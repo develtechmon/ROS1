@@ -1,0 +1,2 @@
+gazebo_drone:ros_numpy
+-DCATKIN_DEVEL_PREFIX=/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/devel -DCMAKE_INSTALL_PREFIX=/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/install -G Unix Makefiles

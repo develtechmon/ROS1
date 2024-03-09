@@ -1,0 +1,8 @@
+prefix=/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/install
+
+Name: aruco_drone
+Description: Description of aruco_drone
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
