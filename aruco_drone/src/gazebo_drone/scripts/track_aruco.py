@@ -56,8 +56,8 @@ def msg_receiver(message):
                     ret = aruco.estimatePoseSingleMarkers(corners, marker_size, cameraMatrix=np_camera_matrix, distCoeffs=np_dist_coeff)
                     (rvec, tvec) = (ret[0][0,0,:], ret[1][0,0,:])
                     x = '{:.2f}'.format(tvec[0])
-                    y = '{:.2f}'.format(tvec[0])
-                    z = '{:.2f}'.format(tvec[0])
+                    y = '{:.2f}'.format(tvec[1])
+                    z = '{:.2f}'.format(tvec[2])
 
                     marker_position = 'MARKER POSITION: x='+x+' y='+y+' z='+z
 
