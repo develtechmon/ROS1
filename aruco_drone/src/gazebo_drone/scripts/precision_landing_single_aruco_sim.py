@@ -141,10 +141,10 @@ def msg_receiver(message):
                         y_sum = corners[0][0][0][1]+ corners[0][0][1][1]+ corners[0][0][2][1]+ corners[0][0][3][1]
                         
                         # This will give us centre point of the aruco marker in the frame itself
-                        # x_avg = x_sum*.25
-                        # y_avg = y_sum*.25
-                        x_avg = x_sum / 4
-                        y_avg = y_sum /4
+                        x_avg = x_sum*.25
+                        y_avg = y_sum*.25
+                        #x_avg = x_sum / 4
+                        #y_avg = y_sum /4
                     
                         # X-angle and Y-angle which used by mavlink message
                         x_ang = (x_avg - horizontal_res*0.5)*(horizontal_fov/horizontal_res)
