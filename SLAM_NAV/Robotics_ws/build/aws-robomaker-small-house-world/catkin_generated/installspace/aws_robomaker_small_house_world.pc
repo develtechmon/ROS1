@@ -1,0 +1,8 @@
+prefix=/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/install
+
+Name: aws_robomaker_small_house_world
+Description: Description of aws_robomaker_small_house_world
+Version: 1.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

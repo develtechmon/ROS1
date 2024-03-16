@@ -1,0 +1,8 @@
+prefix=/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/install
+
+Name: navigation_stack
+Description: Description of navigation_stack
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib -lnavigation_stack
+Requires: amcl dwa_local_planner gmapping map_server move_base roscpp rospy sensor_msgs tf geometry_msgs nav_msgs gazebo_ros
