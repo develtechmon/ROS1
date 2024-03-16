@@ -55,7 +55,7 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/atom/cmd_vel
 
 ## Step 4 : Start our `Mapping`
 ```
-roslaunch atom mapping
+roslaunch atom gmapping_demo.launch
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/atom/cmd_vel
 rosrun map_server map_saver -f map
 ```
