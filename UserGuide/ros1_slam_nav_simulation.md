@@ -31,8 +31,11 @@ sudo apt-get install ros-melodic-urdf
 sudo apt-get install ros-melodic-xacro
 sudo apt-get install ros-melodic-compressed-image-transport
 sudo apt-get install ros-melodic-rqt-image-view
+sudo apt-get install ros-melodic-rqt*
 sudo apt-get install ros-melodic-gmapping
 sudo apt-get install ros-melodic-navigation
+sudo apt-get install ros-melodic-interactive-markers
+sudo apt-get install ros-melodic-gazebo-ros-pkgs
 ```
 
 ## Step 2 : Clone and Setup the project
