@@ -36,6 +36,7 @@ sudo apt-get install ros-melodic-gmapping
 sudo apt-get install ros-melodic-navigation
 sudo apt-get install ros-melodic-interactive-markers
 sudo apt-get install ros-melodic-gazebo-ros-pkgs
+sudo apt-get install gparted
 ```
 
 ## Step 2 : Clone and Setup the project
