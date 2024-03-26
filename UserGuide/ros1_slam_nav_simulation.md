@@ -37,6 +37,11 @@ sudo apt-get install ros-melodic-navigation
 sudo apt-get install ros-melodic-interactive-markers
 sudo apt-get install ros-melodic-gazebo-ros-pkgs
 sudo apt-get install gparted
+
+New
+sudo apt-get install ros-melodic-dynamixel-sdk
+sudo apt-get install ros-melodic-turtlebot3-msgs
+sudo apt-get install ros-melodic-turtlebot3
 ```
 
 ## Step 2 : Clone and Setup the project
