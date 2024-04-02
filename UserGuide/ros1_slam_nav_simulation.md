@@ -12,6 +12,7 @@ ROS1 : melodic
 ## Step 1: Install below packages
 ```
 sudo apt install ros-melodic-gmapping
+sudo apt-get install ros-melodic-dwa-local-planner
 sudo apt-get install ros-melodic-teleop-twist-keyboard
 sudo apt-get install ros-melodic-joy 
 sudo apt-get install ros-melodic-teleop-twist-joy
