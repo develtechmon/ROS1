@@ -81,7 +81,8 @@ jlukas adm dialout cdrom sudo dip plugdev lpadmin sambashare docker
 
 ## Step 3: VS Code setup
 
-Bear in mind, we're going to use VSCode for our container instead of running it using conventional approach. 
+Bear in mind, we're going to use VSCode for our container instead of running it using conventional approach.
+To start, open any `docker_test` directory. This later used for mounting and 
 Please install following extension in VScode
 ```
 Dev Containers
@@ -90,6 +91,16 @@ Remote Development
 You should be able to see some changes in VSCode once you install this extension.
 
 ## Step 4: Download 'ros2_humble' docker image
-From `vscode` search for `Reopen in Container` and choose non workspace of your location.
-From `search bar` search for ros and it should show you `ROS ijnek`. Select the ROS2 humble from the drop down list
+From `vscode` search for `Reopen in Container` and choose non workspace of your location which is `docker_test`.
+From `search bar` search for ros and it should show you `ROS ijnek`. Select the `ROS2 humble` from the drop down list. This will pull the image from docker and it'll automatically mount on your `docker_test` directory.
 
+## Step 4: Enable rviz2 GUI
+
+To enable rviz2 GUI there are two approaches, both simple and easy to use. By default launching `rviz` in docker is quite problematic. To launch rviz2
+
+Open new terminal in your local machine and run following command
+```
+su - ${USER}
+xhost +local: <------ This the command 
+```
+Meanwhile in your `docker` machine, `rebuild container` again.
