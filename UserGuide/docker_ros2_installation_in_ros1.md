@@ -103,4 +103,78 @@ Open new terminal in your local machine and run following command
 su - ${USER}
 xhost +local: <------ This the command 
 ```
-Meanwhile in your `docker` machine, `rebuild container` again.
+Meanwhile in your `docker` machine, please `rebuild container` again, and then `re-open the container` and run `rviz` command. It should work now.
+
+## Step 5: How to give access to our local `desktop` directory
+
+To have an access to desktop file in our local machine. Please modidy the `json` file as follow.
+```
+
+{
+  "name": "My Dev Humble",
+  "dockerFile": "Dockerfile",
+  "runArgs": [
+    "--privileged"
+  ],
+  "workspaceMount": "source=${localWorkspaceFolder},target=/${localWorkspaceFolderBasename},type=bind",
+  "workspaceFolder": "/${localWorkspaceFolderBasename}",
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.bash_history,target=/home/vscode/.bash_history,type=bind",
+     "source=/home/jlukas/Desktop,target=/desktop,type=bind" <----------- This one, map Desktop to /desktop name
+  ],
+
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {}
+  },
+
+  "forwardPorts": [6080,5901],
+  "portsAttributes": {
+    "6080": {
+      "label": "Desktop (Web)"
+    },
+    "5901": {
+      "label": "Desktop (VNC)"
+    }
+  }
+}
+
+```
+## Step 6: VNC and browser access
+To have VNC and browser view, use below json format
+```
+{
+  "name": "My Dev Humble",
+  "dockerFile": "Dockerfile",
+  "runArgs": [
+    "--privileged"
+  ],
+  "workspaceMount": "source=${localWorkspaceFolder},target=/${localWorkspaceFolderBasename},type=bind",
+  "workspaceFolder": "/${localWorkspaceFolderBasename}",
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.bash_history,target=/home/vscode/.bash_history,type=bind",
+    // "source=/home/jlukas/Desktop,target=/desktop,type=bind"
+  ],
+
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {}
+  },
+
+  "forwardPorts": [6080,5901],
+  "portsAttributes": {
+    "6080": {
+      "label": "Desktop (Web)"
+    },
+    "5901": {
+      "label": "Desktop (VNC)"
+    }
+  }
+}
+```
+
+Then from your browser, type following to see desktop.
+```
+localhost:6080
+Password is : vscode
+rviz2
+```
+
