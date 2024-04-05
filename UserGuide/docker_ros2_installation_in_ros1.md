@@ -78,3 +78,18 @@ While will result as follow
 ```
 jlukas adm dialout cdrom sudo dip plugdev lpadmin sambashare docker
 ```
+
+## Step 3: VS Code setup
+
+Bear in mind, we're going to use VSCode for our container instead of running it using conventional approach. 
+Please install following extension in VScode
+```
+Dev Containers
+Remote Development
+```
+You should be able to see some changes in VSCode once you install this extension.
+
+## Step 4: Download 'ros2_humble' docker image
+From `vscode` search for `Reopen in Container` and choose non workspace of your location.
+From `search bar` search for ros and it should show you `ROS ijnek`. Select the ROS2 humble from the drop down list
+
