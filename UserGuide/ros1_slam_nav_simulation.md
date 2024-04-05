@@ -46,13 +46,17 @@ sudo apt-get install ros-melodic-turtlebot3
 ```
 
 ## Step 2 : Clone and Setup the project
+
+This package is based on original developer : `https://github.com/harshmittal2210/Robotics_ws.git`
+
+I've made some minor changes to this original packages, you'll need to use my package to work in my environment as follow.
 ```
-https://github.com/harshmittal2210/Robotics_ws.git
+git clone https://github.com/develtechmon/ROS1.git
+cd ROS1/SLAM_NAV
 cd Robotics_ws
-git submodule update --init --recursive
 sudo rosdep init
 rosdep update
-rosdep install --from-paths src -y --ignore-src
+rosdep install --from-paths src -y --ignore-src (you can ignore the opencv if you see this message)
 catkin_make
 source devel/setup.sh
 ```
