@@ -1,4 +1,4 @@
-prefix=/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel
+prefix=/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel
 
 Name: aws_robomaker_small_house_world
 Description: Description of aws_robomaker_small_house_world

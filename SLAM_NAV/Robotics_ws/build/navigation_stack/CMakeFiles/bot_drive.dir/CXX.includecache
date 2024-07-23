@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack/src/bot_drive.cpp
+/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack/src/bot_drive.cpp
 bot_drive.hpp
-/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack/src/bot_drive.hpp
+/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack/src/bot_drive.hpp
 
-/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack/src/bot_drive.hpp
+/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack/src/bot_drive.hpp
 ros/ros.h
 -
 sensor_msgs/LaserScan.h

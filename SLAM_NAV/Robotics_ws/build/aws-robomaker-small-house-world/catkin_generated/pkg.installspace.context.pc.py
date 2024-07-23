@@ -4,5 +4,5 @@ PROJECT_PKG_CONFIG_INCLUDE_DIRS = "".split(';') if "" != "" else []
 PROJECT_CATKIN_DEPENDS = "".replace(';', ' ')
 PKG_CONFIG_LIBRARIES_WITH_PREFIX = "".split(';') if "" != "" else []
 PROJECT_NAME = "aws_robomaker_small_house_world"
-PROJECT_SPACE_DIR = "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/install"
+PROJECT_SPACE_DIR = "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/install"
 PROJECT_VERSION = "1.0.0"

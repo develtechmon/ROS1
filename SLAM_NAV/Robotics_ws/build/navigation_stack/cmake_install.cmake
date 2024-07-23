@@ -1,8 +1,8 @@
-# Install script for directory: /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack
+# Install script for directory: /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/navigation_stack/catkin_generated/installspace/navigation_stack.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/navigation_stack/catkin_generated/installspace/navigation_stack.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/navigation_stack/cmake" TYPE FILE FILES
-    "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/navigation_stack/catkin_generated/installspace/navigation_stackConfig.cmake"
-    "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/navigation_stack/catkin_generated/installspace/navigation_stackConfig-version.cmake"
+    "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/navigation_stack/catkin_generated/installspace/navigation_stackConfig.cmake"
+    "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/navigation_stack/catkin_generated/installspace/navigation_stackConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/navigation_stack" TYPE FILE FILES "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/navigation_stack" TYPE FILE FILES "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack/package.xml")
 endif()
 

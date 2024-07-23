@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/bot_drive.dir/src/bot_drive.cpp.o"
-  "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel/lib/navigation_stack/bot_drive.pdb"
-  "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel/lib/navigation_stack/bot_drive"
+  "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel/lib/navigation_stack/bot_drive.pdb"
+  "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel/lib/navigation_stack/bot_drive"
 )
 
 # Per-language clean rules from dependency scanning.

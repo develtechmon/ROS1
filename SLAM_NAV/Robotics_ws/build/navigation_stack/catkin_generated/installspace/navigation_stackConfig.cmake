@@ -67,14 +67,14 @@ set(navigation_stack_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(navigation_stack_SOURCE_PREFIX /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack)
-  set(navigation_stack_DEVEL_PREFIX /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel)
+  set(navigation_stack_SOURCE_PREFIX /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack)
+  set(navigation_stack_DEVEL_PREFIX /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel)
   set(navigation_stack_INSTALL_PREFIX "")
   set(navigation_stack_PREFIX ${navigation_stack_DEVEL_PREFIX})
 else()
   set(navigation_stack_SOURCE_PREFIX "")
   set(navigation_stack_DEVEL_PREFIX "")
-  set(navigation_stack_INSTALL_PREFIX /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/install)
+  set(navigation_stack_INSTALL_PREFIX /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/install)
   set(navigation_stack_PREFIX ${navigation_stack_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/install/lib;/home/jlukas/Desktop/My_Project/SLAM_NAV/Robotics_ws/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/install/lib;/home/jlukas/ROS1/Robotics_ws/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

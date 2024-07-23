@@ -1,4 +1,4 @@
-prefix=/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel
+prefix=/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel
 
 Name: beta_description
 Description: Description of beta_description

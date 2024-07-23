@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src
+CMAKE_SOURCE_DIR = /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build
+CMAKE_BINARY_DIR = /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build
 
 # Utility rule file for amcl_gencfg.
 
@@ -63,10 +63,10 @@ navigation_stack/CMakeFiles/amcl_gencfg.dir/build: amcl_gencfg
 .PHONY : navigation_stack/CMakeFiles/amcl_gencfg.dir/build
 
 navigation_stack/CMakeFiles/amcl_gencfg.dir/clean:
-	cd /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/navigation_stack && $(CMAKE_COMMAND) -P CMakeFiles/amcl_gencfg.dir/cmake_clean.cmake
+	cd /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/navigation_stack && $(CMAKE_COMMAND) -P CMakeFiles/amcl_gencfg.dir/cmake_clean.cmake
 .PHONY : navigation_stack/CMakeFiles/amcl_gencfg.dir/clean
 
 navigation_stack/CMakeFiles/amcl_gencfg.dir/depend:
-	cd /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/navigation_stack /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/navigation_stack/CMakeFiles/amcl_gencfg.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/navigation_stack /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/navigation_stack /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/navigation_stack/CMakeFiles/amcl_gencfg.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : navigation_stack/CMakeFiles/amcl_gencfg.dir/depend
 

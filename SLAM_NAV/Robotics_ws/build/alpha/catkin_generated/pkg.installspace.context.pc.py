@@ -4,5 +4,5 @@ PROJECT_PKG_CONFIG_INCLUDE_DIRS = "".split(';') if "" != "" else []
 PROJECT_CATKIN_DEPENDS = "".replace(';', ' ')
 PKG_CONFIG_LIBRARIES_WITH_PREFIX = "".split(';') if "" != "" else []
 PROJECT_NAME = "alpha"
-PROJECT_SPACE_DIR = "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/install"
+PROJECT_SPACE_DIR = "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/install"
 PROJECT_VERSION = "0.0.0"

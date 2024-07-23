@@ -1,4 +1,4 @@
-prefix=/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/install
+prefix=/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/install
 
 Name: atom
 Description: Description of atom

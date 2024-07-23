@@ -1,8 +1,8 @@
-# Install script for directory: /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world
+# Install script for directory: /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,28 +38,28 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/aws-robomaker-small-house-world/catkin_generated/installspace/aws_robomaker_small_house_world.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/aws-robomaker-small-house-world/catkin_generated/installspace/aws_robomaker_small_house_world.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/aws_robomaker_small_house_world/cmake" TYPE FILE FILES
-    "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/aws-robomaker-small-house-world/catkin_generated/installspace/aws_robomaker_small_house_worldConfig.cmake"
-    "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/aws-robomaker-small-house-world/catkin_generated/installspace/aws_robomaker_small_house_worldConfig-version.cmake"
+    "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/aws-robomaker-small-house-world/catkin_generated/installspace/aws_robomaker_small_house_worldConfig.cmake"
+    "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/aws-robomaker-small-house-world/catkin_generated/installspace/aws_robomaker_small_house_worldConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/aws_robomaker_small_house_world" TYPE FILE FILES "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/aws_robomaker_small_house_world" TYPE FILE FILES "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/package.xml")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/aws_robomaker_small_house_world" TYPE DIRECTORY FILES
-    "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/launch"
-    "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/models"
-    "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/worlds"
-    "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/maps"
-    "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/photos"
-    "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/routes"
+    "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/launch"
+    "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/models"
+    "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/worlds"
+    "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/maps"
+    "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/photos"
+    "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/aws-robomaker-small-house-world/routes"
     )
 endif()
 

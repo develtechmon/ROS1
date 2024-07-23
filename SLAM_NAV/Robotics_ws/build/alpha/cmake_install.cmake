@@ -1,8 +1,8 @@
-# Install script for directory: /home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/alpha
+# Install script for directory: /home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/alpha
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/alpha/catkin_generated/installspace/alpha.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/alpha/catkin_generated/installspace/alpha.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/alpha/cmake" TYPE FILE FILES
-    "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/alpha/catkin_generated/installspace/alphaConfig.cmake"
-    "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/alpha/catkin_generated/installspace/alphaConfig-version.cmake"
+    "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/alpha/catkin_generated/installspace/alphaConfig.cmake"
+    "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build/alpha/catkin_generated/installspace/alphaConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/alpha" TYPE FILE FILES "/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/alpha/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/alpha" TYPE FILE FILES "/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src/alpha/package.xml")
 endif()
 

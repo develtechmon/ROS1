@@ -7,7 +7,7 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel:$CMAKE_PREFIX_PATH"
-export PWD='/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/build'
-export ROSLISP_PACKAGE_DIRECTORIES="/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
-export ROS_PACKAGE_PATH="/home/jlukas/Desktop/My_Project/ROS1/SLAM_NAV/Robotics_ws/src:$ROS_PACKAGE_PATH"
+export CMAKE_PREFIX_PATH="/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel:$CMAKE_PREFIX_PATH"
+export PWD='/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/build'
+export ROSLISP_PACKAGE_DIRECTORIES="/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
+export ROS_PACKAGE_PATH="/home/jlukas/My_Project/ROS1/SLAM_NAV/Robotics_ws/src:$ROS_PACKAGE_PATH"
