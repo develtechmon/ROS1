@@ -227,6 +227,16 @@ Check below link for good reference
 https://robocademy.com/2020/05/02/solved-opengl-issues-with-gazebo-and-vmware/
 ```
 
+# Install mavros melodic
+
+To install mavros, run the following command
+```
+sudo apt-get install ros-melodic-mavros ros-melodic-mavros-extras
+wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
+chmod a+x install_geographiclib_datasets.sh
+sudo ./install_geographiclib_datasets.sh
+```
+
 # Ros programming
 
 # To start `Gazebo` Simulation using ros
@@ -264,15 +274,6 @@ rqt --> To see the relationship list
 From `rqt` go to following tab
 ```
 Visualization --> Image View --> /camera/color/image_raw
-```
-
-## To start `Gazebo` Simulation directly without using ROS
-To start `Gazebo` simulation without using ROS, you can run following command. But this won't publish
-any topic. This method is suitable if you use dronekit and when start the `sim_vehicle.py`
-
-Run below command
-```
-gazebo --verbose ~/ardupilot_gazebo/worlds/iris_arducopter_runway.world 
 ```
 
 Create our first `ros` project
