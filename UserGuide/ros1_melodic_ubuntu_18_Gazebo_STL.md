@@ -266,6 +266,15 @@ From `rqt` go to following tab
 Visualization --> Image View --> /camera/color/image_raw
 ```
 
+## To start `Gazebo` Simulation directly without using ROS
+To start `Gazebo` simulation without using ROS, you can run following command. But this won't publish
+any topic. This method is suitable if you use dronekit and when start the `sim_vehicle.py`
+
+Run below command
+```
+gazebo --verbose ~/ardupilot_gazebo/worlds/iris_arducopter_runway.world 
+```
+
 Create our first `ros` project
 ```
 mkdir catkin_ws
