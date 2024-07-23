@@ -251,8 +251,11 @@ cd launch
 sudo cp -r empty_world.launch iris_world.launch
 
 sudo gedit iris_world.launch
+```
 
 inside this launch file set the parameter of "world_name" default="aruco_landing.world"
+```
+  <arg name="world_name" default="worlds/aruco_landing.world"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
 ```
 
 To launch our launch file. This will launch our `aruco_landing.world`
