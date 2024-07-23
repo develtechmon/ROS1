@@ -94,7 +94,6 @@ And next, you have to `make again` as follow
 cd ~mavros_tutorial
 catkin_make
 source devel/setup.bash
-
 ```
 
 To launch the `apm launcher`, use following command. 
@@ -239,4 +238,75 @@ source devel/setup.bash
 To run our script python, use following command
 ```
 rosrun drone takeoff_land.py
+```
+
+## To connect with Pixhawk Ardupilot Controller
+
+Modify following file in our launcher file
+
+```
+gedit apm.launch
+```
+
+This will launch gedit terminal. In the terminal, please change `fcu_url` to following
+```
+<launch>
+	<!-- vim: set ft=xml noet : -->
+	<!-- example launch script for ArduPilot based FCU's -->
+
+	<arg name="fcu_url" default="/dev/ttyACM0:57600" /> <-------- This one
+	<!-- <arg name="fcu_url" default="tcp://127.0.0.1:5763" /> -->
+	<arg name="gcs_url" default="" />
+	<arg name="tgt_system" default="1" />
+	<arg name="tgt_component" default="1" />
+	<arg name="log_output" default="screen" />
+	<arg name="fcu_protocol" default="v2.0" />
+	<arg name="respawn_mavros" default="false" />
+
+	<include file="$(find mavros)/launch/node.launch">
+		<arg name="pluginlists_yaml" value="$(find mavros)/launch/apm_pluginlists.yaml" />
+		<arg name="config_yaml" value="$(find mavros)/launch/apm_config.yaml" />
+		<arg name="fcu_url" value="$(arg fcu_url)" />
+		<arg name="gcs_url" value="$(arg gcs_url)" />
+		<arg name="tgt_system" value="$(arg tgt_system)" />
+		<arg name="tgt_component" value="$(arg tgt_component)" />
+		<arg name="log_output" value="$(arg log_output)" />
+		<arg name="fcu_protocol" value="$(arg fcu_protocol)" />
+		<arg name="respawn_mavros" value="$(arg respawn_mavros)" />
+	</include>
+</launch>
+```
+
+Save and quit.
+
+And next, you have to `make again` as follow
+```
+cd ~mavros_tutorial
+catkin_make
+source devel/setup.bash
+```
+
+In other terminal, we have to enable port option for our `Pixhawk` port
+```
+sudo chmod 666 /dev/ttyACM0
+```
+To launch the modified `apm launcher`, use following command. 
+```
+roslaunch drone apm.launch
+```
+This will launch the result as follow to indicate there is flight controller SIM detected.
+```
+[ INFO] [1721749328.519058709]: VER: 1.1: Flight software:     04060000 (87435473)
+[ INFO] [1721749328.519084349]: VER: 1.1: Middleware software: 00000000 (        )
+[ INFO] [1721749328.519124740]: VER: 1.1: OS software:         00000000 (        )
+[ INFO] [1721749328.519148212]: VER: 1.1: Board hardware:      00000000
+[ INFO] [1721749328.519167996]: VER: 1.1: VID/PID:             0000:0000
+[ INFO] [1721749328.519182472]: VER: 1.1: UID:                 0000000000000000
+[ INFO] [1721749337.517489174]: FCU: ArduCopter V4.6.0-dev (87435473)
+[ INFO] [1721749337.517654407]: FCU: b4385e815bab498794cf9f418b75c6c7
+[ INFO] [1721749337.517769636]: FCU: Frame: QUAD/X
+[ INFO] [1721749338.177170781]: PR: parameters list received
+[ INFO] [1721749342.516105663]: GF: mission received
+[ INFO] [1721749342.516938426]: RP: mission received
+[ INFO] [1721749342.517227089]: WP: mission received
 ```
