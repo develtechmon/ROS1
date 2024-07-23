@@ -1,0 +1,2 @@
+drone
+-DCATKIN_DEVEL_PREFIX=/home/jlukas/My_Project/ROS1/MAVROS/drone_mavros/devel -DCMAKE_INSTALL_PREFIX=/home/jlukas/My_Project/ROS1/MAVROS/drone_mavros/install -G Unix Makefiles
