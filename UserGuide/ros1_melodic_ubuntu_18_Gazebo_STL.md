@@ -169,7 +169,7 @@ export GAZEBO_MODEL_PATH
 save and quit
 ```
 
-# Install ros2 melodic
+# Install ros melodic
 ```
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 sudo apt install curl
