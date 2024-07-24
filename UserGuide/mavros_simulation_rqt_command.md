@@ -189,7 +189,7 @@ Plugins --> Topics --> Easy Message Publisher
 
 From `Topic (+data member) name` select below to set target linear velocity of the drone
 ```
-/mavros/setpoint_position/cmd_vel
+/mavros/setpoint_velocity/cmd_vel
 ```
 
 You can use your mouse scroll wheel to control the drone `movement` to control the `speed` of drone
