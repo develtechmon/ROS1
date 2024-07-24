@@ -53,7 +53,7 @@ class DroneController:
         rospy.wait_for_service('/mavros/cmd/takeoff')
         try:
             takeoff = rospy.ServiceProxy('/mavros/cmd/takeoff', CommandTOL)
-            response = takeoff(altitude=10.0)  # Set the desired takeoff altitude
+            response = takeoff(altitude=1)  # Set the desired takeoff altitude
             rospy.loginfo("Takeoff command sent. Response: %s", response)
         except rospy.ServiceException as e:
             rospy.logerr("Service call failed: %s", e)
