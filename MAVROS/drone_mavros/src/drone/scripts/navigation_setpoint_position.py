@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+#Have some issue when move left, right, front and back
 import rospy
 from mavros_msgs.srv import CommandBool, SetMode
 from mavros_msgs.srv import CommandTOL
