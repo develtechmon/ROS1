@@ -80,9 +80,10 @@ class Vehicle(object):
 		# IP address for SITL simulator. Port 14550 is reserved for GCS.
 		# If you're running SITL, make sure mavproxy is running and Port
 		# 14551 has been configured as an "--out" port
-                self.SITL = "tcp:127.0.0.1:5763"
+        #self.SITL = "tcp:127.0.0.1:5763"
 		# Connection from on-board companion computer to FC
-		self.FC = FCAddress
+		#self.FC = FCAddress
+		self.FC = '/dev/ttyAMA0'
 		# Baud rate used to for serial connection
 		self.BAUD = baudRate
 		# Initialize the vehicle state
@@ -147,21 +148,21 @@ class Vehicle(object):
 			self.fsController.start()
 		
 		if self.STATE != VehicleState.preFlight:
-			print "Err: Connection denied with vehicle state %s." % self.STATE
+			print ("Err: Connection denied with vehicle state %s." % self.STATE)
 			return False
 		
 		if simulation:
 			connectStr = self.SITL
 		else:
 			connectStr = self.FC
-		print "Connecting to the vehicle on %s with baud rate %d." % (connectStr, self.BAUD)
+		print ("Connecting to the vehicle on %s with baud rate %d." % (connectStr, self.BAUD))
 		self.vehicle = dronekit.connect(connectStr, baud = self.BAUD, wait_ready = True, vehicle_class = Custom_DroneKit_Vehicle)
 		
 		if not self.vehicle:
-			print "Err: Unable to connect to vehicle."
+			print ("Err: Unable to connect to vehicle.")
 			return False
 		
-		print "Waiting for vehicle to initialize..."
+		print ("Waiting for vehicle to initialize...")
 		timeoutCounter = 0
 		# Check if the vehicle is able to arm
 		while not self.vehicle.is_armable:
@@ -170,12 +171,12 @@ class Vehicle(object):
 			#print 'vehicle mode = ', self.vehicle.mode
 			#print 'ekf = ', self.vehicle._ekf_predposhorizabs
 			if timeoutCounter >= (INITIALIZE_TIMEOUT / STD_CHECK_TIME):
-				print "Vehicle initialization timeout."
+				print ("Vehicle initialization timeout.")
 				return False
 		
 		self.set_home()
 		
-		print "Vehicle initialized successfully, ready for flight."
+		print ("Vehicle initialized successfully, ready for flight.")
 		return True
 		
 	'''
@@ -229,7 +230,7 @@ class Vehicle(object):
 	def disarm(self, force = False):
 		if not force:
 			if self.STATE != VehicleState.landed:
-				print "Err: Cannot disarm in %s state." % self.STATE
+				print ("Err: Cannot disarm in %s state." % self.STATE)
 				return False
 
 		self.vehicle.armed = False
@@ -247,7 +248,7 @@ class Vehicle(object):
 		if self.fsController.triggered:
 			return False
 		if self.STATE != VehicleState.landed:
-			print "Err: Takeoff denied with vehicle state %s." % self.STATE
+			print ("Err: Takeoff denied with vehicle state %s." % self.STATE)
 			return False
 		#elif targetHeight <= 0:
 		#	print "Err: Takeoff denied with invalid target height %d." % targetHeight
@@ -262,16 +263,16 @@ class Vehicle(object):
 		
 		self.STATE = VehicleState.takeoff
 		self.vehicle.simple_takeoff(targetHeightGlobal)
-		print "Vehicle is taking off!"
+		print ("Vehicle is taking off!")
 		
 		while wait_ready:
-			print " Current altitude: ", self.vehicle.location.global_relative_frame.alt - startHeightGlobal 
+			print (" Current altitude: ", self.vehicle.location.global_relative_frame.alt - startHeightGlobal) 
 			if self.STATE != VehicleState.takeoff:
-				print "Err: Takeoff terminated unexpectedly with state %s." % self.STATE
+				print ("Err: Takeoff terminated unexpectedly with state %s." % self.STATE)
 				return False
 			#Break and return from function just below target altitude.        
 			if self.vehicle.location.global_relative_frame.alt - startHeightGlobal >= targetHeight * TAKEOFF_ALT_SCALER: 
-				print "Reached target altitude"
+				print ("Reached target altitude")
 				self.STATE = VehicleState.auto
 				break
 			time.sleep(STD_CHECK_TIME)
@@ -292,7 +293,7 @@ class Vehicle(object):
 			if self.STATE == VehicleState.preFlight \
 			or self.STATE == VehicleState.landing \
 			or self.STATE == VehicleState.landed:
-				print "Err: Land denied with vehicle state %s." % self.STATE
+				print ("Err: Land denied with vehicle state %s." % self.STATE)
 				return False
 		
 		# Change the STATE first, prevent triggering failsafe incorrectly
@@ -300,15 +301,15 @@ class Vehicle(object):
 		self.STATE = VehicleState.landing
 		
 		if self.switch_mode("LAND"):
-			print "Landing"
+			print ("Landing")
 		else:
-			print "Err: Failed to switch to LAND."
+			print ("Err: Failed to switch to LAND.")
 			self.STATE = lastSTATE
 			return False
 		
 		while self.vehicle.armed:
 			time.sleep(STD_CHECK_TIME)
-		print "Landed successfully."
+		print ("Landed successfully.")
 		self.STATE = VehicleState.landed
 		return True
 		
@@ -327,7 +328,7 @@ class Vehicle(object):
 		if self.fsController.triggered:
 			return False
 		if self.STATE != VehicleState.auto:
-			print "Err: Goto command denied with vehicle state %s." % self.STATE
+			print ("Err: Goto command denied with vehicle state %s." % self.STATE)
 			return False
 		
 		# Decide which frame type to be used
@@ -367,7 +368,7 @@ class Vehicle(object):
 		if self.fsController.triggered:
 			return False
 		if self.STATE != VehicleState.auto:
-			print "Err: Velocity control denied with vehicle state %s." % self.STATE
+			print ("Err: Velocity control denied with vehicle state %s." % self.STATE)
 			return False
 			
 		# Decide which frame type to be used
@@ -405,7 +406,7 @@ class Vehicle(object):
 		if self.fsController.triggered:
 			return False
 		if self.STATE != VehicleState.auto:
-			print "Err: Yaw control denied with vehicle state %s." % self.STATE
+			print ("Err: Yaw control denied with vehicle state %s." % self.STATE)
 			return False
 		
 		# Yaw command in absolute or relative angle
@@ -450,7 +451,7 @@ class Vehicle(object):
 		if self.fsController.triggered:
 			return False
 		if self.STATE != VehicleState.auto:
-			print "Err: Hovering denied with vehicle state %s." % self.STATE
+			print ("Err: Hovering denied with vehicle state %s." % self.STATE)
 			return False
 		
 		# Set RC3(throttle) to the hover level
@@ -511,7 +512,7 @@ class Vehicle(object):
 	'''
 	def exit(self):
 		if self.STATE != VehicleState.landed and self.STATE != VehicleState.preFlight:
-			print "Err: cannot exit when still in the air! State %s." % self.STATE
+			print ("Err: cannot exit when still in the air! State %s." % self.STATE)
 			return False
 		
 		self.fsController.join()
@@ -539,7 +540,7 @@ class FailsafeController(threading.Thread):
 					# Counter was added against latency in 'vehicle.armed'
 					disarmCounter += 1
 					if disarmCounter >= 3:
-						print 'Vehicle disarmed unexpectedly.'
+						print ('Vehicle disarmed unexpectedly.')
 						self.instance.STATE = VehicleState.landed
 				else:
 					disarmCounter = 0
@@ -548,10 +549,10 @@ class FailsafeController(threading.Thread):
 					self.triggered = True
 					self.instance.vehicle.channels.overrides = None
 					if self.instance.vehicle.armed:
-						print 'Failsafe triggered, now landing.'
+						print ('Failsafe triggered, now landing.')
 						self.instance.STATE = VehicleState.landing
 					else:
-						print 'Failsafe triggered, landed unexpectedly. Now exiting...'
+						print ('Failsafe triggered, landed unexpectedly. Now exiting...')
 						self.instance.STATE = VehicleState.landed
 						os._exit(1)
 						
@@ -561,7 +562,7 @@ class FailsafeController(threading.Thread):
 					self.instance.STATE = VehicleState.manual
 			
 			if self.triggered and not self.instance.vehicle.armed and self.instance.STATE == VehicleState.landing:
-				print 'Landed. Now exiting...'
+				print ('Landed. Now exiting...')
 				os._exit(1)
 
 			time.sleep(FS_SLEEP_TIME)

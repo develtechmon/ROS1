@@ -13,7 +13,7 @@ import time
 myCopter = FlightController.Vehicle()
 
 # Connect and initialize the vehicle, enable SITL here
-if not myCopter.initialize(simulation = True):
+if not myCopter.initialize(simulation = False):
 	sys.exit(1)
 
 # Try arming the vehicle
@@ -21,11 +21,11 @@ timeoutCounter = 0
 while not myCopter.arm():
 	timeoutCounter += 1
 	if timeoutCounter > 3:
-		print "Cannot arm the vehicle after 3 retries."
+		print ("Cannot arm the vehicle after 3 retries.")
 		sys.exit(1)
 
 # Takeoff
-if not myCopter.takeoff(1):
+if not myCopter.takeoff(0.5):
 	sys.exit(1)
 
 # Hover for 10 seconds
@@ -36,7 +36,7 @@ timeoutCounter = 0
 while not myCopter.land():
 	timeoutCounter += 1
 	if timeoutCounter > 3:
-		print "Critical: Cannot land the vehicle after 3 retries."
+		print ("Critical: Cannot land the vehicle after 3 retries.")
 		sys.exit(1)
 		
 myCopter.exit()
