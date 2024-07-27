@@ -228,14 +228,11 @@ In general overall `Serial Ports` view should look as follow
 
 I'm using Flight Mode as follow. Please ensure to use `FLTMODE_CH = 8` in this case.
 
-![alt text](image.png)
-
-
 Under `Extended Tuning` please set `RC6`, `RC7` and `RC9` to the following.
 
 ![alt text](Extended_Tuning.PNG)
 
-## 7. Transmitter Setup
+## 8. Transmitter Setup
 
 I'm using `Master Boxer` ELRS Controller, you will have to calibrate your Transmitter
 and map the `mode` appropriately in your transmitter. My setup i'm using these mode
@@ -251,7 +248,7 @@ LAND
 
 In this setup, we're using `Optical FLow` and `RangeFinder` data as a primary sources.
 
-## 8. Battery Setup
+## 9. Battery Setup
 
 We've to enable Battery monitor as following. 
 * In my case i'm using 4S Battery. 
