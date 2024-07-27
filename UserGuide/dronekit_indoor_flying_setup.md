@@ -334,7 +334,6 @@ sudo pip install gpiozero = 1.6.2
 sudo pip install tflite-runtime == 2.5.0.post1
 sudo pip install tflite-support == 0.4.3
 sudo pip install RPi.GPIO == 0.7.0
-
 ```
 
 ## 3. Enable Serial in RPI
@@ -437,9 +436,9 @@ To enable `Terminal` mode in our Rpi, please do the following.
 sudo raspi-config
 ```
 
-and go to `Boot Options` and choose
+and go to `System Options` and choose
 ```
-Console Autologin Text console, automatically logged in as `pi` user.
+Boot / Auto Login Select boot into desktop or to command line
 ```
 
 click save and `reboot` the RPI.
