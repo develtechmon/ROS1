@@ -302,6 +302,11 @@ Please ensure that you have flash RPI with mentioned Image using RPI imager.
 
 ## 2. Python Libraries 
 
+Python Version
+```
+Python 3.9.2 Mar 12, 2021
+```
+
 Below is list of python libraries that you have to install in RPi Zero 2
 ```
 sudo apt-get update
@@ -311,11 +316,24 @@ sudo apt-get install python-dev
 sudo apt-get install screen python-wxgtk4.0 python-lxml
 sudo apt-get install git
 sudo pip install pexpect
-sudo pip install future
-sudo pip install pyserial
-sudo pip install dronekit
-sudo pip install MAVProxy
-sudo pip install keyboard
+sudo pip install future == 0.18.3
+sudo pip install pyserial == 3.5b0
+sudo pip install dronekit == 2.9.2
+sudo pip install MAVProxy == 1.8.60
+sudo pip install keyboard == 0.13.5
+sudo pip install numpy = 1.24.3
+sudo pip install opencv-python = 4.5.3.56
+sudo pip install pexpect = 4.8.0
+sudo pip install picamera = 1.13
+sudo pip install picamera2 = 0.3.12
+sudo pip install pycoral = 2.0.0
+sudo pip install pygame = 1.9.6
+sudo pip install pymavlink = 2.4.37
+sudo pip install v4l2-python3 = 0.3.2
+sudo pip install gpiozero = 1.6.2
+sudo pip install tflite-runtime == 2.5.0.post1
+sudo pip install tflite-support == 0.4.3
+sudo pip install RPi.GPIO == 0.7.0
 ```
 
 ## 3. Enable Serial in RPI
@@ -364,7 +382,8 @@ ls /dev/ttyAMA0
 
 ## 4. Create Access Point
 
-To creae access point from our `Raspberry Pi Zero 2`. Do the following
+To creaete access point from our `Raspberry Pi Zero 2`. Do the following. But, in my setup i didnt set
+the static `IP address`.
 
 Enable static `IP address` by adding following line
 ```
@@ -386,7 +405,7 @@ sudo vi /etc/wpa_supplicant/wpa_supplicant.confg
 and fill the following info
 ```
  network={
-     ssid="raspberrypizero2"
+     ssid="pi-techmon"
      psk="2328"
      mode=2
      proto=RSN
