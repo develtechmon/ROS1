@@ -36,11 +36,26 @@ class Custom_DroneKit_Vehicle(dronekit.Vehicle):
     def is_armable(self):
         return self.mode != 'INITIALISING' and self.rangefinder.distance and self._ekf_predposhorizrel
 
-connection_string = 'tcp:127.0.0.1:5763'
+connection_string = '/dev/ttyAMA0,921600'
 print('Connecting to vehicle on: %s' % connection_string)
 vehicle = connect(connection_string, wait_ready=True, vehicle_class=Custom_DroneKit_Vehicle)
 print("Virtual Copter is Ready")
 
+def send_ned_velocity(velocity_x, velocity_y, velocity_z, duration):
+    msg = vehicle.message_factory.set_position_target_local_ned_encode(
+        0,
+        0, 0,
+        mavutil.mavlink.MAV_FRAME_LOCAL_NED,
+        0b0000111111000111,
+        0, 0, 0,
+        velocity_x, velocity_y, velocity_z,
+        0, 0, 0,
+        0, 0
+    )
+    for _ in range(0, duration):
+        vehicle.send_mavlink(msg)
+        time.sleep(1)
+        
 def to_quaternion(roll=0.0, pitch=0.0, yaw=0.0):
     """
     Convert degrees to quaternions
@@ -76,8 +91,7 @@ def hover():
         if (state.get_system_state() == "land"):
             land()
             break
-        
-
+                    
 def send_attitude_target(roll_angle=0.0, pitch_angle=0.0,
                          yaw_angle=None, yaw_rate=0.0, use_yaw_rate=False,
                          thrust=0.5):
@@ -152,7 +166,7 @@ def arm_and_takeoff_nogps(aTargetAltitude):
             thrust = 0.6
         time.sleep(0.2)
         set_attitude(thrust=thrust)
-    state.set_system_state("loiter")    
+    state.set_system_state("loiter")
 
 def land():
     vehicle.mode = VehicleMode("LAND")
@@ -160,26 +174,44 @@ def land():
 def keyboard_control():
     # c1 - roll, c3 - throttle, c2 - pitch, c4 - yaw
     while True:
-        # if keyboard.is_pressed('w'):
-        #     #set_attitude(pitch_angle=-5, thrust=0.5, duration=0.1)
-        #     vehicle.channels.overrides['4'] = 900
+        if keyboard.is_pressed('w'):
+            print("Forward")
+            vehicle.channels.overrides['2'] = 1400  # Pitch backward
 
-        # elif keyboard.is_pressed('s'):
-        #     #set_attitude(pitch_angle=5, thrust=0.5, duration=0.1)
-        #     vehicle.channels.overrides['4'] = 900
+        elif keyboard.is_pressed('s'):
+            print("Backward")
+            vehicle.channels.overrides['2'] = 1600  # Pitch forward
 
-        if keyboard.is_pressed('a'):
-            state.set_system_state("forward")    
-            # set_attitude(roll_angle=-5, thrust=0.5, duration=0.1)
-            print("a")
-            
+        elif keyboard.is_pressed('a'):
+            print("Left")
+            vehicle.channels.overrides['1'] = 1400  # Roll left
+
         elif keyboard.is_pressed('d'):
-            set_attitude(roll_angle=5, thrust=0.5, duration=0.1)
-            print("d")
+            print("Right")
+            vehicle.channels.overrides['1'] = 1600  # Roll right
             
         elif keyboard.is_pressed('q'):
-            print("land")
-            state.set_system_state("land")    
+            print("Yaw Left")
+            vehicle.channels.overrides['4'] = 1400  # Yaw left
+        
+        elif keyboard.is_pressed('e'):
+            print("Yaw Right")
+            vehicle.channels.overrides['4'] = 1600  # Yaw right
+            
+        elif keyboard.is_pressed('r'):
+            print("Land")
+            state.set_system_state("land")
+            
+        elif keyboard.is_pressed('space'):
+            print("Brake")
+            vehicle.channels.overrides['1'] = 1500  # Center roll
+            vehicle.channels.overrides['2'] = 1500  # Center pitch
+            vehicle.channels.overrides['4'] = 1500  # Center yaw
+                
+        else:
+            vehicle.channels.overrides['1'] = 1500  # Center roll
+            vehicle.channels.overrides['2'] = 1500  # Center pitch
+            vehicle.channels.overrides['4'] = 1500  # Center yaw
             
         #elif keyboard.is_pressed('e'):
             #set_attitude(yaw_angle=vehicle.attitude.yaw + 0.1, thrust=0.5, duration=0.1)
