@@ -450,4 +450,55 @@ To test if connection is working. Run below command using mavproxy. You should s
 mavproxy.py --master=/dev/ttyACM0,921600
 ```
 
+## To Run Indoor Drone Script
 
+With Keyboard Control and please ensure you've connect the `USB Transreceiver` to RPI port.
+## Run using below command for Simulation
+
+To Launch Gazebo using Melodic Ubuntu 18 in your VM Machine
+```
+roslaunch gazebo_ros iris_world.launch
+```
+
+To launch Mavproxy 
+```
+sim_vehicle.py -v ArduCopter -f gazebo-iris --console
+```
+
+To run python script
+```
+sudo python3 Keyboard_Motion_Control_Field_Sim.py
+```
+
+Then you control the drone with following Key using keyboard
+```
+w - forward
+s - backward
+a - left
+d - right
+q - yaw left
+e - yaw right
+r - land
+space - brake
+```
+
+## Run using below command for Field Flying
+
+In Your `Rpi` terminal do the following.
+
+To run python script
+```
+sudo python3 Keyboard_Motion_Control_Field.py
+```
+
+Then you control the drone with following Key using keyboard
+```
+w - forward
+s - backward
+a - left
+d - right
+q - yaw left
+e - yaw right
+r - land
+space - brake
+```

@@ -202,6 +202,13 @@ def keyboard_control():
             print("Land")
             state.set_system_state("land")
             
+        elif keyboard.is_pressed('t'):
+            print("Takeoff")
+            state.set_system_state("takeoff")
+            control()  
+            # arm_and_takeoff_nogps(0.5)
+            # hover()
+            
         elif keyboard.is_pressed('space'):
             print("Brake")
             vehicle.channels.overrides['1'] = 1500  # Center roll
@@ -217,14 +224,11 @@ def keyboard_control():
             #set_attitude(yaw_angle=vehicle.attitude.yaw + 0.1, thrust=0.5, duration=0.1)
         time.sleep(0.05)
 
- 
-state.set_system_state("takeoff")    
-if __name__ == "__main__":
-    
+def control():
     while True:
         print("Current Mode is : " + state.get_system_state())
         if (state.get_system_state() == "takeoff"):
-            arm_and_takeoff_nogps(0.3)
+            arm_and_takeoff_nogps(0.5)
         
         elif (state.get_system_state() == "loiter"):
             # Start hover and keyboard control in parallel
@@ -236,5 +240,11 @@ if __name__ == "__main__":
             
             hover_thread.join()
             control_thread.join()
+ 
+state.set_system_state("takeoff")    
+if __name__ == "__main__":
+    control()
+    
+
        
 
