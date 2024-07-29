@@ -1,19 +1,3 @@
-#!/usr/bin/env python
-
-"""
-
-set_attitude_target.py: (Copter Only)
-
-This example shows how to move/direct Copter and send commands
- in GUIDED_NOGPS mode using DroneKit Python.
-
-Caution: A lot of unexpected behaviors may occur in GUIDED_NOGPS mode.
-        Always watch the drone movement, and make sure that you are in dangerless environment.
-        Land the drone as soon as possible when it shows any unexpected behavior.
-
-Tested in Python 2.7.10
-"""
-
 from dronekit import connect, VehicleMode, LocationGlobal, LocationGlobalRelative
 from pymavlink import mavutil # Needed for command message definitions
 import time
@@ -22,63 +6,13 @@ import math
 # Set up option parsing to get connection string
 import argparse
 
+#connection_string = '/dev/ttyAMA0,921600'
 connection_string = 'tcp:127.0.0.1:5763'
-
-sitl = None
-
-# Start SITL if no connection string specified
-if not connection_string:
-    import dronekit_sitl
-    sitl = dronekit_sitl.start_default()
-    connection_string = sitl.connection_string()
-
 
 # Connect to the Vehicle
 print('Connecting to vehicle on: %s' % connection_string)
 vehicle = connect(connection_string, wait_ready=True)
 print("Virtual Copter is Ready")
-
-def arm_and_takeoff_nogps(aTargetAltitude):
-    """
-    Arms vehicle and fly to aTargetAltitude without GPS data.
-    """
-
-    ##### CONSTANTS #####
-    DEFAULT_TAKEOFF_THRUST = 0.7
-    SMOOTH_TAKEOFF_THRUST = 0.6
-
-    print("Basic pre-arm checks")
-    # Don't let the user try to arm until autopilot is ready
-    # If you need to disable the arming check,
-    # just comment it with your own responsibility.
-    #while not vehicle.is_armable:
-    #    print(" Waiting for vehicle to initialise...")
-    #    time.sleep(1)
-
-    print("Arming motors")
-    # Copter should arm in GUIDED_NOGPS mode
-    vehicle.mode = VehicleMode("GUIDED_NOGPS")
-    vehicle.armed = True
-
-    while not vehicle.armed:
-        print(" Waiting for arming...")
-        vehicle.armed = True
-        time.sleep(1)
-
-    print("Taking off!")
-
-    thrust = DEFAULT_TAKEOFF_THRUST
-    while True:
-        current_altitude = vehicle.location.global_relative_frame.alt
-        print(" Altitude: %f  Desired: %f" %
-              (current_altitude, aTargetAltitude))
-        if current_altitude >= aTargetAltitude*0.95: # Trigger just below target alt.
-            print("Reached target altitude")
-            break
-        elif current_altitude >= aTargetAltitude*0.6:
-            thrust = SMOOTH_TAKEOFF_THRUST
-        set_attitude(thrust = thrust)
-        time.sleep(0.2)
 
 def send_attitude_target(roll_angle = 0.0, pitch_angle = 0.0,
                          yaw_angle = None, yaw_rate = 0.0, use_yaw_rate = False,
@@ -108,20 +42,6 @@ def send_attitude_target(roll_angle = 0.0, pitch_angle = 0.0,
         thrust  # Thrust
     )
     vehicle.send_mavlink(msg)
-
-
-def hover():
-    print("Set the channel overrides to Loiter")
-    vehicle.channels.overrides['3'] = 1500
-    msg = vehicle.message_factory.command_long_encode(
-            0,0,
-            mavutil.mavlink.MAV_CMD_NAV_LOITER_UNLIM,
-            0,
-            0,0,0,0,
-            0,0,0)
-    vehicle.send_mavlink(msg)
-    vehicle.flush()
-    print(vehicle.mode)
     
 def set_attitude(roll_angle = 0.0, pitch_angle = 0.0,
                  yaw_angle = None, yaw_rate = 0.0, use_yaw_rate = False,
@@ -165,29 +85,51 @@ def to_quaternion(roll = 0.0, pitch = 0.0, yaw = 0.0):
 
     return [w, x, y, z]
 
-# Take off 2.5m in GUIDED_NOGPS mode.
-arm_and_takeoff_nogps(0.5)
+def hover():
+    print("Set the channel overrides to Loiter")
+    vehicle.channels.overrides['3'] = 1500
+    msg = vehicle.message_factory.command_long_encode(
+            0,0,
+            mavutil.mavlink.MAV_CMD_NAV_LOITER_UNLIM,
+            0,
+            0,0,0,0,
+            0,0,0)
+    vehicle.send_mavlink(msg)
+    vehicle.flush()
+    print(vehicle.mode)
 
-# Hold the position for 3 seconds.
-print("Hold position for 3 seconds")
+
+def arm_and_takeoff_nogps(aTargetAltitude):
+    vstate = vehicle.system_status.state
+    if vstate != "STANDBY":
+        print("Vehicle is not ready for arming !")
+        return False
+    
+    # Change Flight Mode to GUIDE_NO_GPS
+    vehicle.mode = VehicleMode("GUIDED_NOGPS")
+    vehicle.armed = True
+
+    # Takeoff up to 0.5m and hover
+    while True:
+        current_altitude = vehicle.rangefinder.distance
+        print("Hovering at %f meters.\n" % current_altitude)
+        if current_altitude >= aTargetAltitude:
+            #thrust = 0.7
+            break
+        else:
+            thrust = 0.55
+        time.sleep(0.2)
+        set_attitude(thrust=thrust)
+
+
+# Take off 2.5m in GUIDED_NOGPS mode.
+arm_and_takeoff_nogps(1)
+
+print("Hold position for 5 seconds")
 #set_attitude(duration = 5)
 hover()
 
-# Uncomment the lines below for testing roll angle and yaw rate.
-# Make sure that there is enough space for testing this.
-
-# set_attitude(roll_angle = 1, thrust = 0.5, duration = 3)
-# set_attitude(yaw_rate = 30, thrust = 0.5, duration = 3)
-
-# Move the drone forward and backward.
-# Note that it will be in front of original position due to inertia.
-#print("Move forward")
-#set_attitude(pitch_angle = -1, thrust = 0.5, duration = 2)
-
-#print("Move backward")
-#set_attitude(pitch_angle = 5, thrust = 0.5, duration = 3.21)
-
-#print("Setting LAND mode...")
+print("Setting LAND mode...")
 #vehicle.mode = VehicleMode("LAND")
 #time.sleep(1)
 
@@ -195,8 +137,4 @@ hover()
 #print("Close vehicle object")
 #vehicle.close()
 
-# Shut down simulator if it was started.
-#if sitl is not None:
-#    sitl.stop()
 
-#print("Completed")

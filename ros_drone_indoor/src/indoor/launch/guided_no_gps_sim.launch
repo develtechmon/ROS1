@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+ 	<!-- Launch the custom node to start sim_vehicle.py -->
+  	<node pkg="indoor" type="guided_no_gps_optical_flow_sim.py" name="guided_no_gps_optical_flow_sim" output="screen"/>
+
+</launch>

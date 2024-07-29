@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+	<!-- Run the sim_vehicle.py script -->
+	<node pkg="indoor" type="start_sim_vehicle.py" name="start_sim_vehicle" output="screen"/>
+	
+	<!-- Launch Gazebo World -->
+	<include file="$(find gazebo_ros)/launch/iris_world.launch">
+	<arg name="use_sim_time" value="true"/>
+	<arg name="verbose" value="false"/>
+	<arg name="debug" value="false"/>
+	<arg name="gui" value="true" />
+	</include>
+
+</launch>
