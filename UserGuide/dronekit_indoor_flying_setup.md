@@ -69,6 +69,10 @@ Below is Software i used
 ```
 * Mission Planner 1.3.81 
 * 64 bit Rpi OS Image
+   - VERSION_CODENAME = bullseye
+   - Release = 11
+   - Kernel = Linux 6.1.21-v7+
+   - ARM = 32/64 bit
 ```
 
 ## 2. Custom Ardupilot Firmware
