@@ -200,7 +200,7 @@ If you don't have `Plugins --> Topic --> Easy message publisher`, you can instal
 ```
 sudo apt-get update
 sudo apt-get upgrade
-
+sudo apt-get install ros-melodic-rqt ros-melodic-rqt-common-plugins
 sudo apt-get install ros-melodic-rqt-ez-publisher 
 ```
 
