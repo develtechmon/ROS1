@@ -1,0 +1,8 @@
+prefix=/home/jlukas/My_Project/ROS1/ROS1_DroneKit_Indoor/install
+
+Name: indoor
+Description: Description of indoor
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

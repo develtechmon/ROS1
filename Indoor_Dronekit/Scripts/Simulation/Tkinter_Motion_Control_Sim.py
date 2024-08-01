@@ -8,8 +8,9 @@ import keyboard
 import threading
 import state
 
-# Set up option parsing to get connection string
-import argparse
+
+# -- Importing Tkinter : sudo apt-get install python-tk or pip3 install tk
+import tkinter as tk
 
 '''
 Class name: Custom_DroneKit_Vehicle
@@ -171,64 +172,66 @@ def arm_and_takeoff_nogps(aTargetAltitude):
 def land():
     vehicle.mode = VehicleMode("LAND")
     
+    
+def key(event):
+    # c1 - roll, c3 - throttle, c2 - pitch, c4 - yaw    
+    if event.char == event.keysym: #-- standard keys
+        if event.keysym == 'r':
+            print("Land")
+            state.set_system_state("land")
+            
+        elif event.keysym == 'w':
+            print("Forward")
+            vehicle.channels.overrides['2'] = 1400  # Pitch backward
+            
+        elif event.keysym == 's':
+            print("Backward")
+            vehicle.channels.overrides['2'] = 1600  # Pitch forward
+            
+        elif event.keysym == 'a':
+            print("Left")
+            vehicle.channels.overrides['1'] = 1400  # Roll left
+            
+        elif event.keysym == 'd':
+            print("Right")
+            vehicle.channels.overrides['1'] = 1600  # Roll right
+            
+        elif event.keysym == 'q':
+                 print("Yaw Left")
+                 vehicle.channels.overrides['4'] = 1400  # Yaw left
+            
+        elif event.keysym == 'e':
+            print("Yaw Right")
+            vehicle.channels.overrides['4'] = 1600  # Yaw right
+            
+        elif event.keysym == 't':
+            print("Takeoff")
+            state.set_system_state("takeoff")
+            control()  
+            arm_and_takeoff_nogps(0.5)
+            hover()
+            
+        elif event.keysym =='x':
+            print("Brake")
+            vehicle.channels.overrides['1'] = 1500  # Center roll
+            vehicle.channels.overrides['2'] = 1500  # Center pitch
+            vehicle.channels.overrides['4'] = 1500  # Center yaw
+            
+        else:
+            vehicle.channels.overrides['1'] = 1500  # Center roll
+            vehicle.channels.overrides['2'] = 1500  # Center pitch
+            vehicle.channels.overrides['4'] = 1500  # Center yaw
+        
+        time.sleep(0.05)
+       
 def keyboard_control():
     # c1 - roll, c3 - throttle, c2 - pitch, c4 - yaw
-    while True:
-        try:
-            if keyboard.is_pressed('w'):
-                print("Forward")
-                vehicle.channels.overrides['2'] = 1400  # Pitch backward
-
-            elif keyboard.is_pressed('s'):
-                print("Backward")
-                vehicle.channels.overrides['2'] = 1600  # Pitch forward
-
-            elif keyboard.is_pressed('a'):
-                print("Left")
-                vehicle.channels.overrides['1'] = 1400  # Roll left
-
-            elif keyboard.is_pressed('d'):
-                print("Right")
-                vehicle.channels.overrides['1'] = 1600  # Roll right
-                
-            elif keyboard.is_pressed('q'):
-                print("Yaw Left")
-                vehicle.channels.overrides['4'] = 1400  # Yaw left
-            
-            elif keyboard.is_pressed('e'):
-                print("Yaw Right")
-                vehicle.channels.overrides['4'] = 1600  # Yaw right
-                
-            elif keyboard.is_pressed('r'):
-                print("Land")
-                state.set_system_state("land")
-                
-            elif keyboard.is_pressed('t'):
-                print("Takeoff")
-                state.set_system_state("takeoff")
-                control()  
-                # arm_and_takeoff_nogps(0.5)
-                # hover()
-            
-            elif keyboard.is_pressed('space'):
-                print("Brake")
-                vehicle.channels.overrides['1'] = 1500  # Center roll
-                vehicle.channels.overrides['2'] = 1500  # Center pitch
-                vehicle.channels.overrides['4'] = 1500  # Center yaw
-                    
-            else:
-                vehicle.channels.overrides['1'] = 1500  # Center roll
-                vehicle.channels.overrides['2'] = 1500  # Center pitch
-                vehicle.channels.overrides['4'] = 1500  # Center yaw
-                
-            #elif keyboard.is_pressed('e'):
-                #set_attitude(yaw_angle=vehicle.attitude.yaw + 0.1, thrust=0.5, duration=0.1)
-            time.sleep(0.05)
-            
-        except:
-            pass
-
-def control():
+    root = tk.Tk()
+    print(">> Control the drone with the arrow keys. Press r for RTL mode")
+    root.bind_all('<Key>', key)
+    root.mainloop()
+    
+def control():    
     while True:
         print("Current Mode is : " + state.get_system_state())
         if (state.get_system_state() == "takeoff"):

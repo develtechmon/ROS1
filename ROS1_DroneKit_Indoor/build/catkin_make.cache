@@ -1,0 +1,2 @@
+indoor
+-DCATKIN_DEVEL_PREFIX=/home/jlukas/My_Project/ROS1/ROS1_DroneKit_Indoor/devel -DCMAKE_INSTALL_PREFIX=/home/jlukas/My_Project/ROS1/ROS1_DroneKit_Indoor/install -G Unix Makefiles
