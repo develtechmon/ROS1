@@ -69,6 +69,10 @@ Below is Software i used
 ```
 * Mission Planner 1.3.81 
 * 64 bit Rpi OS Image
+   - VERSION_CODENAME = bullseye
+   - Release = 11
+   - Kernel = Linux 6.1.21-v7+
+   - ARM = 32/64 bit
 ```
 
 ## 2. Custom Ardupilot Firmware
@@ -316,24 +320,24 @@ sudo apt-get install python-dev
 sudo apt-get install screen python-wxgtk4.0 python-lxml
 sudo apt-get install git
 sudo pip install pexpect
-sudo pip install future == 0.18.3
-sudo pip install pyserial == 3.5b0
-sudo pip install dronekit == 2.9.2
-sudo pip install MAVProxy == 1.8.60
-sudo pip install keyboard == 0.13.5
-sudo pip install numpy = 1.24.3
-sudo pip install opencv-python = 4.5.3.56
-sudo pip install pexpect = 4.8.0
-sudo pip install picamera = 1.13
-sudo pip install picamera2 = 0.3.12
-sudo pip install pycoral = 2.0.0
-sudo pip install pygame = 1.9.6
-sudo pip install pymavlink = 2.4.37
-sudo pip install v4l2-python3 = 0.3.2
-sudo pip install gpiozero = 1.6.2
-sudo pip install tflite-runtime == 2.5.0.post1
-sudo pip install tflite-support == 0.4.3
-sudo pip install RPi.GPIO == 0.7.0
+sudo pip install future==0.18.3
+sudo pip install pyserial==3.5b0
+sudo pip install dronekit==2.9.2
+sudo pip install MAVProxy==1.8.60
+sudo pip install keyboard==0.13.5
+sudo pip install numpy==1.24.3
+sudo pip install opencv-python==4.5.3.56
+sudo pip install pexpect==4.8.0
+sudo pip install picamera==1.13
+sudo pip install picamera2==0.3.12
+sudo pip install pycoral==2.0.0
+sudo pip install pygame==1.9.6
+sudo pip install pymavlink==2.4.37
+sudo pip install v4l2-python3==0.3.2
+sudo pip install gpiozero==1.6.2
+sudo pip install tflite-runtime==2.5.0.post1
+sudo pip install tflite-support==0.4.3
+sudo pip install RPi.GPIO==0.7.0
 ```
 
 ## 3. Enable Serial in RPI

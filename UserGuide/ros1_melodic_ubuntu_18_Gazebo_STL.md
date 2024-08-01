@@ -191,6 +191,25 @@ rosdep update
 
 sudo apt-get install ros-melodic-gazebo-ros-pkgs ros-melodic-gazebo-ros-control
 ```
+# Install `rqt_ez_publisher`
+
+In my ROS melodic version, there is no `rqt easy publisher`. This plugin is very helpful as it allow user to send the topic command
+from rqt directly without using command.
+
+If you don't have `Plugins --> Topic --> Easy message publisher`, you can install it using following command
+```
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install ros-melodic-rqt ros-melodic-rqt-common-plugins
+sudo apt-get install ros-melodic-rqt-ez-publisher 
+```
+
+Then run below command to `force the discovery and launch the plugin`. But please ensure you have
+run `roscore` command first.
+```
+rosrun rqt_ez_publisher rqt_ez_publisher --force-discover
+```
+At this point when your run `rqt` command, you should see `easy publish` plugin available.
 
 Next we're going to fly our `drone` in Gazebo. Run following command in new terminal
 ```
