@@ -94,3 +94,52 @@ Simply execute
 ```
 source /opt/ros/noetic/setup.bash
 ```
+
+## Enable SSH On Focal Ubuntu
+
+This is bit tricky because it's not very staright forward.
+Please follow this step from this userguide first
+```
+https://github.com/develtechmon/ROS2/blob/main/UserGuide/ssh_installation.md
+```
+
+In general step as follow
+```
+sudo apt install openssh-server
+sudo systemctl status ssh
+sudo systemctl enable ssh
+sudo systemctl start sh
+```
+
+Enable Firewall and open port 22
+```
+sudo ufw allow ssh
+sudo ufw enable
+sudo ufw status
+```
+
+However, afer installation, you will observe `permission denied` when you try to ssh
+from your laptop to rpi zero. To solve this problem, do the following in rpi.
+
+```
+sudo vi /etc/ssh/sshd_config
+```
+
+and set the following inside this file
+```
+PasswordAuthentication no
+ChallengeResponseAuthentication yes
+
+save and quit
+```
+
+Run following command
+```
+sudo systemctl try-reload-or-restart ssh
+```
+
+Then try to ssh from your `pc` to `rpi`. It should work now.
+```
+ssh jlukas@192.168.8.165
+```
+
