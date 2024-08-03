@@ -1,6 +1,12 @@
 # Getting Started
 
 This is usergude on how to perform swap using `rpi zero 2` to install big package such as numpy
+
+Install the package if you havent have it
+```
+sudo apt install dphys-swapfile
+```
+Then run following commadn
 ```
 sudo dphys-swapfile swapoff 
 
