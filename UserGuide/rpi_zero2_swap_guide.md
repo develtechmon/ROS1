@@ -1,6 +1,7 @@
 # Getting Started
 
-This is usergude on how to perform swap using `rpi zero 2` to install big package such as numpy
+This is usergude on how to perform swap using `rpi zero 2` to install big package such as numpy or 
+when you install package inside `Ubuntu 20` and `ros focal` inside rpi 2
 
 Install the package if you havent have it
 ```
