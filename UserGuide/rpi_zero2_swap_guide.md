@@ -12,7 +12,8 @@ Then run following commadn
 sudo dphys-swapfile swapoff 
 
 sudo vi /etc/dphys-swapfile
-Under this file --> change CONF_SWAPSIZE=100 to 1024 for 1GB
+Under this file --> change CONF_SWAPSIZE=100 to 1024 for 1GB or 
+Under this file --> change CONF_SWAPSIZE=100 to 2048 for 2GB
 
 save and quit
 
