@@ -56,6 +56,8 @@ whereis pip
 
 
 3. Install Ardupilot and relevant packages
+
+This packages is based on python2 because rospy is using python2. Not python3 !
 ```
 sudo apt-get update
 sudo apt-get upgrade
