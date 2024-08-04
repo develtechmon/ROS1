@@ -68,7 +68,7 @@ Below is hardware `Compass` connection to `MatekF405-HDTE`
 Below is Software i used 
 ```
 * Mission Planner 1.3.81 
-* 64 bit Rpi OS Image
+* Bullseye 64 bit Rpi OS Image
 ```
 
 ## 2. Custom Ardupilot Firmware
