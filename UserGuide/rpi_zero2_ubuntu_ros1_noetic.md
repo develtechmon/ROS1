@@ -142,4 +142,13 @@ Then try to ssh from your `pc` to `rpi`. It should work now.
 ```
 ssh jlukas@192.168.8.165
 ```
+# Install Opencv
+
+15
+
+You should remember that Ubuntu 20.04 uses python3 by default, because python 2 is considered deprecated.
+That's why you should install this package using
+```
+sudo apt-get install python3-opencv
+```
 
