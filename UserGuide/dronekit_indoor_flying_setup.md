@@ -386,7 +386,7 @@ ls /dev/ttyAMA0
 
 ## 4. Create Access Point
 
-To creaete access point from our `Raspberry Pi Zero 2`. Do the following. But, in my setup i didnt set
+To create access point from our `Raspberry Pi Zero 2`. Do the following. But, in my setup i didnt set
 the static `IP address`.
 
 Enable static `IP address` by adding following line
