@@ -155,7 +155,7 @@ That's why you should install this package using
 ```
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get install python-pip
+sudo apt-get install python-pip3
 sudo apt-get install python-dev
 sudo apt-get install screen python-wxgtk4.0 python-lxml
 sudo apt-get install git
@@ -181,20 +181,20 @@ sudo apt-get install libv4l-dev libdc1394-22-dev
 
 sudo apt-get install python3-opencv
 
-sudo pip install pexpect==4.6.0
-sudo pip install future==0.18.3
-sudo pip install pyserial==3.5b0
-sudo pip install dronekit==2.9.2
-sudo pip install MAVProxy==1.8.60
-sudo pip install keyboard==0.13.5
-sudo pip install numpy==1.24.3
-sudo pip install picamera==1.13
-sudo pip install pycoral==0.1.0
-sudo pip install pymavlink==2.4.41
-sudo pip install v4l2-python3==0.3.4
-sudo pip install gpiozero==2.0
-sudo pip install tflite-runtime==2.13.0
-sudo pip install tflite-support==0.4.4
-sudo pip install RPi.GPIO==0.7.1
+sudo pip3 install pexpect==4.6.0
+sudo pip3 install future==0.18.3
+sudo pip3 install pyserial==3.5b0
+sudo pip3 install dronekit==2.9.2
+sudo pip3 install MAVProxy==1.8.60
+sudo pip3 install keyboard==0.13.5
+sudo pip3 install numpy==1.24.3
+sudo pip3 install picamera==1.13
+sudo pip3 install pycoral==0.1.0
+sudo pip3 install pymavlink==2.4.41
+sudo pip3 install v4l2-python3==0.3.4
+sudo pip3 install gpiozero==2.0
+sudo pip3 install tflite-runtime==2.13.0
+sudo pip3 install tflite-support==0.4.4
+sudo pip3 install RPi.GPIO==0.7.1
 ```
 
