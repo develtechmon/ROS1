@@ -52,42 +52,18 @@ That's why you should install this package using
 ```
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get install python-pip3
-sudo apt-get install python-dev
-sudo apt-get install screen python-wxgtk4.0 python-lxml
-sudo apt-get install git
+sudo pip3 install dronekit==2.9.2
+sudo pip3 install pymavlink==2.4.41
+sudo pip3 install MAVProxy==1.8.60
+sudo pip3 install keyboard==0.13.5
 
-sudo apt-get install git cmake
-sudo apt-get install libatlas-base-dev gfortran
-sudo apt-get install libhdf5-serial-dev hdf5-tools
-sudo apt-get install python3-dev
-sudo apt-get install nano locate
-sudo apt-get install libfreetype6-dev python3-setuptools
-sudo apt-get install protobuf-compiler libprotobuf-dev openssl
-sudo apt-get install libssl-dev libcurl4-openssl-dev
-sudo apt-get install cython3
-sudo apt-get install libxml2-dev libxslt1-dev
-sudo apt-get install build-essential pkg-config
-sudo apt-get install libtbb2 libtbb-dev
-sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev
-sudo apt-get install libxvidcore-dev libavresample-dev
-sudo apt-get install libtiff-dev libjpeg-dev libpng-dev
-sudo apt-get install python-tk libgtk-3-dev
-sudo apt-get install libcanberra-gtk-module libcanberra-gtk3-module
-sudo apt-get install libv4l-dev libdc1394-22-dev
-
-sudo apt-get install python3-opencv
-
+# Optional
 sudo pip3 install pexpect==4.6.0
 sudo pip3 install future==0.18.3
 sudo pip3 install pyserial==3.5b0
-sudo pip3 install dronekit==2.9.2
-sudo pip3 install MAVProxy==1.8.60
-sudo pip3 install keyboard==0.13.5
 sudo pip3 install numpy==1.24.3
 sudo pip3 install picamera==1.13
 sudo pip3 install pycoral==0.1.0
-sudo pip3 install pymavlink==2.4.41
 sudo pip3 install v4l2-python3==0.3.4
 sudo pip3 install gpiozero==2.0
 sudo pip3 install tflite-runtime==2.13.0
