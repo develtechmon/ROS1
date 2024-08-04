@@ -1,5 +1,6 @@
 # Getting Started
 
+# Update - Please ignore this setup, it's so tedious to setup
 This is userguide on how to install `ros1 noetic` into `raspberry pi zero 2`.
 
 ## Hardware Requirements
