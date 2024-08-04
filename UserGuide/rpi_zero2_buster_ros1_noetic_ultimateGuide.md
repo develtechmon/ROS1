@@ -2,11 +2,11 @@
 
 This is userguide on how to flash existing `buster RPi` with `ROS1 Noetic` into `raspberry pi zero 2`.
 
-## Hardware Requirements
+## 1. Hardware Requirements
 * 64 GB SD Card
 * Recommended power supply
 
-## Software Requirements
+## 2. Software Requirements
 * Install `balena etcher` 
 * Please use `clover image v0.24`. This RPI image contains all the necessary software with less effort to setup and install.
 * Please read page for details [rpi_image](https://clover.coex.tech/en/image.html)
@@ -17,12 +17,12 @@ https://github.com/CopterExpress/clover/releases/download/v0.24/clover_v0.24.img
 * Once done download, plese flash SD Card with above image
 
 
-## Browser Login to RPI
+## 3. Browser Login to RPI
 
 * You should new `clover wifi`. Please connect to it and use password `cloverwifi`.
 * From browser just run this IP address ` http://192.168.11.1`
 
-## Alternative Login to RPI using SSH
+## 4. Alternative Login to RPI using SSH
 
 * You can also login to RPI using `ssh pi@192.168.11.1`
 ```
@@ -30,7 +30,7 @@ login : pi
 pwd : raspberry
 ```
 
-## Enable Serial in RPI
+## 5. Enable Serial in RPI
 
 To enable a successful `UART` connection, we have to enable below configuration.
 * Please follow below step.
@@ -73,7 +73,7 @@ you should see `ttyAMA0` if you run following command
 ls /dev/ttyAMA0
 ```
 
-# Wifi Configuration for Client Mode
+## 6. Wifi Configuration for Client Mode
 
 Please ensure to increase  your swap file to ensure a successful installation. Please refer to  below userguide
 ```
@@ -91,7 +91,7 @@ This step is well explained here [configuring wifi](https://clover.coex.tech/en/
 
 Then reboot your RPI
 
-# Install Drone Kit Package
+## 7. Install Drone Kit Package
 
 You should remember that this RPI Image uses python3 by default, because python 2 is considered deprecated.
 That's why you should install this package using
@@ -118,10 +118,16 @@ sudo pip3 install tflite-support==0.4.4
 sudo pip3 install RPi.GPIO==0.7.1
 ```
 
-## Test Connection
+## 8. Test Connection
 
 To test if connection is working. Run below command using mavproxy. You should see hearbeart data from flight controller
 ```
 mavproxy.py --master=/dev/ttyACM0,921600
 ```
+
+## 9.  Wifi Configuration for Access Mode
+
+For this settings, you just have to redo back on step 6. This way, you're connecting to RPI wifi only.
+
+
 
