@@ -163,16 +163,6 @@ rostopic list --> to check topic publish by drone
 rostopic hz /camera/color/image_raw --> To check the rate of this topic publish
 ```
 
-Visualization
-```
-rqt --> To see the relationship list
-```
-
-From `rqt` go to following tab
-```
-Visualization --> Image View --> /camera/color/image_raw
-```
-
 # Install `rqt_ez_publisher`
 
 In my ROS Noetic version, there is no `rqt easy publisher`. This plugin is very helpful as it allow user to send the topic command
@@ -191,8 +181,19 @@ run `roscore` command first in a separate terminal.
 ```
 rosrun rqt_ez_publisher rqt_ez_publisher --force-discover
 ```
-At this point when your run `rqt` command, you should see `easy publish` plugin available.
+At this point when your run `rqt` command, you should see `easy publish` plugin available using following command.
 
+Visualization
+```
+rqt --> To see the relationship list
+```
+
+From `rqt` go to following tab
+```
+Visualization --> Image View --> /camera/color/image_raw
+```
+
+# Launch Gazebo and Sim Vehicle Simulation
 Next we're going to fly our `drone` in Gazebo. Run following command in new terminal
 ```
 gazebo iris_arducopter_runaway.world
@@ -210,6 +211,7 @@ To invoke `mavproxy` terminal
 ```
 mavproxy.py --master=127.0.0.1:14550
 ```
+
 
 # Install mavros noetic
 
