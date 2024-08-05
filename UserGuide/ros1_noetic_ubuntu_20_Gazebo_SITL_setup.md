@@ -1,6 +1,6 @@
-Ubuntu 20.04.6 LTS
-Release 20.04
-Codename Focal
+* Ubuntu 20.04.6 LTS
+* Release 20.04
+* Codename Focal
 
 ## Perform this if you can't get big screen, else ignore it.
 ```
