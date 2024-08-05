@@ -133,6 +133,47 @@ export GAZEBO_MODEL_PATH
 save and quit
 ```
 
+# To start `Gazebo` Simulation using ros
+First we have to modify launch file in `gazebo` as follow
+```
+roscd gazebo_ros
+ls --> to list down the package inside gazebo_ros
+```
+
+and edit an copy new `empty_world` to `iris_world` and change `world name`
+```
+cd launch
+sudo cp -r empty_world.launch iris_world.launch
+
+sudo gedit iris_world.launch
+```
+
+inside this launch file set the parameter of "world_name" default="aruco_landing.world"
+```
+  <arg name="world_name" default="worlds/aruco_landing.world"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
+```
+
+To launch our launch file. This will launch our `aruco_landing.world`
+```
+roslaunch gazebo_ros iris_world.launch
+```
+
+Check Topic and Visualization
+```
+rostopic list --> to check topic publish by drone
+rostopic hz /camera/color/image_raw --> To check the rate of this topic publish
+```
+
+Visualization
+```
+rqt --> To see the relationship list
+```
+
+From `rqt` go to following tab
+```
+Visualization --> Image View --> /camera/color/image_raw
+```
+
 # Install `rqt_ez_publisher`
 
 In my ROS Noetic version, there is no `rqt easy publisher`. This plugin is very helpful as it allow user to send the topic command
@@ -182,47 +223,6 @@ sudo ./install_geographiclib_datasets.sh
 ```
 
 # Ros programming
-
-# To start `Gazebo` Simulation using ros
-First we have to modify launch file in `gazebo` as follow
-```
-roscd gazebo_ros
-ls --> to list down the package inside gazebo_ros
-```
-
-and edit an copy new `empty_world` to `iris_world` and change `world name`
-```
-cd launch
-sudo cp -r empty_world.launch iris_world.launch
-
-sudo gedit iris_world.launch
-```
-
-inside this launch file set the parameter of "world_name" default="aruco_landing.world"
-```
-  <arg name="world_name" default="worlds/aruco_landing.world"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
-```
-
-To launch our launch file. This will launch our `aruco_landing.world`
-```
-roslaunch gazebo_ros iris_world.launch
-```
-
-Check Topic and Visualization
-```
-rostopic list --> to check topic publish by drone
-rostopic hz /camera/color/image_raw --> To check the rate of this topic publish
-```
-
-Visualization
-```
-rqt --> To see the relationship list
-```
-
-From `rqt` go to following tab
-```
-Visualization --> Image View --> /camera/color/image_raw
-```
 
 Create our first `ros` project
 ```
