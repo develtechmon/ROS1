@@ -1,8 +1,8 @@
 # Getting Started
 
-In this userguide, i'm going to show how to control our `Mavros` drone using rqt
-a. `Service`
-b. `Topic`
+In this userguide, i'm going to show how to control our `Mavros` drone using rqt in `Noetic` or `Melodic` machine
+* a. `Service`
+* b. `Topic`
 
 ## Step 1 - Run Gazebo
 
