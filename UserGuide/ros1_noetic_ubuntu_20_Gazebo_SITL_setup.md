@@ -147,7 +147,7 @@ sudo apt-get install ros-noetic-rqt-ez-publisher
 ```
 
 Then run below command to `force the discovery and launch the plugin`. But please ensure you have
-run `roscore` command first.
+run `roscore` command first in a separate terminal.
 ```
 rosrun rqt_ez_publisher rqt_ez_publisher --force-discover
 ```
