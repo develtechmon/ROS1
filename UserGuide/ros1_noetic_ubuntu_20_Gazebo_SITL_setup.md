@@ -171,23 +171,6 @@ To invoke `mavproxy` terminal
 mavproxy.py --master=127.0.0.1:14550
 ```
 
-If you encounter error `VMware: vmw_ioctl_command error Invalid argument`. Run following command to remove
-this error
-
-1. Downgrade `GL_VERSION` from 3.3 to 2.1. This method will work better and Gazebo performance also good
-```
-echo "export SVGA_VGPU10=0" >> ~/.bashrc
-```
-
-2. Disable Graphic Acceleration in VMWARE. This method OK but will reduce 3D performance in Gazebo
-```
-Untick Accelerate 3D Graphics.
-```
-Check below link for good reference
-```
-https://robocademy.com/2020/05/02/solved-opengl-issues-with-gazebo-and-vmware/
-```
-
 # Install mavros noetic
 
 To install mavros, run the following command
@@ -203,7 +186,8 @@ sudo ./install_geographiclib_datasets.sh
 # To start `Gazebo` Simulation using ros
 First we have to modify launch file in `gazebo` as follow
 ```
-roscd gazebo_ros --> to list down the package inside gazebo_ros
+roscd gazebo_ros
+ls --> to list down the package inside gazebo_ros
 ```
 
 and edit an copy new `empty_world` to `iris_world` and change `world name`
