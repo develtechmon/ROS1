@@ -1,6 +1,11 @@
+# Getting Started
+
+This is userguide on how to install Ubuntu 18 and ROS Melodic into VM Machine. Package requirements as follow
+```
 Ubuntu 18.04.4 LTS
 Release 18.04
 Codename Bionic
+```
 
 # Big Screen issues in v18 Ubuntu
 ```
