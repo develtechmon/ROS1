@@ -133,8 +133,7 @@ export GAZEBO_MODEL_PATH
 save and quit
 ```
 
-# To start `Gazebo` Simulation using ros
-First we have to modify launch file in `gazebo` as follow
+next, we have to modify launch file in `gazebo` as follow
 ```
 roscd gazebo_ros
 ls --> to list down the package inside gazebo_ros
