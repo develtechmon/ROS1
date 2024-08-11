@@ -4,5 +4,5 @@ PROJECT_PKG_CONFIG_INCLUDE_DIRS = "".split(';') if "" != "" else []
 PROJECT_CATKIN_DEPENDS = "".replace(';', ' ')
 PKG_CONFIG_LIBRARIES_WITH_PREFIX = "".split(';') if "" != "" else []
 PROJECT_NAME = "indoor"
-PROJECT_SPACE_DIR = "/home/jlukas/My_Project/ROS1/ROS1_DroneKit_Indoor/devel"
+PROJECT_SPACE_DIR = "/home/jlukas/Desktop/My_Project/ROS1/ROS1_DroneKit_Indoor/devel"
 PROJECT_VERSION = "0.0.0"

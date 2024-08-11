@@ -1,8 +1,8 @@
-# Install script for directory: /home/jlukas/My_Project/ROS1/ROS1_DroneKit_Indoor/src/indoor
+# Install script for directory: /home/jlukas/Desktop/My_Project/ROS1/ROS1_DroneKit_Indoor/src/indoor
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/jlukas/My_Project/ROS1/ROS1_DroneKit_Indoor/install")
+  set(CMAKE_INSTALL_PREFIX "/home/jlukas/Desktop/My_Project/ROS1/ROS1_DroneKit_Indoor/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/jlukas/My_Project/ROS1/ROS1_DroneKit_Indoor/build/indoor/catkin_generated/installspace/indoor.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/jlukas/Desktop/My_Project/ROS1/ROS1_DroneKit_Indoor/build/indoor/catkin_generated/installspace/indoor.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/indoor/cmake" TYPE FILE FILES
-    "/home/jlukas/My_Project/ROS1/ROS1_DroneKit_Indoor/build/indoor/catkin_generated/installspace/indoorConfig.cmake"
-    "/home/jlukas/My_Project/ROS1/ROS1_DroneKit_Indoor/build/indoor/catkin_generated/installspace/indoorConfig-version.cmake"
+    "/home/jlukas/Desktop/My_Project/ROS1/ROS1_DroneKit_Indoor/build/indoor/catkin_generated/installspace/indoorConfig.cmake"
+    "/home/jlukas/Desktop/My_Project/ROS1/ROS1_DroneKit_Indoor/build/indoor/catkin_generated/installspace/indoorConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/indoor" TYPE FILE FILES "/home/jlukas/My_Project/ROS1/ROS1_DroneKit_Indoor/src/indoor/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/indoor" TYPE FILE FILES "/home/jlukas/Desktop/My_Project/ROS1/ROS1_DroneKit_Indoor/src/indoor/package.xml")
 endif()
 

@@ -1,4 +1,4 @@
-prefix=/home/jlukas/My_Project/ROS1/ROS1_DroneKit_Indoor/devel
+prefix=/home/jlukas/Desktop/My_Project/ROS1/ROS1_DroneKit_Indoor/devel
 
 Name: indoor
 Description: Description of indoor
