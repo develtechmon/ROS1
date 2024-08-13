@@ -91,7 +91,7 @@ time_to_wait = .1 ## 100ms
 ## PID
 # PID tuning parameters
 P = 0.5
-I = 0.4
+I = 0.2
 D = 0.00
 Roll_PError = 0
 Pitch_PError = 0
@@ -149,7 +149,6 @@ def adjust_position_my_pid(cx, cy,z=0):
     
     speed_roll = P * roll_error + I * (roll_error - Roll_PError)
     speed_pitch = P * pitch_error + I * (pitch_error - Pitch_PError)
-    
     
     # Adjust pitch (channel 2) based on y_ang
     pitch_pwm = 1500 + int(speed_pitch * 500)  # 500 is a scaling factor to convert angle to PWM
@@ -289,10 +288,10 @@ def msg_receiver(message):
                     
                     # Working 
                     # To adjust the drone position hovering without PID controller but still work very well
-                    #adjust_position_no_pid(x_ang, y_ang, z)
+                    adjust_position_no_pid(x_ang, y_ang, z)
                     
                     # To adjust the drone position hovering with PID controller, work but might need to tune the PID
-                    adjust_position_my_pid(x_error,y_error,z)
+                    #adjust_position_my_pid(x_error,y_error,z)
                     
                     # Work in progress
                     # To adjust the drone position hovering with PID controller using simple pid library, can't get fix position. 
