@@ -1,0 +1,13 @@
+material marker_48
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture aruco-48.png
+      }
+    }
+  }
+}

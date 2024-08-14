@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="marker_48">
+    <static>true</static>
+    <link name="link">
+      <pose>0.0 0.0 5e-05 0.0 0.0 0.0</pose>
+      <collision name="collision">
+        <geometry>
+          <!-- Box or plane geometry is used -->
+        <box><size>0.2 0.2 0.0001</size></box></geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <!-- Box or plane geometry is used -->
+        <box><size>0.2 0.2 0.0001</size></box></geometry>
+        <material>
+          <script>
+            <name>marker_48</name>
+            <uri>model://marker_48/materials/scripts/</uri>
+            <uri>model://marker_48/materials/textures/</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

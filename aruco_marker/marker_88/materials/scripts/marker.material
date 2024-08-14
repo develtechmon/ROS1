@@ -1,0 +1,13 @@
+material marker_88
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture aruco-88.png
+      }
+    }
+  }
+}

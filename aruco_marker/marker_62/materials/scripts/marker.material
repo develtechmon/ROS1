@@ -1,0 +1,13 @@
+material marker_62
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture aruco-62.png
+      }
+    }
+  }
+}
