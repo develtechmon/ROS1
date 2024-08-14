@@ -61,7 +61,7 @@ takeoff_height = 5 # m
 ## Variables ##
 newimg_pub = rospy.Publisher('/camera/color/image_new', Image, queue_size=10)
 
-id_to_find = 72 ## arucoID
+id_to_find = 72 ## arucoID default is 72
 marker_size = 20  ## CM
 
 aruco_dict = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)
@@ -151,7 +151,9 @@ def msg_receiver(message):
 
         ids = ''
         (corners, ids, rejected) = aruco.detectMarkers(image=gray_img, dictionary=aruco_dict, parameters=parameters)
-                
+        
+        print("ID: =" + str(ids))
+
         try:
             if ids is not None:
                 if ids[0] == id_to_find: 
