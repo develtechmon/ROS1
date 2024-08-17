@@ -52,7 +52,7 @@ class Custom_DroneKit_Vehicle(dronekit.Vehicle):
 
 # For RPI IP Address
 #connection_string = '192.168.8:5763'
-connection_string = '192.168.8:14553'
+connection_string = '192.168.8.146:14553'
 
 print('Connecting to vehicle on: %s' % connection_string)
 vehicle = connect(connection_string, wait_ready=True, vehicle_class=Custom_DroneKit_Vehicle)
@@ -446,11 +446,11 @@ def keyboard_control():
         except:
             pass
 
-def subscriber():
+#def subscriber():
     # rospy.init_node('drone_node', anonymous=False)
     #sub = rospy.Subscriber('/camera/color/image_raw', Image, msg_receiver)
     #rospy.spin()
-    msg_receiver()        
+    #msg_receiver()        
     
 def control():
     while True:
@@ -474,7 +474,7 @@ if __name__ == "__main__":
     state.set_system_state("takeoff")    
     
     # Start subscriber in the main thread
-    subscriber_thread = threading.Thread(target=subscriber)
+    subscriber_thread = threading.Thread(target=msg_receiver)
     subscriber_thread.start()
     
     # Start control logic in a separate thread
