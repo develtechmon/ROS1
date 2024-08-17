@@ -113,8 +113,8 @@ sudo pip3 install picamera==1.13
 sudo pip3 install pycoral==0.1.0
 sudo pip3 install v4l2-python3==0.3.4
 sudo pip3 install gpiozero==2.0
-sudo pip3 install tflite-runtime==2.13.0
-sudo pip3 install tflite-support==0.4.4
+sudo pip3 install tflite-runtime==2.13.0 (To install this package in your rpi zero2, please increase the swap size to 2GB, plese refer to rpi_zero2_swap_guide)
+sudo pip3 install tflite-support==0.4.4 (To install this package in your rpi zero2, please increase the swap size to 2GB, plese refer to rpi_zero2_swap_guide)
 sudo pip3 install RPi.GPIO==0.7.1
 ```
 
