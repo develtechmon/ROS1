@@ -16,6 +16,16 @@ https://github.com/CopterExpress/clover/releases/download/v0.24/clover_v0.24.img
 ```
 * Once done download, plese flash SD Card with above image
 
+This is Spec For this Image
+```
+Distributon ID: Raspbian
+Description: Raspbian GNU/Linux 10 (buster)
+Release: 10
+Codename: Buster
+
+ROS1: Noetic
+Python : 3.7.3
+```
 
 ## 3. Browser Login to RPI
 
@@ -32,7 +42,10 @@ pwd : raspberry
 
 ## 5. Enable Serial in RPI
 
-To enable a successful `UART` connection, we have to enable below configuration.
+To enable a successful `UART` connection, we have to enable below configuration. 
+
+By default, `UART` for this image has been ebnabled. So far not setup is needed, but you can cross check.
+
 * Please follow below step.
 
 ```
