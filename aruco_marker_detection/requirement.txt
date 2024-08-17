@@ -1,3 +1,4 @@
+############## Window 10 ######################
 Python Version : 3.8.10
 OpenCv Version : opencv-contrib-python==4.2.0.32
 Tested On : Windows Machine  - 17-August-2024 (First test)
@@ -5,3 +6,16 @@ Tested On : Windows Machine  - 17-August-2024 (First test)
 Install Using Below Command
 py -3.8 -m pip install  opencv-contrib-python==4.2.0.32
 py -3.8 -m pip install imutils
+
+############## RPI Zero 2 (Bullseye 32 Bit) ##########3
+Python Version : 3.9.2
+OpenCv Version : opencv-contrib-python==4.4.0.46
+Tested On : Rpi Zero 2 Machine  - 17-August-2024 (First test)
+          : Raspbian GNU/Liux 11 (Bullseye)
+
+Please refer to rpi_opencv_installation guide in raspberry pi repository.
+Then install using following command
+
+sudo python3 -m pip uninstall opencv-contrib-python
+sudo python3 -m pip install opencv-contrib-python==4.4.0.46
+sudo python3 -m pip install imutils
