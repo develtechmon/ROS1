@@ -72,8 +72,8 @@ marker_size = 20  ## CM
 aruco_dict = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)
 parameters = aruco.DetectorParameters_create()
 
-horizontal_res = 1280
-vertical_res = 720
+horizontal_res = 640
+vertical_res = 480
 
 horizontal_fov = 62.2 * (math.pi / 180)
 vertical_fov = 48.8 * (math.pi / 180)
