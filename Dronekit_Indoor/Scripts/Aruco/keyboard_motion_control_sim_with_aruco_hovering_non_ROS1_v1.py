@@ -60,8 +60,7 @@ print("Virtual Copter is Ready")
 velocity = 0.5 # m/s
 takeoff_height = 5 # m
 
-## Variables ##
-id_to_find = 72 ## arucoID default is 72
+id_to_find = 88 ## arucoID default is 72
 marker_size = 20  ## CM
 
 aruco_dict = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)
@@ -121,6 +120,7 @@ def to_quaternion(roll=0.0, pitch=0.0, yaw=0.0):
 
     return [w, x, y, z]
 
+    
 def hover():
     print("Current Mode is : " + state.get_system_state())
     print("Set the channel overrides to Loiter")
@@ -240,9 +240,9 @@ def adjust_position_no_pid(x_ang, y_ang, z_dist):
     print(f"x_ang -> x_ang: {x_ang}, y_ang: {y_ang}")
     print(f"PWM -> pitch_pwm: {pitch_pwm}, roll_pwm: {roll_pwm}")
 
-def msg_receiver():
+def msg_receiver(message):
     global not_found_count, found_count, time_last, time_to_wait, id_to_find
-    
+
     while True:
         message = cap.read()
         if time.time() - time_last > time_to_wait:
@@ -254,10 +254,8 @@ def msg_receiver():
             ids = ''
             (corners, ids, rejected) = aruco.detectMarkers(image=gray_img, dictionary=aruco_dict, parameters=parameters)
             
-            cv2.circle(np_data, (width//2, height//2), 8 , (0,0,255), cv2.FILLED)
-
             print("Detected ID: =" + str(ids))
-            
+
             try:
                 if ids is not None:
                     if ids[0][0] == id_to_find: # To extract bracket of [id] and left only the integer id for correct detection
@@ -291,6 +289,7 @@ def msg_receiver():
                         cv2.putText(np_data, marker_position, (10, 50), 0, .5, (255, 0, 0), thickness=2)
                         
                         print(f"X CENTER PIXEL: {cx} Y CENTER PIXEL: {cy}")
+                        print(f"FOUND COUNT: {found_count} NOTFOUND COUNT: {not_found_count}")
                         print(f"MARKER POSITION: x={x} y={y} z={z}\n")
                         print(f"ERROR POSITION: Error X={x_error} Error Y={y_error}\n")
 
@@ -307,13 +306,17 @@ def msg_receiver():
                         # To adjust the drone position hovering with PID controller using simple pid library, can't get fix position. 
                         #adjust_position_simple_pid(x_ang, y_ang,z)
                         
+                        found_count += 1                
                     else:
+                        not_found_count += 1
+                        
                         # Brake and Hold
                         vehicle.channels.overrides['1'] = 1500 # Center roll
                         vehicle.channels.overrides['2'] = 1500 # Center pitch
                         vehicle.channels.overrides['4'] = 1500 # Center yaw
-
                 else:
+                    not_found_count += 1
+                    
                     # Brake and Hold
                     vehicle.channels.overrides['1'] = 1500 # Center roll
                     vehicle.channels.overrides['2'] = 1500 # Center pitch
@@ -322,10 +325,11 @@ def msg_receiver():
             except Exception as e:
                 print("Target not found")
                 print(e)
-                
+                not_found_count += 1
+            
             # Show the frame
             cv2.imshow("Frame", np_data)
-
+            
             # Press 'q' to exit the loop
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 state.set_system_state("land")
@@ -333,8 +337,8 @@ def msg_receiver():
             
             time_last = time.time()
         
-        #else:
-        #    return None
+        else:
+            return None
    
 def send_attitude_target(roll_angle=0.0, pitch_angle=0.0,
                          yaw_angle=None, yaw_rate=0.0, use_yaw_rate=False,
@@ -448,41 +452,39 @@ def keyboard_control():
             pass
 
 def control():
-    print("Current Mode is : " + state.get_system_state())
-    if (state.get_system_state() == "takeoff"):
-        arm_and_takeoff_nogps(0.5)
-        time.sleep(1)
+    while True:
+        print("Current Mode is : " + state.get_system_state())
+        if (state.get_system_state() == "takeoff"):
+            arm_and_takeoff_nogps(0.5)
+            time.sleep(1)
         
-    if (state.get_system_state() == "loiter"):
-        hover_thread = threading.Thread(target=hover)
-        aruco_thread = threading.Thread(target=msg_receiver)
-        control_thread = threading.Thread(target=keyboard_control)
+        if (state.get_system_state() == "loiter"):
+            hover_thread = threading.Thread(target=hover)
+            #aruco_thread = threading.Thread(target=msg_receiver)
+            control_thread = threading.Thread(target=keyboard_control)
 
-        control_thread.start()
-        hover_thread.start()
-        aruco_thread.start()
+            control_thread.start()
+            #aruco_thread.start()
+            hover_thread.start()
             
-        hover_thread.join()
-        aruco_thread.join()
-        control_thread.join()
-
-def main():
-    control()
-
-state.set_system_state("takeoff")    
+            hover_thread.join()
+            #aruco_thread.join()
+            control_thread.join()
+            
 
 if __name__ == "__main__":
-    main()
+    
+    # Start subscriber in the main thread
+    subscriber_thread = threading.Thread(target=msg_receiver)
+    subscriber_thread.start()
+    
+    # Start control logic in a separate thread
+    control_thread = threading.Thread(target=control)
+    control_thread.start()
 
-
-
-
-
-
-
-
-
-
-
-
-
+    # Keep the main thread alive
+    try:
+        subscriber_thread.join()
+        control_thread.join()
+    except:
+        pass
