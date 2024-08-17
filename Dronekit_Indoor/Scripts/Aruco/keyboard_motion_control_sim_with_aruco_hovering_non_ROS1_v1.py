@@ -471,6 +471,7 @@ def control():
             #aruco_thread.join()
             control_thread.join()
             
+state.set_system_state("takeoff")    
 
 if __name__ == "__main__":
     
