@@ -1,0 +1,7 @@
+Python Version : 3.8.10
+OpenCv Version : opencv-contrib-python==4.2.0.32
+Tested On : Windows Machine  - 17-August-2024 (First test)
+
+Install Using Below Command
+py -3.8 -m pip install  opencv-contrib-python==4.2.0.32
+py -3.8 -m pip install imutils
