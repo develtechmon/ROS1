@@ -333,9 +333,6 @@ def msg_receiver():
             
             time_last = time.time()
         
-        #else:
-        #    return None
-   
 def send_attitude_target(roll_angle=0.0, pitch_angle=0.0,
                          yaw_angle=None, yaw_rate=0.0, use_yaw_rate=False,
                          thrust=0.5):

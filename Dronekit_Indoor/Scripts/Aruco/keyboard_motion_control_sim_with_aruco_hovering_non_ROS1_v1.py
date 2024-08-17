@@ -60,7 +60,7 @@ print("Virtual Copter is Ready")
 velocity = 0.5 # m/s
 takeoff_height = 5 # m
 
-id_to_find = 88 ## arucoID default is 72
+id_to_find = 72 ## arucoID default is 72
 marker_size = 20  ## CM
 
 aruco_dict = aruco.getPredefinedDictionary(aruco.DICT_ARUCO_ORIGINAL)
@@ -254,6 +254,8 @@ def msg_receiver():
             ids = ''
             (corners, ids, rejected) = aruco.detectMarkers(image=gray_img, dictionary=aruco_dict, parameters=parameters)
             
+            cv2.circle(np_data, (width//2, height//2), 8, (0,0,255), cv2.FILLED)
+
             print("Detected ID: =" + str(ids))
 
             try:
@@ -337,8 +339,6 @@ def msg_receiver():
             
             time_last = time.time()
         
-        else:
-            return None
    
 def send_attitude_target(roll_angle=0.0, pitch_angle=0.0,
                          yaw_angle=None, yaw_rate=0.0, use_yaw_rate=False,
@@ -452,24 +452,24 @@ def keyboard_control():
             pass
 
 def control():
-    while True:
-        print("Current Mode is : " + state.get_system_state())
-        if (state.get_system_state() == "takeoff"):
-            arm_and_takeoff_nogps(0.5)
-            time.sleep(1)
-        
-        if (state.get_system_state() == "loiter"):
-            hover_thread = threading.Thread(target=hover)
-            #aruco_thread = threading.Thread(target=msg_receiver)
-            control_thread = threading.Thread(target=keyboard_control)
+    print("Current Mode is : " + state.get_system_state())
 
-            control_thread.start()
-            #aruco_thread.start()
-            hover_thread.start()
+    if (state.get_system_state() == "takeoff"):
+        arm_and_takeoff_nogps(0.5)
+        time.sleep(1)
+        
+    if (state.get_system_state() == "loiter"):
+        hover_thread = threading.Thread(target=hover)
+        #aruco_thread = threading.Thread(target=msg_receiver)
+        control_thread = threading.Thread(target=keyboard_control)
+
+        control_thread.start()
+        #aruco_thread.start()
+        hover_thread.start()
             
-            hover_thread.join()
-            #aruco_thread.join()
-            control_thread.join()
+        hover_thread.join()
+        #aruco_thread.join()
+        control_thread.join()
             
 state.set_system_state("takeoff")    
 
@@ -480,13 +480,12 @@ if __name__ == "__main__":
     subscriber_thread.start()
     
     # Start control logic in a separate thread
-    #control_thread = threading.Thread(target=control)
-    #control_thread.start()
-    control()
+    control_thread = threading.Thread(target=control)
+    control_thread.start()
     
     # Keep the main thread alive
     try:
         subscriber_thread.join()
-        #control_thread.join()
+        control_thread.join()
     except:
         pass
