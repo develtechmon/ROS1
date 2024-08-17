@@ -240,7 +240,7 @@ def adjust_position_no_pid(x_ang, y_ang, z_dist):
     print(f"x_ang -> x_ang: {x_ang}, y_ang: {y_ang}")
     print(f"PWM -> pitch_pwm: {pitch_pwm}, roll_pwm: {roll_pwm}")
 
-def msg_receiver(message):
+def msg_receiver():
     global not_found_count, found_count, time_last, time_to_wait, id_to_find
 
     while True:
