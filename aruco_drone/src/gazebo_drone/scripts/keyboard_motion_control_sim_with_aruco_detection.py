@@ -176,7 +176,7 @@ def msg_receiver(message):
                         #cx = x_sum*.25
                         #cy = y_sum*.25
                         cx = x_sum / 4
-                        cy = y_sum /4
+                        cy = y_sum / 4
                     
                         # X-angle and Y-angle which used by mavlink message
                         x_ang = (cx - horizontal_res*0.5)*(horizontal_fov/horizontal_res)
