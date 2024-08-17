@@ -446,11 +446,11 @@ def keyboard_control():
         except:
             pass
 
-#def subscriber():
+def subscriber():
     # rospy.init_node('drone_node', anonymous=False)
     #sub = rospy.Subscriber('/camera/color/image_raw', Image, msg_receiver)
     #rospy.spin()
-    #msg_receiver()        
+    msg_receiver()        
     
 def control():
     while True:
