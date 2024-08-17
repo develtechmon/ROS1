@@ -480,12 +480,13 @@ if __name__ == "__main__":
     subscriber_thread.start()
     
     # Start control logic in a separate thread
-    control_thread = threading.Thread(target=control)
-    control_thread.start()
-
+    #control_thread = threading.Thread(target=control)
+    #control_thread.start()
+    control()
+    
     # Keep the main thread alive
     try:
         subscriber_thread.join()
-        control_thread.join()
+        #control_thread.join()
     except:
         pass
