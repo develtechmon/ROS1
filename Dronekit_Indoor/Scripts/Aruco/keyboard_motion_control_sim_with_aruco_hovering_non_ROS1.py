@@ -9,15 +9,11 @@ import math
 import keyboard
 import threading
 import state
-import cv2
 import numpy as np
-
 import cv2
 import cv2.aruco as aruco
-import numpy as np
 from imutils.video import WebcamVideoStream
 import imutils
-
 import os
 import platform
 import sys
@@ -50,8 +46,7 @@ class Custom_DroneKit_Vehicle(dronekit.Vehicle):
 # For Simulation 
 #connection_string = 'tcp:127.0.0.1:5763'
 
-# For RPI IP Address
-#connection_string = '192.168.8:5763'
+# For RPI Zero 2 IP Address
 connection_string = '192.168.8.146:14553'
 
 print('Connecting to vehicle on: %s' % connection_string)
@@ -252,15 +247,17 @@ def msg_receiver():
         message = cap.read()
         if time.time() - time_last > time_to_wait:
             np_data = np.array(message)
-            gray_img = cv2.cvtColor(np_data, cv2.COLOR_BGR2GRAY)
-
+            try:
+                gray_img = cv2.cvtColor(np_data, cv2.COLOR_BGR2GRAY)
+            except:
+                pass
             ids = ''
             (corners, ids, rejected) = aruco.detectMarkers(image=gray_img, dictionary=aruco_dict, parameters=parameters)
             
             cv2.circle(np_data, (width//2, height//2), 8 , (0,0,255), cv2.FILLED)
 
             print("Detected ID: =" + str(ids))
-
+            
             try:
                 if ids is not None:
                     if ids[0][0] == id_to_find: # To extract bracket of [id] and left only the integer id for correct detection
@@ -294,7 +291,6 @@ def msg_receiver():
                         cv2.putText(np_data, marker_position, (10, 50), 0, .5, (255, 0, 0), thickness=2)
                         
                         print(f"X CENTER PIXEL: {cx} Y CENTER PIXEL: {cy}")
-                        print(f"FOUND COUNT: {found_count} NOTFOUND COUNT: {not_found_count}")
                         print(f"MARKER POSITION: x={x} y={y} z={z}\n")
                         print(f"ERROR POSITION: Error X={x_error} Error Y={y_error}\n")
 
@@ -311,29 +307,34 @@ def msg_receiver():
                         # To adjust the drone position hovering with PID controller using simple pid library, can't get fix position. 
                         #adjust_position_simple_pid(x_ang, y_ang,z)
                         
-                        found_count += 1                
                     else:
-                        not_found_count += 1
+                        # Brake and Hold
+                        vehicle.channels.overrides['1'] = 1500 # Center roll
+                        vehicle.channels.overrides['2'] = 1500 # Center pitch
+                        vehicle.channels.overrides['4'] = 1500 # Center yaw
+
                 else:
-                    not_found_count += 1
+                    # Brake and Hold
+                    vehicle.channels.overrides['1'] = 1500 # Center roll
+                    vehicle.channels.overrides['2'] = 1500 # Center pitch
+                    vehicle.channels.overrides['4'] = 1500 # Center yaw
 
             except Exception as e:
                 print("Target not found")
                 print(e)
-                not_found_count += 1
                 
-              # Show the frame
+            # Show the frame
             cv2.imshow("Frame", np_data)
 
             # Press 'q' to exit the loop
             if cv2.waitKey(1) & 0xFF == ord('q'):
+                state.set_system_state("land")
                 break
             
-            # new_msg = rnp.msgify(Image, np_data, encoding='rgb8')
-            # newimg_pub.publish(new_msg)
             time_last = time.time()
-        else:
-            return None
+        
+        #else:
+        #    return None
    
 def send_attitude_target(roll_angle=0.0, pitch_angle=0.0,
                          yaw_angle=None, yaw_rate=0.0, use_yaw_rate=False,
@@ -446,44 +447,43 @@ def keyboard_control():
         except:
             pass
 
-def subscriber():
-    # rospy.init_node('drone_node', anonymous=False)
-    #sub = rospy.Subscriber('/camera/color/image_raw', Image, msg_receiver)
-    #rospy.spin()
-    msg_receiver()        
-    
 def control():
-    while True:
-        print("Current Mode is : " + state.get_system_state())
-        if (state.get_system_state() == "takeoff"):
-            arm_and_takeoff_nogps(0.5)
-            time.sleep(1)
+    
+    print("Current Mode is : " + state.get_system_state())
+    if (state.get_system_state() == "takeoff"):
+        arm_and_takeoff_nogps(0.5)
+        time.sleep(1)
         
-        elif (state.get_system_state() == "loiter"):
-            hover_thread = threading.Thread(target=hover)
-            control_thread = threading.Thread(target=keyboard_control)
+    if (state.get_system_state() == "loiter"):
+        hover_thread = threading.Thread(target=hover)
+        aruco_thread = threading.Thread(target=msg_receiver)
+        control_thread = threading.Thread(target=keyboard_control)
 
-            control_thread.start()
-            hover_thread.start()
+        control_thread.start()
+        hover_thread.start()
+        aruco_thread.start()
             
-            hover_thread.join()
-            control_thread.join()
-            
-if __name__ == "__main__":
-    
-    state.set_system_state("takeoff")    
-    
-    # Start subscriber in the main thread
-    subscriber_thread = threading.Thread(target=msg_receiver)
-    subscriber_thread.start()
-    
-    # Start control logic in a separate thread
-    control_thread = threading.Thread(target=control)
-    control_thread.start()
-
-    # Keep the main thread alive
-    try:
-        subscriber_thread.join()
+        hover_thread.join()
+        aruco_thread.join()
         control_thread.join()
-    except:
-        pass
+
+def main():
+    control()
+
+state.set_system_state("takeoff")    
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+
+
+
+
+
+
+
