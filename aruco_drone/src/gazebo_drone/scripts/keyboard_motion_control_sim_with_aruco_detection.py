@@ -165,22 +165,22 @@ def msg_receiver(message):
                         x = '{:.2f}'.format(tvec[0])
                         y = '{:.2f}'.format(tvec[1])
                         z = '{:.2f}'.format(tvec[2])
-                    
-                        y_sum = 0
+                        
                         x_sum = 0
+                        y_sum = 0
                     
                         x_sum = corners[0][0][0][0]+ corners[0][0][1][0]+ corners[0][0][2][0]+ corners[0][0][3][0]
                         y_sum = corners[0][0][0][1]+ corners[0][0][1][1]+ corners[0][0][2][1]+ corners[0][0][3][1]
                         
                         # This will give us centre point of the aruco marker in the frame itself
-                        x_avg = x_sum*.25
-                        y_avg = y_sum*.25
-                        #x_avg = x_sum / 4
-                        #y_avg = y_sum /4
+                        #cx = x_sum*.25
+                        #cy = y_sum*.25
+                        cx = x_sum / 4
+                        cy = y_sum /4
                     
                         # X-angle and Y-angle which used by mavlink message
-                        x_ang = (x_avg - horizontal_res*0.5)*(horizontal_fov/horizontal_res)
-                        y_ang = (y_avg - vertical_res*0.5)*(vertical_fov/vertical_res)
+                        x_ang = (cx - horizontal_res*0.5)*(horizontal_fov/horizontal_res)
+                        y_ang = (cy - vertical_res*0.5)*(vertical_fov/vertical_res)
                         
                         # if vehicle.mode != 'LAND':
                         #     vehicle.mode = VehicleMode('LAND')
