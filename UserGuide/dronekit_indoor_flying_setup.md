@@ -451,7 +451,7 @@ click save and `reboot` the RPI.
 
 To test if connection is working. Run below command using mavproxy. You should see hearbeart data from flight controller
 ```
-mavproxy.py --master=/dev/ttyACM0,921600
+mavproxy.py --master=/dev/ttyAMA0,921600
 ```
 
 
