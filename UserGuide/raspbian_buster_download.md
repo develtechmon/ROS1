@@ -13,3 +13,8 @@ https://largefiles.pimylifeup.com/raspbian/raspbian-desktop-lite/2021-01-11-rasp
 
 Once done, flash this image to your `64 Gb` sd card using RPI imager. In my case,
 i'm using Rpi Zero 2 and it's working.
+
+Then run below command to enable update, since this is old version
+```
+sudo apt-get update --allow-releaseinfo-change
+```
