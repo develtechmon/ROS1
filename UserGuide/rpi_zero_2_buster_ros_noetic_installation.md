@@ -80,10 +80,65 @@ Then inspect file in the list to ensure it's fetch from right source
 cat /etc/ros/rosdep/sources.list.d/20-default.list
 ```
 
-## Step 8: rosde update to fetch package information from the repo
+## Step 8: rosdep update to fetch package information from the repo
 
 Next we run rosdep update to fetch package information from the repos that are just initialized.
 ```
 rosdep update
+```
+
+## Step 9: Fetch and install ROS Noetic Depedencies
+
+Before we begin, we will need to create a catkin workspace by:
+```
+mkdir ~/ros_catkin_ws
+cd ~/ros_catkin_ws
+```
+
+Then we use rosinstall_generator to generate a list of Noetic dependencies for different Noetic variants, such as desktop-full, desktop, and ros_comm.
+
+Here we will use the ros_comm variant, which has no GUI components, such as rqt and rviz. Note that wet packages are the ROS packages that have been released. There won’t be any output if it succeeds.
+
+```
+rosinstall_generator ros_comm --rosdistro noetic --deps --wet-only --tar > noetic-ros_comm-wet.rosinstall
+```
+
+Next we will use the wstool to fetch all the remote repos specified from the noetic-ros_comm-wet.rosinstall file locally to the src folder:
+```
+wstool init src noetic-ros_comm-wet.rosinstall
+```
+
+Then before compiling the packages in the src folder, we install all system dependencies using rosdep install:
+```
+rosdep install -y --from-paths src --ignore-src --rosdistro noetic -r --os=debian:buster
+```
+
+## Step 10: Compiling Noetic Packages on RPI Zero 2
+
+Turn off swap file
+
+```
+sudo dphys-swapfile swapoff
+```
+
+Open Swap File
+```
+sudo vi /etc/dphys-swapfile
+```
+
+Then change `CONF_SWAPSIZE=100` to `2048` for 2GB
+```
+CONF_SWAPSIZE=2048
+```
+
+Then run the setup and turn on the swap again
+```
+sudo dphys-swapfile setup
+sudo dphys-swapfile swapon
+```
+
+We can check if the swap status using free -m, you will see the 'swap' line like below:
+```
+free -m
 ```
 
