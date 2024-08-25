@@ -137,8 +137,31 @@ sudo dphys-swapfile setup
 sudo dphys-swapfile swapon
 ```
 
-We can check if the swap status using free -m, you will see the 'swap' line like below:
+We can check if the swap status using free -m, you will see the `swap` line like below:
 ```
 free -m
 ```
 
+Next, we're going to compile the `ROS Noetic` package using below command. This can take a while, bear with it.
+```
+sudo src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/noetic -j1 -DPYTHON_EXECUTABLE=/usr/bin/python3
+```
+
+## Step 11: Verify Noetic Installation
+
+Let's source the bash
+```
+source /opt/ros/noetic/setup.bash
+```
+
+and run
+```
+roscd
+```
+
+and run below command to start `ros` service.
+```
+roscore
+```
+
+Yeahh !!
