@@ -29,7 +29,7 @@ vertical_fov = 48.8 * (math.pi / 180)
 found_count = 0
 not_found_count = 0
 
-calib_path = r"/home/jlukas/Desktop/My_Project/ROS1/ROS1_open_cv/src/open_cv/aruco/calibration_files/"
+calib_path = r"/home/jlukas/Desktop/My_Project/ROS1/ROS1_open_cv/src/open_cv/aruco/calibration_files_new_cam/"
 
 np_camera_matrix = np.loadtxt(calib_path + 'cameraMatrix.txt', delimiter=',')
 np_dist_coeff = np.loadtxt(calib_path + 'cameraDistortion.txt', delimiter=',')
