@@ -165,3 +165,9 @@ roscore
 ```
 
 Yeahh !!
+
+## Step 11: Install depedencies
+```
+sudo apt-get install ros-$(rosversion -d)-cv-bridge
+sudo apt-get install python3-sensor-msgs
+```
