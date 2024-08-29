@@ -38,6 +38,9 @@ np_dist_coeff = np.loadtxt(calib_path + 'cameraDistortion.txt', delimiter=',')
 time_last = 0
 time_to_wait = .1  # 100ms
 
+width=640
+height=480
+
 def image_callback(img_msg):
     global not_found_count, found_count, time_last, time_to_wait, id_to_find
     
@@ -50,6 +53,8 @@ def image_callback(img_msg):
         
         ids = ''
         (corners, ids, rejected) = aruco.detectMarkers(image=gray_img, dictionary=aruco_dict, parameters=parameters)
+        
+        cv2.circle(np_data, (width//2, height//2),8, (0,0,255), cv2.FILLED)
 
         print("Detected ID: =" + str(ids))
         
