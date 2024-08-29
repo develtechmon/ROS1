@@ -1,0 +1,9 @@
+libdir=/home/jlukas/Desktop/My_Project/ROS1/ROS1_open_cv/install/lib
+includedir=/home/jlukas/Desktop/My_Project/ROS1/ROS1_open_cv/install/include
+
+Name: gmock_main
+Description: GoogleMock (with main() function)
+Version: 1.9.0
+URL: https://github.com/google/googletest
+Libs: -L${libdir} -lgmock_main -pthread
+Cflags: -I${includedir} -DGTEST_HAS_PTHREAD=1 -pthread

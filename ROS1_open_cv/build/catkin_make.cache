@@ -1,0 +1,2 @@
+open_cv
+-DCATKIN_DEVEL_PREFIX=/home/jlukas/Desktop/My_Project/ROS1/ROS1_open_cv/devel -DCMAKE_INSTALL_PREFIX=/home/jlukas/Desktop/My_Project/ROS1/ROS1_open_cv/install -G Unix Makefiles

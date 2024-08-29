@@ -1,0 +1,8 @@
+prefix=/home/jlukas/Desktop/My_Project/ROS1/ROS1_open_cv/devel
+
+Name: open_cv
+Description: Description of open_cv
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
