@@ -15,7 +15,7 @@ py -3.8 -m pip install  opencv-contrib-python==4.2.0.32
 py -3.8 -m pip install imutils
 ```
 
-## For RPI Zero 2 (Bullseye 32 Bit)
+## For RPI Zero 2 (Bullseye 32 Bit) and also works with Buster
 
 Spec as follow:
 * Python Version : 3.9.2
