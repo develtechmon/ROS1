@@ -53,6 +53,8 @@ Next, we're going an extension package from `coex` to ensure we can install `Noe
 sudo su
 wget -O - 'http://packages.coex.tech/key.asc' | apt-key add -
 echo 'deb http://packages.coex.tech buster main' >> /etc/apt/sources.list
+
+exit
 sudo apt update
 ```
 
