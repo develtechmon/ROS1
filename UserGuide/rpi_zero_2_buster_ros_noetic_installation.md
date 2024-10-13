@@ -69,6 +69,7 @@ sudo apt upgrade
 
 ```
 sudo apt-get install -y python-rosdep python-rosinstall-generator python-wstool python-rosinstall build-essential cmake
+sudo apt-get install -y python-rosdep python-rosinstall-generator python-wstool python-rosinstall build-essential cmake
 
 ```
 
