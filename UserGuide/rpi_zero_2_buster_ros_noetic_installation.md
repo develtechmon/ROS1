@@ -48,6 +48,24 @@ gpg: Total number processed: 1
 gpg: imported: 1
 ```
 
+Next, we're going an extension package from `coex` to ensure we can install `Noetic` package. Please do the following
+```
+sudo su
+wget -O - 'http://packages.coex.tech/key.asc' | apt-key add -
+echo 'deb http://packages.coex.tech buster main' >> /etc/apt/sources.list
+sudo apt update
+```
+
+You should see the result below
+```
+Get:1 http://packages.coex.tech buster InRelease [4,959 B]
+Hit:2 http://raspbian.raspberrypi.org/raspbian buster InRelease
+Hit:3 http://archive.raspberrypi.org/debian buster InRelease
+Hit:4 http://packages.ros.org/ros/ubuntu buster InRelease <-----
+Get:5 http://packages.coex.tech buster/main armhf Packages [110 kB] <-----
+Get:6 http://packages.coex.tech buster/main all Packages [1,904 B] <-----
+```
+
 ## Step 5:  Pull all meta info of ROS Noetic packages
 
 ```
