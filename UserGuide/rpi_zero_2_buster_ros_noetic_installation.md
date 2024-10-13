@@ -77,7 +77,6 @@ https://github.com/CopterExpress/packages
 
 ```
 sudo apt-get update --allow-releaseinfo-change
-sudo apt update
 ```
 
 During the update, you might encounter `vlc unmet depedencies` and stuff. To resolve this, do the following before upgrade.
