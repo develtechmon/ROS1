@@ -76,6 +76,7 @@ https://github.com/CopterExpress/packages
 ## Step 5:  Pull all meta info of ROS Noetic packages
 
 ```
+sudo apt-get update --allow-releaseinfo-change
 sudo apt update
 ```
 
