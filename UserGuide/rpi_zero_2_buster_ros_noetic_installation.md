@@ -52,6 +52,16 @@ gpg: imported: 1
 
 ```
 sudo apt update
+```
+
+During the update, you might encounter `vlc unmet depedencies` and stuff. To resolve this, do the following before upgrade.
+```
+sudo apt install -f vlc
+sudo apt --fix-broken install
+```
+
+and run following command. This might take some time. So bear with it. 
+```
 sudo apt upgrade
 ```
 
