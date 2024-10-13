@@ -66,6 +66,11 @@ Get:5 http://packages.coex.tech buster/main armhf Packages [110 kB] <-----
 Get:6 http://packages.coex.tech buster/main all Packages [1,904 B] <-----
 ```
 
+You can visit below link about above step
+```
+https://github.com/CopterExpress/packages
+```
+
 ## Step 5:  Pull all meta info of ROS Noetic packages
 
 ```
