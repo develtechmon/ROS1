@@ -212,6 +212,7 @@ cd ardupilot/ArduCopter
 or
 
 sim_vehicle.py -v ArduCopter -f gazebo-iris --console
+sim_vehicle.py -v ArduCopter -f gazebo-iris --console --out=127.0.0.1:14550
 ```
 
 To invoke `mavproxy` terminal
