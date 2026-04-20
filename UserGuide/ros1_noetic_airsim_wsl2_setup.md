@@ -47,7 +47,7 @@ or use below
 cat /etc/os-release
 ```
 
-### Step 5 : Verifiy you are on WSL 2.
+### Step 5 : Verify you are on WSL 2.
 
 Back in PowerShell run the following command
 ```
@@ -138,7 +138,7 @@ sudo pip install keyboard
 sudo pip install pymavlink==2.4.37
 ```
 
-### Step 3 : Python 3.11 From Source and Install PIP
+### Step 3 : Install Python 3.11 From Source and Install PIP
 
 Install this prequisite packages
 ```
@@ -172,6 +172,78 @@ sudo apt install -y build-essential cmake pkg-config     libgl1-mesa-dev libosme
 
 pip install --upgrade pip setuptools setuptools_scm wheel build
 ```
+
+### Ardupilot Installation
+
+We're going to install `Ardupilot` which will be used for simulation later.
+
+#### Step 1: Clone Ardupilot packages and install the following
+```
+git clone https://github.com/ArduPilot/ardupilot
+
+cd ardupilot
+
+git submodule update --init --recursive
+
+./Tools/environment_install/install-prereqs-ubuntu.sh -y
+
+. ~/.profile
+
+
+```
+
+## Step 2: Launch `Sim Vehicle`
+
+Once done with the installation, we can launch the SITL using this command
+```
+cd ardupilot/Arducopter
+
+cd ArduCopter/
+
+sim_vehicle.py -w
+```
+
+### Ardupilot Gazebo Installation
+
+Next we're going to setup `Gazebo` environment setup. Here we can display the drone in simulated environment
+
+### Step 1 : Clone Ardupilot Gazebo packages and install the following
+
+```
+git clone https://github.com/dronedojo/ardupilot_gazebo
+
+cd ardupilot_gazebo
+
+mkdir build
+
+cd build
+
+sudo apt install cmake
+
+cmake ..
+
+make -j4
+
+clear
+```
+
+### Step 2: Once done with the installation we've to modify our `bashrc` script as follow
+
+```
+sudo vi ~jlukas/.bashrc
+```
+
+add the following:
+```
+source /opt/ros/noetic/setup.bash
+source "/home/jlukas/ardupilot/Tools/completion/completion.bash"
+
+export GAZEBO_RESOURCE_PATH="/home/jlukas/ardupilot_gazebo":"/home/jlukas/ardupilot_gazebo/worlds":"/usr/share/gazebo-11"
+export GAZEBO_MODEL_PATH="/home/jlukas/ardupilot_gazebo/models":"/usr/share/gazebo-11/models"
+source /usr/share/gazebo-11/setup.sh
+```
+
+
 
 
 
