@@ -188,8 +188,6 @@ git submodule update --init --recursive
 ./Tools/environment_install/install-prereqs-ubuntu.sh -y
 
 . ~/.profile
-
-
 ```
 
 ## Step 2: Launch `Sim Vehicle`
@@ -243,12 +241,114 @@ export GAZEBO_MODEL_PATH="/home/jlukas/ardupilot_gazebo/models":"/usr/share/gaze
 source /usr/share/gazebo-11/setup.sh
 ```
 
+Next we've to disable the default `gazebo 11` environment so that it won't conflict with above as follow
+
+open thie file 
+```
+sudo vi  /usr/share/gazebo-11/setup.sh
+```
+
+and disable the following
+```
+export GAZEBO_MASTER_URI=${GAZEBO_MASTER_URI:-http://localhost:11345}
+export GAZEBO_MODEL_DATABASE_URI=http://models.gazebosim.org
+#export GAZEBO_RESOURCE_PATH=${installPrefix}/share/gazebo-11:${GAZEBO_RESOURCE_PATH} <----------- Disable this
+export GAZEBO_PLUGIN_PATH=${installPrefix}/lib/x86_64-linux-gnu/gazebo-11/plugins:${GAZEBO_PLUGIN_PATH}
+#export GAZEBO_MODEL_PATH=${installPrefix}/share/gazebo-11/models:${GAZEBO_MODEL_PATH} <----------- Disable this
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${GAZEBO_PLUGIN_PATH}
+export OGRE_RESOURCE_PATH=/usr/lib/x86_64-linux-gnu/OGRE-1.9.0
+```
+
 Then source the `bashrc` to take effective environment
 ```
 source ~jlukas/.bashrc
 ```
 
+### Step 3 : Change the Gazebo world 
 
+here we want run our prefer world as follow
+```
+roscd gazebo_ros
+cd launch/
+sudo cp -r empty_world.launch iris_world.launch
+sudo gedit iris_world.launch
+```
 
+Inside `iris_world.launch` modify the following as follow, where we set it into `aruco_landing.world`.
+```
+<arg name="world_name" default="worlds/aruco_landing.world"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
+
+```
+To launch our `customized world` in Gazebo. Please do the following
+```
+roslaunch gazebo_ros iris_world.launch
+```
+
+To launch with `ros` environment. Please do the following:
+```
+gazebo iris_arducopter_runaway.world
+```
+
+or 
+
+```
+gazebo --verbose ~/ardupilot_gazebo/worlds/iris_arducopter_runway.world
+```
+
+Then launch the `SITL`
+```
+sim_vehicle.py -v ArduCopter -f gazebo-iris --console
+```
+
+We can the published topic
+```
+cd ~
+
+ls
+
+rostopic list
+```
+
+### Create Virtual Environment
+
+To avoid conflict with `root` access system, it's recommend to work on virtual environment. Please do the following
+```
+mkdir airsim
+cd airsim/
+```
+
+To create the enviroment please do:
+```
+py -m venv airsimcode
+```
+
+Then activate our environment
+```
+python3.11 -m venv airsimcode
+source airsimcode/bin/activate
+```
+
+The install the following drone packages and RL in our virtual environment
+```
+pip install --upgrade pip setuptools setuptools_scm wheel build
+pip list
+pip install swig
+pip install --no-build-isolation --force-reinstall   "gymnasium[all]"   "stable-baselines3[extra]"   tensorboard   ale-py
+
+clear
+pip install pexpect future pyserial dronekit
+pip install MAVProxy keyboard pymavlink==2.4.37
+clear -altr
+ls -altr
+rqt
+roslaunch gazebo_ros iris_world.launch
+clear
+
+roslaunch gazebo_ros iris_world.launch
+
+python
+sed -i 's/collections.MutableMapping/collections.abc.MutableMapping/g' ~/airsim/airsimcode/lib/python3.11/site-packages/dronekit/__init__.py
+
+```
 
 
