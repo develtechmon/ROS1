@@ -333,7 +333,19 @@ The install the following drone packages and RL in our virtual environment
 pip install --upgrade pip setuptools setuptools_scm wheel build
 pip list
 pip install swig
+pip install msgpack==0.6.2 msgpack-python==0.5.6 msgpack-rpc-python==0.4.1
+pip install airsim
+pip install --upgrade numpy
+pip install airsim
+pip uninstall numpy
+pip install numpy
+pip install airsim
+pip install numpy
+pip install airsim --no-build-isolaation
+
 pip install --no-build-isolation --force-reinstall   "gymnasium[all]"   "stable-baselines3[extra]"   tensorboard   ale-py
+
+sed -i 's/collections.MutableMapping/collections.abc.MutableMapping/g' ~/airsim/airsimcode/lib/python3.11/site-packages/dronekit/__init__.py
 
 clear
 pip install pexpect future pyserial dronekit
@@ -347,8 +359,6 @@ clear
 roslaunch gazebo_ros iris_world.launch
 
 python
-sed -i 's/collections.MutableMapping/collections.abc.MutableMapping/g' ~/airsim/airsimcode/lib/python3.11/site-packages/dronekit/__init__.py
-
 ```
 
 
