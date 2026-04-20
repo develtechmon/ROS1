@@ -233,7 +233,7 @@ clear
 sudo vi ~jlukas/.bashrc
 ```
 
-add the following:
+add the following line into `bashrc` script
 ```
 source /opt/ros/noetic/setup.bash
 source "/home/jlukas/ardupilot/Tools/completion/completion.bash"
@@ -243,6 +243,10 @@ export GAZEBO_MODEL_PATH="/home/jlukas/ardupilot_gazebo/models":"/usr/share/gaze
 source /usr/share/gazebo-11/setup.sh
 ```
 
+Then source the `bashrc` to take effective environment
+```
+source ~jlukas/.bashrc
+```
 
 
 
