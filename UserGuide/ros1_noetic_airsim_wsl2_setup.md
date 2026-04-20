@@ -78,6 +78,101 @@ sudo apt-get install terminator
 terminator
 ```
 
+### ROS Noetic Installation
+
+### Step 1 : Perform pdate and upgrade 
+```
+sudo apt-get update -y && sudo apt-get ugprade -y
+```
+
+### Step 2 : Install Ros Noetic and Its packages
+
+Please follow below step
+```
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+sudo apt install curl # if you haven't already installed curl
+
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+
+sudo apt update
+
+sudo apt upgrade -y
+
+sudo apt install ros-noetic-desktop-full -y
+
+echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+
+source ~/.bashrc
+
+sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
+
+sudo apt install python3-rosdep
+
+sudo rosdep init
+
+rosdep update
+
+sudo apt install python3-pip
+whereis pip
+```
+
+Install below ros1 packages and python packages into root. But later we're going to 
+reinstall it again in our `virtual` environment
+```
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install python3-wxgtk4.0 -y
+sudo apt-get install git
+sudo apt-get install gedit
+sudo apt-get install ros-noetic-rqt ros-noetic-rqt-common-plugins
+sudo apt-get install ros-noetic-rqt-ez-publisher
+rosrun rqt_ez_publisher rqt_ez_publisher --force-discover
+
+sudo pip install pexpect
+sudo pip install future
+sudo pip install pyserial
+sudo pip install dronekit
+sudo pip install MAVProxy
+sudo pip install keyboard
+sudo pip install pymavlink==2.4.37
+```
+
+### Step 3 : Python 3.11 From Source and Install PIP
+
+Install this prequisite packages
+```
+sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev liblzma-dev -y
+```
+
+Download the python `3.11.9` from this link into your workspace
+```
+wget https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tgz
+```
+
+and run the following command
+```
+tar -xf Python-3.11.9.tgz
+
+cd Python-3.11.9
+
+./configure --enable-optimizations
+
+make -j12
+
+sudo make altinstall
+
+python3.11 --version
+
+python3.11 -m ensurepip --upgrade
+
+sudo apt update
+
+sudo apt install -y build-essential cmake pkg-config     libgl1-mesa-dev libosmesa6-dev libglfw3 libglfw3-dev     libglew-dev libx11-dev libxrandr-dev libxi-dev libxinerama-dev     libxcursor-dev libfreetype6-dev libssl-dev zlib1g-dev     libbz2-dev liblzma-dev
+
+pip install --upgrade pip setuptools setuptools_scm wheel build
+```
+
 
 
 
