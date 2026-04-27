@@ -363,6 +363,7 @@ pose:
 
 **Leave this running!** It publishes "hover at (0, 0, 2m)" at 20Hz.
 
+Otherwise, you can start the drone using this typical approach by `arming` and `takeoff` the drone and then switch to `OFFBOARD`
 ---
 
 **Terminal 5 — Wait 5-10 seconds, then switch to OFFBOARD:**
