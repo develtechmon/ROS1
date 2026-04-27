@@ -363,7 +363,6 @@ pose:
 
 **Leave this running!** It publishes "hover at (0, 0, 2m)" at 20Hz.
 
-Otherwise, you can start the drone using this typical approach by `arming` and `takeoff` the drone and then switch to `OFFBOARD`
 ---
 
 **Terminal 5 — Wait 5-10 seconds, then switch to OFFBOARD:**
@@ -389,6 +388,41 @@ rosservice call /mavros/cmd/arming "value: true"
 **The drone should now take off to 2m and hover.**
 
 ---
+
+Otherwise, you can start the drone using this typical approach by `arming` and `takeoff` the drone and then switch to `OFFBOARD` as follow
+```
+commander arm
+commander takeoff
+```
+
+Then in new terminal, run the following command to check what is the current `flight mode`.
+```
+rostopic echo /mavros/state -n 1
+```
+
+You should see below output
+```
+header: 
+  seq: 17
+  stamp: 
+    secs: 1777312873
+    nsecs: 352242329
+  frame_id: ''
+connected: True
+armed: False
+guided: True
+manual_input: False
+mode: "AUTO.LOITER <----
+```
+
+Then we can switch to `OFFBOARD mode`.
+```bash
+# Switch to OFFBOARD mode
+rosservice call /mavros/set_mode "base_mode: 0
+custom_mode: 'OFFBOARD'"
+
+# Expected response: mode_sent: True
+```
 
 #### Moving to Different Positions
 
