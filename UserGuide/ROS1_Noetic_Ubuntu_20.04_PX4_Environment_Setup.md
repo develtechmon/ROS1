@@ -1,7 +1,7 @@
 # ROS1 Noetic Ubuntu 20.04 PX4 Environment Setup
  
 **Author:** Lukas  
-**Date:** April 27, 2026  
+**Date:** April 28, 2026  
 **Target System:** Ubuntu 20.04 (Focal Fossa) with ROS1 Noetic  
 **PX4 Version:** Latest (compatible with Gazebo Classic 11)
  
@@ -11,10 +11,10 @@
  
 1. [Prerequisites](#prerequisites)
 2. [System Requirements](#system-requirements)
-3. [Installation Overview](#installation-overview)
-4. [Step-by-Step Installation](#step-by-step-installation)
-5. [Testing the Installation](#testing-the-installation)
-6. [Integration with ROS and MAVROS](#integration-with-ros-and-mavros)
+3. [Step-by-Step Installation](#step-by-step-installation)
+4. [Testing the Installation](#testing-the-installation)
+5. [Integration with ROS and MAVROS](#integration-with-ros-and-mavros)
+6. [OFFBOARD Mode Control](#offboard-mode-control)
 7. [Troubleshooting](#troubleshooting)
 8. [Common Commands Reference](#common-commands-reference)
 9. [Next Steps](#next-steps)
@@ -31,7 +31,7 @@ Before starting, ensure you have:
 - **Git** installed
 - **Sudo privileges**
 - **Stable internet connection**
-### Verify ROS Noetic Installation
+### Verify Installations
  
 ```bash
 # Check ROS installation
@@ -41,19 +41,20 @@ rosversion -d
 # Check Gazebo version
 gazebo --version
 # Should output: Gazebo multi-robot simulator, version 11.x.x
-```
  
-### Verify MAVROS Installation
- 
-```bash
+# Check MAVROS installation
 rospack find mavros
 # Should output: /opt/ros/noetic/share/mavros
 ```
  
-If MAVROS is not installed:
+### Install MAVROS (if not already installed)
  
 ```bash
 sudo apt install ros-noetic-mavros ros-noetic-mavros-extras
+ 
+# Install GeographicLib datasets (required for GPS simulation)
+wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
+sudo bash ./install_geographiclib_datasets.sh
 ```
  
 ---
@@ -75,20 +76,6 @@ sudo apt install ros-noetic-mavros ros-noetic-mavros-extras
 - Git 2.x+
 ---
  
-## Installation Overview
- 
-The installation process involves:
- 
-1. Cloning the PX4-Autopilot repository
-2. Installing PX4 dependencies (WITHOUT conflicting Gazebo versions)
-3. Building PX4 for Software-In-The-Loop (SITL) simulation
-4. Configuring environment variables
-5. Testing PX4 standalone
-6. Integrating with ROS/MAVROS
-**Important:** We will NOT use PX4's `ubuntu.sh` setup script as-is because it tries to install Gazebo Harmonic, which conflicts with Gazebo Classic 11 on Ubuntu 20.04.
- 
----
- 
 ## Step-by-Step Installation
  
 ### Step 1: Clone PX4-Autopilot Repository
@@ -102,19 +89,15 @@ git clone https://github.com/PX4/PX4-Autopilot.git --recursive
  
 # Navigate into the repository
 cd PX4-Autopilot
- 
-# Verify the clone was successful
-ls -la
-# You should see directories like: src/, msg/, Tools/, platforms/, etc.
 ```
  
 **Note:** The `--recursive` flag is critical — it clones all Git submodules that PX4 depends on.
  
 ---
  
-### Step 2: Install PX4 Dependencies (Manual Method)
+### Step 2: Install PX4 Dependencies
  
-Instead of running the full `ubuntu.sh` script (which tries to install incompatible Gazebo), we install dependencies manually.
+**Important:** We will NOT use PX4's `ubuntu.sh` setup script as-is because it tries to install Gazebo Harmonic, which conflicts with Gazebo Classic 11 on Ubuntu 20.04.
  
 ```bash
 # Update package lists
@@ -122,115 +105,68 @@ sudo apt-get update
  
 # Install core build dependencies
 sudo apt-get install -y \
-    git \
-    make \
-    cmake \
-    ninja-build \
-    ccache \
-    astyle \
-    build-essential \
-    genromfs \
-    libeigen3-dev \
-    libopencv-dev \
-    libxml2-utils \
-    pkg-config \
-    protobuf-compiler \
-    rsync \
-    unzip \
-    zip
+    git make cmake ninja-build ccache astyle build-essential \
+    genromfs libeigen3-dev libopencv-dev libxml2-utils \
+    pkg-config protobuf-compiler rsync unzip zip
  
 # Install GStreamer (for video streaming simulation)
 sudo apt-get install -y \
-    libgstreamer-plugins-base1.0-dev \
-    gstreamer1.0-plugins-bad \
-    gstreamer1.0-plugins-base \
-    gstreamer1.0-plugins-good \
-    gstreamer1.0-plugins-ugly \
-    gstreamer1.0-libav
+    libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-bad \
+    gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-ugly gstreamer1.0-libav
  
 # Install Python 3 dependencies
 sudo apt-get install -y \
-    python3-pip \
-    python3-dev \
-    python3-jinja2 \
-    python3-numpy \
-    python3-empy \
-    python3-toml \
-    python3-packaging \
-    python3-yaml
+    python3-pip python3-dev python3-jinja2 python3-numpy \
+    python3-empy python3-toml python3-packaging python3-yaml
  
 # Install GeographicLib (needed for GPS simulation)
-sudo apt-get install -y \
-    geographiclib-tools \
-    geographiclib-doc
- 
-# Download GeographicLib geoid datasets
+sudo apt-get install -y geographiclib-tools geographiclib-doc
 sudo /usr/sbin/geographiclib-get-geoids egm96-5
-```
  
----
- 
-### Step 3: Install Python Packages for PX4
- 
-```bash
 # Install Python packages using pip3
 pip3 install --user \
-    kconfiglib \
-    jsonschema \
-    pyros-genmsg \
-    packaging \
-    toml \
-    numpy \
-    future \
-    empy \
-    jinja2 \
-    pymavlink
- 
-# Verify installation
-pip3 list | grep -E "kconfiglib|pymavlink|jinja2"
+    kconfiglib jsonschema pyros-genmsg packaging toml \
+    numpy future empy jinja2 pymavlink
 ```
  
 ---
  
-### Step 4: Configure Environment Variables
+### Step 3: Configure Environment Variables
  
-Add Gazebo paths so PX4 can find Gazebo Classic 11 plugins and models:
+**For PX4-only installation:**
  
 ```bash
-# Open .bashrc
 nano ~/.bashrc
  
-# Add the following lines at the end:
-export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/usr/share/gazebo-11/models
+# Add these lines at the end:
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:$HOME/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models
 export GAZEBO_RESOURCE_PATH=$GAZEBO_RESOURCE_PATH:/usr/share/gazebo-11
  
-# Save and exit (Ctrl+X, then Y, then Enter)
- 
-# Apply changes
+# Save (Ctrl+X, Y, Enter) and apply
 source ~/.bashrc
 ```
-
-If you install `ardupilot_gazebo` from my other userguide `ros1_noetic_ubuntu_20_Gazebo_SITL_setup.md`. You can append `px4` gazebo environments as follow. This is safe method to combine `ardupilot` and `px4` gazebo environments
-```
-bash
-# Open .bashrc
+ 
+**If you have ArduPilot Gazebo installed (from ArduPilot userguide):**
+ 
+This allows both ArduPilot and PX4 to coexist safely:
+ 
+```bash
 nano ~/.bashrc
-
-# Gazebo paths for both ArduPilot and PX4
+ 
+# Add these lines at the end:
 export GAZEBO_RESOURCE_PATH="/home/jlukas/ardupilot_gazebo":"/home/jlukas/ardupilot_gazebo/worlds":"/usr/share/gazebo-11"
 export GAZEBO_MODEL_PATH="/home/jlukas/ardupilot_gazebo/models":"$HOME/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models":"/usr/share/gazebo-11/models"
-export GAZEBO_PLUGIN_PATH="$HOME/PX4-Autopilot/build/px4_sitl_default/build_gazebo-classic":"/usr/lib/x86_64-linux-gnu/gazebo-11/plugins"
-
-# Save and exit (Ctrl+X, then Y, then Enter)
  
-# Apply changes
+# Save and apply
 source ~/.bashrc
 ```
+ 
+**Important:** Do NOT add `GAZEBO_PLUGIN_PATH` to `.bashrc` — PX4 sets this automatically during runtime.
  
 ---
  
-### Step 5: Build PX4 for Gazebo Classic SITL
+### Step 4: Build PX4 for Gazebo Classic SITL
  
 ```bash
 # Navigate to PX4-Autopilot directory
@@ -240,7 +176,6 @@ cd ~/PX4-Autopilot
 make px4_sitl gazebo-classic
  
 # This will take 5-15 minutes on first build
-# You'll see compilation progress messages
 ```
  
 **Expected Output:**
@@ -250,40 +185,37 @@ make px4_sitl gazebo-classic
 **Common Build Warnings (Safe to Ignore):**
 - `warning: unused variable`
 - `warning: deprecated conversion`
-- `note: suggested alternative`
 ---
  
-### Step 6: Test PX4 Standalone (Without ROS)
+## Testing the Installation
+ 
+### Test 1: PX4 Standalone (Without ROS)
  
 ```bash
-# Launch PX4 SITL with Gazebo
 cd ~/PX4-Autopilot
 make px4_sitl gazebo-classic
 ```
  
 **What Should Happen:**
  
-1. **Gazebo window opens** showing an Iris quadcopter on a ground plane
-2. **PX4 console appears** with prompt: `pxh>`
-3. **Initialization messages** scroll past (sensor checks, calibrations, etc.)
-4. **Final message:** `INFO [commander] Ready for takeoff!`
-**You may see these warnings (NORMAL, ignore them):**
- 
+1. Gazebo window opens showing an Iris quadcopter
+2. PX4 console appears with prompt: `pxh>`
+3. Initialization messages scroll past
+4. Final message: `INFO [commander] Ready for takeoff!`
+**Common warnings (safe to ignore):**
 ```
 WARN  [health_and_arming_checks] Preflight Fail: heading estimate invalid
 Node::Advertise(): Error advertising topic [/asphalt_plane/joint_cmd]
 ```
  
-These are harmless — the magnetometer needs a few seconds to stabilize, and the joint control error is a Gazebo GUI quirk.
+These are normal — the magnetometer needs time to stabilize, and the joint control error is a Gazebo GUI quirk.
  
----
+### Test 2: Basic Flight Commands
  
-### Step 7: Test Basic Flight Commands
- 
-In the PX4 console (`pxh>`), try these commands:
+In the PX4 console (`pxh>`):
  
 ```bash
-# Wait 10 seconds after startup for sensors to stabilize
+# Wait 10 seconds for sensors to stabilize
  
 # Command takeoff
 commander takeoff
@@ -294,104 +226,84 @@ commander takeoff
 **If you get "Preflight Fail: heading estimate invalid":**
  
 ```bash
-# Force arm and takeoff (simulation only!)
+# Force arm (simulation only!)
 commander arm -f
 commander takeoff
 ```
  
 **To land:**
- 
 ```bash
 commander land
 ```
  
-**To shutdown PX4:**
- 
+**To shutdown:**
 ```bash
 shutdown
-# Or just press Ctrl+C
+# Or press Ctrl+C
 ```
- 
-**If the test works:** PX4 is installed correctly! Proceed to ROS integration.
  
 ---
  
 ## Integration with ROS and MAVROS
  
-Now we'll connect PX4 to ROS using MAVROS.
+### Launch Sequence Overview
  
-### Step 1: Launch PX4 SITL in Headless Mode
+You'll need 3 terminals running simultaneously:
  
-Headless mode runs PX4 without launching Gazebo automatically, so we can launch Gazebo via ROS instead.
+1. **Terminal 1:** PX4 SITL
+2. **Terminal 2:** Gazebo (optional if PX4 already launched it)
+3. **Terminal 3:** MAVROS
+---
  
-**Terminal 1 - PX4 SITL:**
+### Terminal 1: Launch PX4 SITL
  
 ```bash
 cd ~/PX4-Autopilot
-HEADLESS=1 make px4_sitl gazebo-classic
+make px4_sitl gazebo-classic
 ```
  
-**Expected Output:**
-- PX4 console appears (`pxh>`)
-- No Gazebo window (that's correct — we'll launch it via ROS)
-- Message: `Ready for takeoff!`
+**Wait for:** `INFO [commander] Ready for takeoff!`
+ 
 ---
  
-### Step 2: Launch Gazebo via ROS
+### Terminal 2: Launch Gazebo (Optional)
  
-**Terminal 2 - Gazebo GUI:**
+If you want to use a custom world (like `iris_world.launch`):
  
 ```bash
-# Source ROS environment
-source /opt/ros/noetic/setup.bash
- 
-# Launch Iris World Gazebo with empty world
 roslaunch gazebo_ros iris_world.launch
 ```
  
-**Expected Output:**
-- Gazebo window opens
-- You should see the Iris quadcopter in the world
-- No errors related to model loading
+**Note:** If PX4 already launched Gazebo in Terminal 1, skip this step.
+ 
 ---
  
-### Step 3: Launch MAVROS
- 
-**Terminal 3 - MAVROS:**
+### Terminal 3: Launch MAVROS
  
 ```bash
-# Source ROS environment
-source /opt/ros/noetic/setup.bash
- 
-# Launch MAVROS with PX4-specific configuration
 roslaunch mavros px4.launch fcu_url:="udp://:14540@127.0.0.1:14557"
 ```
  
 **Expected Output:**
- 
 ```
-[ INFO] [timestamp]: FCU: PX4 Autopilot
-[ INFO] [timestamp]: FCU: connected
-[ INFO] [timestamp]: GCS: connected
+[ INFO]: FCU: PX4 Autopilot
+[ INFO]: FCU: connected
+[ INFO]: GCS: connected
 ```
  
 ---
  
-### Step 4: Verify ROS Connection
+### Verify Connection
  
-**Terminal 4 - ROS Topics:**
+**Terminal 4:**
  
 ```bash
 # Check MAVROS state
 rostopic echo /mavros/state
  
-# Expected output (should update continuously):
-# header: 
-#   seq: 123
-#   stamp: ...
+# Expected output:
 # connected: True
 # armed: False
-# guided: False
 # mode: "MANUAL"
 ```
  
@@ -399,35 +311,494 @@ rostopic echo /mavros/state
  
 ---
  
-### Step 5: Test Flight via ROS
+## OFFBOARD Mode Control
  
-**Set mode to OFFBOARD and arm:**
+OFFBOARD mode allows you to control the drone programmatically via ROS. This is essential for autonomous flight, RL controllers, and research applications.
+ 
+### Understanding OFFBOARD Mode Requirements
+ 
+**Critical Rules:**
+ 
+1. **Must publish setpoints BEFORE switching to OFFBOARD mode** — PX4 will reject the mode switch if no setpoints are streaming
+2. **Must publish at >2Hz continuously** — PX4 has a 500ms timeout; if setpoints stop, it will failsafe back to the previous mode
+3. **Recommended to enter OFFBOARD from Position mode** — if OFFBOARD fails, the drone will hover in place instead of falling
+---
+ 
+### Method 1: Position Control (Go to Coordinates)
+ 
+Position control tells the drone "fly to this XYZ coordinate and stay there."
+ 
+**Best for:** Waypoint missions, hovering at specific locations, structured testing
+ 
+#### Step-by-Step Procedure
+ 
+**Terminal 4 — Start Publishing Position Setpoints:**
  
 ```bash
-# Enable OFFBOARD mode
+rostopic pub -r 20 /mavros/setpoint_position/local geometry_msgs/PoseStamped "
+header:
+  stamp: now
+  frame_id: 'map'
+pose:
+  position:
+    x: 0.0
+    y: 0.0
+    z: 2.0
+  orientation:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0"
+```
+ 
+**Leave this running!** It publishes "hover at (0, 0, 2m)" at 20Hz.
+ 
+---
+ 
+**Terminal 5 — Wait 5-10 seconds, then switch to OFFBOARD:**
+ 
+```bash
+# Switch to OFFBOARD mode
 rosservice call /mavros/set_mode "base_mode: 0
 custom_mode: 'OFFBOARD'"
  
-# Arm the vehicle
-rosservice call /mavros/cmd/arming "value: true"
- 
-# Takeoff to 2 meters
-rosservice call /mavros/cmd/takeoff "{min_pitch: 0.0, yaw: 0.0, latitude: 0.0, longitude: 0.0, altitude: 2.0}"
-```
- 
-**The drone should take off in Gazebo.**
- 
-**To land:**
- 
-```bash
-rosservice call /mavros/cmd/land "{min_pitch: 0.0, yaw: 0.0, latitude: 0.0, longitude: 0.0, altitude: 0.0}"
+# Expected response: mode_sent: True
 ```
  
 ---
  
+**Terminal 5 — Arm the drone:**
+ 
+```bash
+rosservice call /mavros/cmd/arming "value: true"
+ 
+# Expected response: success: True
+```
+ 
+**The drone should now take off to 2m and hover.**
+ 
+---
+ 
+#### Moving to Different Positions
+ 
+To change position, stop the current `rostopic pub` (Ctrl+C) and immediately start a new one:
+ 
+**Move Forward 2m:**
+```bash
+rostopic pub -r 20 /mavros/setpoint_position/local geometry_msgs/PoseStamped "
+header:
+  stamp: now
+  frame_id: 'map'
+pose:
+  position:
+    x: 2.0
+    y: 0.0
+    z: 2.0
+  orientation:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0"
+```
+ 
+**Move Left 1m:**
+```bash
+rostopic pub -r 20 /mavros/setpoint_position/local geometry_msgs/PoseStamped "
+header:
+  stamp: now
+  frame_id: 'map'
+pose:
+  position:
+    x: 2.0
+    y: 1.0
+    z: 2.0
+  orientation:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0"
+```
+ 
+**Coordinate Frame (ENU - MAVROS default):**
+- **+X** = Forward (North)
+- **+Y** = Left (East)
+- **+Z** = Up
+---
+ 
+### Method 2: Velocity Control (cmd_vel)
+ 
+Velocity control tells the drone "move at this speed" instead of "go to this position."
+ 
+**Best for:** Manual flying, teleoperation, reactive control, joystick integration, RL controllers that output velocities
+ 
+#### Understanding Velocity Control
+ 
+**Position control:**
+- You say "go to coordinates (2, 0, 2)"
+- Drone flies there and stops
+- Like GPS navigation
+**Velocity control:**
+- You say "move forward at 1 m/s"
+- Drone keeps moving until you change the velocity
+- Like using a joystick
+---
+ 
+#### Step-by-Step Procedure
+ 
+**Terminal 4 — Start Publishing Zero Velocity (Hover):**
+ 
+```bash
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+ 
+**Leave this running!**
+ 
+---
+ 
+**Terminal 5 — Switch to OFFBOARD and Arm:**
+ 
+```bash
+# Wait 5-10 seconds after starting setpoints
+ 
+# Switch to OFFBOARD
+rosservice call /mavros/set_mode "base_mode: 0
+custom_mode: 'OFFBOARD'"
+ 
+# Arm
+rosservice call /mavros/cmd/arming "value: true"
+```
+ 
+**Drone arms but stays on ground (because Z velocity = 0).**
+ 
+---
+ 
+**Terminal 4 — Take Off (Set Upward Velocity):**
+ 
+Stop (Ctrl+C) and publish:
+ 
+```bash
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 0.0
+  z: 1.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+ 
+**Drone climbs at 1 m/s.** Watch Gazebo and when you reach desired altitude (~2m), stop it.
+ 
+---
+ 
+**Terminal 4 — Hover (Stop Vertical Movement):**
+ 
+```bash
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+ 
+---
+ 
+#### Velocity Control Commands
+ 
+Each time you want to change velocity, Ctrl+C the current command and paste a new one:
+ 
+**Move Forward at 1 m/s:**
+```bash
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 1.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+ 
+**Move Backward at 1 m/s:**
+```bash
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: -1.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+ 
+**Move Left at 1 m/s:**
+```bash
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 1.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+ 
+**Move Right at 1 m/s:**
+```bash
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: -1.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+ 
+**Ascend at 0.5 m/s:**
+```bash
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.5
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+ 
+**Descend at 0.5 m/s:**
+```bash
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 0.0
+  z: -0.5
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+ 
+**Rotate Left (Yaw) at 0.5 rad/s:**
+```bash
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.5"
+```
+ 
+**Rotate Right (Yaw) at 0.5 rad/s:**
+```bash
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: -0.5"
+```
+ 
+**Stop/Hover:**
+```bash
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+ 
+---
+ 
+#### Understanding Velocity Fields
+ 
+```yaml
+linear:
+  x: 1.0   # Forward (+) / Backward (-) in m/s
+  y: 1.0   # Left (+) / Right (-) in m/s
+  z: 1.0   # Up (+) / Down (-) in m/s
+angular:
+  x: 0.0   # Roll (rarely used)
+  y: 0.0   # Pitch (rarely used)
+  z: 0.5   # Yaw: rotate left (+) / right (-) in rad/s
+```
+ 
+**Units:**
+- Linear velocity: **m/s** (meters per second)
+- Angular velocity: **rad/s** (radians per second)
+  - 0.5 rad/s ≈ 28°/second (slow rotation)
+  - 1.0 rad/s ≈ 57°/second (moderate rotation)
+---
+ 
+### Method 3: Keyboard Teleoperation (Easiest for Testing)
+ 
+Instead of manually typing commands, use the ROS keyboard teleop package:
+ 
+#### Install (if not already installed):
+ 
+```bash
+sudo apt install ros-noetic-teleop-twist-keyboard
+```
+ 
+#### Usage:
+ 
+**After drone is in OFFBOARD mode and armed:**
+ 
+**Terminal 4:**
+ 
+```bash
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/mavros/setpoint_velocity/cmd_vel_unstamped
+```
+ 
+**Control Keys:**
+ 
+```
+Moving around:
+   u    i    o
+   j    k    l
+   m    ,    .
+ 
+Holonomic mode (strafing) - hold Shift:
+   U    I    O
+   J    K    L
+   M    <    >
+ 
+t : up (+z)
+b : down (-z)
+ 
+k : stop/hover
+ 
+q/z : increase/decrease max speeds by 10%
+w/x : increase/decrease linear speed only
+e/c : increase/decrease angular speed only
+ 
+CTRL-C to quit
+```
+ 
+**Controls Breakdown:**
+- **i** = Forward
+- **,** = Backward
+- **j** = Rotate left (yaw)
+- **l** = Rotate right (yaw)
+- **Shift+J** = Strafe left (sideways)
+- **Shift+L** = Strafe right (sideways)
+- **t** = Up
+- **b** = Down
+- **k** = Stop/Hover
+- **u/o/m/.** = Diagonal movements
+**This is the easiest way to manually fly the drone for testing!**
+ 
+---
+ 
+### Landing
+ 
+**Method 1: Land via ROS service:**
+ 
+```bash
+rosservice call /mavros/cmd/land "min_pitch: 0.0
+yaw: 0.0
+latitude: 0.0
+longitude: 0.0
+altitude: 0.0"
+```
+ 
+**Method 2: Switch to AUTO.LAND mode:**
+ 
+```bash
+rosservice call /mavros/set_mode "base_mode: 0
+custom_mode: 'AUTO.LAND'"
+```
+ 
+---
+ 
+### Position vs Velocity: When to Use Each
+ 
+**Use Position Control when:**
+- Flying to specific GPS/local coordinates
+- Waypoint missions
+- You want "go here and stop" behavior
+- Your RL agent outputs target positions
+**Use Velocity Control when:**
+- Manual flying / teleoperation
+- Continuous movement (path following)
+- Reactive control (obstacle avoidance)
+- Integration with joysticks/game controllers
+- Your RL agent outputs velocities (like PPO typically does)
+---
+ 
 ## Troubleshooting
  
-### Issue 1: "heading estimate invalid" Won't Clear
+### Issue 1: "Poll Timeout" Errors When Switching to OFFBOARD
+ 
+**Symptom:**
+```
+ERROR [simulator_mavlink] poll timeout 0, 22
+```
+ 
+**Cause:** PX4 can't communicate with Gazebo.
+ 
+**Solution:**
+ 
+1. Make sure Gazebo is actually running:
+   ```bash
+   ps aux | grep gazebo
+   # Should show gzserver and gzclient
+   ```
+ 
+2. If using HEADLESS mode, make sure you launched Gazebo separately via ROS:
+   ```bash
+   roslaunch gazebo_ros empty_world.launch
+   ```
+ 
+3. Don't mix ArduPilot worlds with PX4 — use PX4's default worlds or create compatible ones.
+---
+ 
+### Issue 2: OFFBOARD Mode Rejected / Timeout
+ 
+**Symptom:** Mode switch fails or times out immediately.
+ 
+**Cause:** Not publishing setpoints before switching to OFFBOARD.
+ 
+**Solution:** Always follow this sequence:
+ 
+1. Start publishing setpoints (at 20Hz)
+2. Wait 5-10 seconds
+3. **Then** switch to OFFBOARD
+4. **Then** arm
+Never switch to OFFBOARD before setpoints are streaming!
+ 
+---
+ 
+### Issue 3: "Heading Estimate Invalid" Won't Clear
  
 **Symptom:** PX4 refuses to arm due to magnetometer errors.
  
@@ -438,47 +809,49 @@ rosservice call /mavros/cmd/land "{min_pitch: 0.0, yaw: 0.0, latitude: 0.0, long
 commander arm -f  # Force arm (simulation only!)
 ```
  
+Or wait 15-30 seconds for GPS/magnetometer to initialize.
+ 
 ---
  
-### Issue 2: Gazebo Can't Find Models
+### Issue 4: Gazebo Can't Find Models
  
 **Symptom:** Error messages like `Model 'iris' not found`.
  
 **Solution:**
  
+Check your GAZEBO_MODEL_PATH includes PX4 models:
+ 
 ```bash
-# Add PX4 model paths to Gazebo
-echo 'export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models' >> ~/.bashrc
-source ~/.bashrc
+echo $GAZEBO_MODEL_PATH
+# Should include: .../PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models
 ```
+ 
+If not, add it to `.bashrc` and `source ~/.bashrc`.
  
 ---
  
-### Issue 3: MAVROS Can't Connect
+### Issue 5: MAVROS Can't Connect
  
 **Symptom:** `rostopic echo /mavros/state` shows `connected: False`.
  
 **Solution:**
  
-Check PX4 is running and listening on correct ports:
+Check PX4 MAVLink status:
  
 ```bash
-# In PX4 console, check MAVLink status
+# In PX4 console
 mavlink status
- 
 # Should show UDP connections on ports 14540, 14557
 ```
  
-If not, restart PX4 with:
- 
+Verify MAVROS is using correct URL:
 ```bash
-cd ~/PX4-Autopilot
-HEADLESS=1 make px4_sitl gazebo-classic
+roslaunch mavros px4.launch fcu_url:="udp://:14540@127.0.0.1:14557"
 ```
  
 ---
  
-### Issue 4: Build Fails with "Submodule Error"
+### Issue 6: Build Fails with "Submodule Error"
  
 **Symptom:** Error during `make` about missing submodules.
  
@@ -493,34 +866,19 @@ make px4_sitl gazebo-classic
  
 ---
  
-### Issue 5: Python Package Import Errors
+### Issue 7: GPU Not Being Used (WSL2)
  
-**Symptom:** `ModuleNotFoundError: No module named 'kconfiglib'` or similar.
- 
-**Solution:**
- 
-```bash
-# Reinstall Python packages
-pip3 install --user --upgrade \
-    kconfiglib jsonschema pyros-genmsg packaging toml numpy future empy jinja2 pymavlink
-```
- 
----
- 
-### Issue 6: GPU Not Being Used (WSL2 Users)
- 
-**Symptom:** Low FPS, high CPU usage, `nvidia-smi` shows no Gazebo process.
+**Symptom:** Low FPS, `nvidia-smi` shows no Gazebo process.
  
 **Solution:**
  
-You're likely hitting OpenGL version limitations. See your `glxinfo` output — if OpenGL version is 3.1, force Gazebo to use OGRE1:
+Your WSL2 OpenGL version is likely capped at 3.1. Check:
  
 ```bash
-# Launch Gazebo with OGRE1 renderer (compatible with OpenGL 3.1)
-# This won't affect PX4, only improves rendering performance
-export GAZEBO_RENDER_ENGINE=ogre
-roslaunch gazebo_ros empty_world.launch
+glxinfo -B | grep "OpenGL version"
 ```
+ 
+If showing 3.1, Gazebo is already using GPU but limited by OpenGL version. This is a WSL2 limitation, not a configuration issue. Performance is acceptable for simulation work.
  
 ---
  
@@ -537,7 +895,7 @@ make px4_sitl gazebo-classic
 HEADLESS=1 make px4_sitl gazebo-classic
  
 # Clean build (if something breaks)
-make clean
+make distclean
 make px4_sitl gazebo-classic
 ```
  
@@ -578,18 +936,18 @@ rostopic list | grep mavros
 # Arm via ROS
 rosservice call /mavros/cmd/arming "value: true"
  
-# Set mode
+# Set mode to OFFBOARD
 rosservice call /mavros/set_mode "base_mode: 0
 custom_mode: 'OFFBOARD'"
  
-# Takeoff
+# Takeoff (direct command, not via OFFBOARD)
 rosservice call /mavros/cmd/takeoff "{min_pitch: 0.0, yaw: 0.0, latitude: 0.0, longitude: 0.0, altitude: 2.0}"
  
 # Land
 rosservice call /mavros/cmd/land "{min_pitch: 0.0, yaw: 0.0, latitude: 0.0, longitude: 0.0, altitude: 0.0}"
 ```
  
-### Useful Monitoring Commands
+### Monitoring Commands
  
 ```bash
 # Monitor IMU data
@@ -604,6 +962,11 @@ rostopic echo /mavros/battery
 # Monitor GPS (simulated)
 rostopic echo /mavros/global_position/global
  
+# Check setpoint publishing rate
+rostopic hz /mavros/setpoint_position/local
+# Or for velocity:
+rostopic hz /mavros/setpoint_velocity/cmd_vel_unstamped
+ 
 # Record flight data
 rosbag record /mavros/imu/data /mavros/local_position/pose /mavros/state -O flight_test.bag
 ```
@@ -615,13 +978,13 @@ rosbag record /mavros/imu/data /mavros/local_position/pose /mavros/state -O flig
 ### For Research Work (PPO + Adaptive PID)
  
 1. **Create a custom Gazebo world** with obstacles/impact scenarios
-2. **Integrate your RL pipeline** (PPO training loop)
-3. **Access PX4's EKF state** via `/mavros/local_position/*` topics
-4. **Implement custom controllers** via MAVROS offboard mode
-5. **Log data** using rosbag for analysis
+2. **Integrate your RL pipeline** (PPO training loop publishing to `/mavros/setpoint_velocity/cmd_vel_unstamped`)
+3. **Access PX4's EKF state** via `/mavros/local_position/*` topics for your state observations
+4. **Implement custom controllers** via MAVROS OFFBOARD mode
+5. **Log data** using rosbag for analysis and paper figures
 ### Comparing ArduPilot vs PX4
  
-Since you have both installed:
+Since you have both installed, run them sequentially (never simultaneously):
  
 **ArduPilot Session:**
  
@@ -641,18 +1004,50 @@ roslaunch mavros apm.launch fcu_url:="udp://127.0.0.1:14551@14555"
 ```bash
 # Terminal 1
 cd ~/PX4-Autopilot
-HEADLESS=1 make px4_sitl gazebo-classic
+make px4_sitl gazebo-classic
  
 # Terminal 2
-roslaunch gazebo_ros empty_world.launch
- 
-# Terminal 3
 roslaunch mavros px4.launch fcu_url:="udp://:14540@127.0.0.1:14557"
  
 # Run same tests, collect rosbag data
 ```
  
-**Never run both simultaneously** — they'll conflict on ports.
+**Never run both simultaneously** — they'll conflict on MAVLink ports and Gazebo.
+ 
+---
+ 
+## Quick Reference: Complete OFFBOARD Workflow
+ 
+### Using Velocity Control (Recommended for RL)
+ 
+```bash
+# Terminal 1: PX4
+cd ~/PX4-Autopilot
+make px4_sitl gazebo-classic
+ 
+# Terminal 2: MAVROS
+roslaunch mavros px4.launch fcu_url:="udp://:14540@127.0.0.1:14557"
+ 
+# Terminal 3: Start publishing zero velocity
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}"
+ 
+# Terminal 4: Wait 5-10 sec, switch to OFFBOARD
+sleep 10
+rosservice call /mavros/set_mode "base_mode: 0
+custom_mode: 'OFFBOARD'"
+ 
+# Arm
+rosservice call /mavros/cmd/arming "value: true"
+ 
+# Terminal 3: Ctrl+C, then takeoff (ascend at 1 m/s)
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "linear: {x: 0.0, y: 0.0, z: 1.0}, angular: {x: 0.0, y: 0.0, z: 0.0}"
+ 
+# Wait ~2 seconds (reaches 2m), then Ctrl+C and hover
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}"
+ 
+# OR use keyboard control instead:
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/mavros/setpoint_velocity/cmd_vel_unstamped
+```
  
 ---
  
@@ -663,6 +1058,7 @@ roslaunch mavros px4.launch fcu_url:="udp://:14540@127.0.0.1:14557"
 - **PX4 User Guide:** https://docs.px4.io/
 - **PX4 Developer Guide:** https://dev.px4.io/
 - **MAVROS Documentation:** http://wiki.ros.org/mavros
+- **MAVROS OFFBOARD Tutorial:** https://docs.px4.io/main/en/ros/mavros_offboard_python
 - **Gazebo Classic Tutorials:** http://gazebosim.org/tutorials
 ### Useful GitHub Repositories
  
@@ -681,6 +1077,7 @@ roslaunch mavros px4.launch fcu_url:="udp://:14540@127.0.0.1:14557"
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2026-04-27 | Initial guide based on successful Ubuntu 20.04 + ROS Noetic + PX4 installation |
+| 2.0 | 2026-04-28 | Added OFFBOARD mode control section with position control, velocity control (cmd_vel), and keyboard teleoperation methods |
  
 ---
  
