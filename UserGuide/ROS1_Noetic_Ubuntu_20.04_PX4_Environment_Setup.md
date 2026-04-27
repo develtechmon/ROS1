@@ -210,6 +210,23 @@ export GAZEBO_RESOURCE_PATH=$GAZEBO_RESOURCE_PATH:/usr/share/gazebo-11
 # Apply changes
 source ~/.bashrc
 ```
+
+If you install `ardupilot_gazebo` from my other userguide `ros1_noetic_ubuntu_20_Gazebo_SITL_setup.md`. You can append `px4` gazebo environments as follow. This is safe method to combine `ardupilot` and `px4` gazebo environments
+```
+bash
+# Open .bashrc
+nano ~/.bashrc
+
+# Gazebo paths for both ArduPilot and PX4
+export GAZEBO_RESOURCE_PATH="/home/jlukas/ardupilot_gazebo":"/home/jlukas/ardupilot_gazebo/worlds":"/usr/share/gazebo-11"
+export GAZEBO_MODEL_PATH="/home/jlukas/ardupilot_gazebo/models":"$HOME/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models":"/usr/share/gazebo-11/models"
+export GAZEBO_PLUGIN_PATH="$HOME/PX4-Autopilot/build/px4_sitl_default/build_gazebo-classic":"/usr/lib/x86_64-linux-gnu/gazebo-11/plugins"
+
+# Save and exit (Ctrl+X, then Y, then Enter)
+ 
+# Apply changes
+source ~/.bashrc
+```
  
 ---
  
@@ -328,8 +345,8 @@ HEADLESS=1 make px4_sitl gazebo-classic
 # Source ROS environment
 source /opt/ros/noetic/setup.bash
  
-# Launch Gazebo with empty world
-roslaunch gazebo_ros empty_world.launch
+# Launch Iris World Gazebo with empty world
+roslaunch gazebo_ros iris_world.launch
 ```
  
 **Expected Output:**
