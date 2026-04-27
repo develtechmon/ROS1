@@ -564,6 +564,41 @@ angular:
 
 ---
 
+Alternatively, you can start the drone using this typical approach by `arming` and `takeoff` the drone and then switch to `OFFBOARD` as follow. This method didn't required you to perform the `setpoint` like previous step.
+```
+commander arm
+commander takeoff
+```
+
+Then in new terminal, run the following command to check what is the current `flight mode`.
+```
+rostopic echo /mavros/state -n 1
+```
+
+You should see below output
+```
+header: 
+  seq: 17
+  stamp: 
+    secs: 1777312873
+    nsecs: 352242329
+  frame_id: ''
+connected: True
+armed: False
+guided: True
+manual_input: False
+mode: "AUTO.LOITER <----
+```
+
+Then we can switch to `OFFBOARD mode`.
+```bash
+# Switch to OFFBOARD mode
+rosservice call /mavros/set_mode "base_mode: 0
+custom_mode: 'OFFBOARD'"
+
+# Expected response: mode_sent: True
+```
+
 #### Velocity Control Commands
 
 Each time you want to change velocity, Ctrl+C the current command and paste a new one:
