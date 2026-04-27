@@ -389,7 +389,7 @@ rosservice call /mavros/cmd/arming "value: true"
 
 ---
 
-Otherwise, you can start the drone using this typical approach by `arming` and `takeoff` the drone and then switch to `OFFBOARD` as follow
+Alternatively, you can start the drone using this typical approach by `arming` and `takeoff` the drone and then switch to `OFFBOARD` as follow. This method didn't required you to perform the `setpoint` like previous step.
 ```
 commander arm
 commander takeoff
