@@ -763,6 +763,12 @@ sudo apt install ros-noetic-teleop-twist-keyboard
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py _repeat_rate:=20.0 cmd_vel:=/mavros/setpoint_velocity/cmd_vel_unstamped
 ```
 
+or run below command
+```
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/mavros/setpoint_velocity/cmd_vel_unstamped
+
+```
+
 **Important:** The `_repeat_rate:=20.0` parameter ensures continuous publishing at 20Hz, which is required for OFFBOARD mode.
 
 **Control Keys:**
