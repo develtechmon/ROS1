@@ -259,7 +259,8 @@ You'll need 3 terminals running simultaneously:
  
 ```bash
 cd ~/PX4-Autopilot
-make px4_sitl gazebo-classic
+#make px4_sitl gazebo-classic
+HEADLESS=1 make px4_sitl gazebo-classic
 ```
  
 **Wait for:** `INFO [commander] Ready for takeoff!`
