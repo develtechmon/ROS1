@@ -4,7 +4,7 @@ In this userguide, i'm going to show how to control our `Mavros` drone using rqt
 * a. `Service`
 * b. `Topic`
 
-## This is for `Ardupilot`
+# This is for `Ardupilot`
 ## Step 1 - Run Gazebo
 
 Open terminator terminal and run following command
