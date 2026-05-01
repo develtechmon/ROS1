@@ -42,7 +42,7 @@ roslaunch mavros apm.launch fcu_url:=tcp://127.0.0.1:5763
 This is for PX4
 
 Here we can run PX4, Gazebo, QGroundControl, ROS/MAVROS together
-## Step 1 - Start PX4 SIT:L
+## Step 1 - Start PX4 SITL
 
 Open terminator terminal and run following command
 ```
