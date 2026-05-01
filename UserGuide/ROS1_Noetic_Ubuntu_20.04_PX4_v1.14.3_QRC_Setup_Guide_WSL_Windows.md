@@ -109,6 +109,19 @@ PX4 v1.14.3 has a known dependency syntax issue. Fix it:
 
 ```bash
 sed -i 's/matplotlib>=3.0.\*/matplotlib>=3.0/g' Tools/setup/requirements.txt
+
+or
+cd ~/PX4-Autopilot
+
+vi Tools/setup/requirements.txt
+
+Find line that says:
+matplotlib>=3.0.*
+
+change it to:
+matplotlib>=3.0
+
+save & quit
 ```
 
 ### Step 4: Install Dependencies
@@ -123,12 +136,17 @@ bash ./Tools/setup/ubuntu.sh
 cd ~/PX4-Autopilot
 make px4_sitl gazebo-classic
 
-or
-
 # Build (fast with all cores)
 make px4_sitl gazebo-classic -j$(nproc)
 ```
 
+if build is fain and the do the following
+```
+# Clean and rebuild
+cd ~/PX4-Autopilot
+make distclean
+make px4_sitl gazebo-classic -j$(nproc)
+```
 **First build takes 5-10 minutes.** Subsequent builds are faster.
 
 ### Step 7: Verify Installation
