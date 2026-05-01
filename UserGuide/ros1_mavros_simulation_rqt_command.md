@@ -8,7 +8,11 @@ In this userguide, i'm going to show how to control our `Mavros` drone using rqt
 
 Open terminator terminal and run following command
 ```
-gazebo --verbose ~/ardupilot_gazebo/worlds/iris_arducopter_runway.world 
+gazebo --verbose ~/ardupilot_gazebo/worlds/iris_arducopter_runway.world
+
+you can run this command to use ROS1 topic
+roslaunch gazebo_ros iris_world.launch
+
 ```
 
 Your gazebo should appear soon.
