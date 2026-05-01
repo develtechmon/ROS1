@@ -65,6 +65,8 @@ Wait for connection message:
 For PX4, you can refer to my userguide here with more details
 ```
 https://github.com/develtechmon/ROS1/blob/master/UserGuide/ROS1_Noetic_Ubuntu_20.04_PX4_v1.14.3_QRC_Setup_Guide_WSL_Windows.md
+
+https://github.com/develtechmon/ROS1/blob/master/UserGuide/ROS1_Noetic_Ubuntu_20.04_PX4_Environment_Setup.md
 ```
 ## Step 4 - Run RQT
 
