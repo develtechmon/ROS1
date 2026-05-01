@@ -91,16 +91,7 @@ sed -i 's/matplotlib>=3.0.\*/matplotlib>=3.0/g' Tools/setup/requirements.txt
 ### Step 4: Install Dependencies
 
 ```bash
-bash ./Tools/setup/ubuntu.sh --no-sim-tools
-```
-
-This installs PX4 dependencies but skips simulator tools (we'll use Gazebo Classic from ROS).
-
-### Step 5: Install Gazebo Classic 11
-
-```bash
-sudo apt update
-sudo apt install gazebo11 libgazebo11-dev
+bash ./Tools/setup/ubuntu.sh 
 ```
 
 ### Step 6: Build PX4 SITL
