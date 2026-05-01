@@ -39,6 +39,28 @@ Here, tcp port is the same we use in our `dronekit` connection string
 ```
 roslaunch mavros apm.launch fcu_url:=tcp://127.0.0.1:5763
 ```
+This is for PX4
+
+Here we can run PX4, Gazebo, QGroundControl, ROS/MAVROS together
+## Step 1 - Start PX4 SIT:L
+
+Open terminator terminal and run following command
+```
+cd ~/PX4-Autopilot
+make px4_sitl gazebo-classic_iris
+```
+Wait for home_set message.
+
+## Step 2 - Launch MAVROS
+Open new terminal
+```
+source /opt/ros/noetic/setup.bash
+roslaunch mavros px4.launch fcu_url:="udp://:14540@127.0.0.1:14557"
+```
+Wait for connection message:
+```
+[ INFO] [1234567890.123456]: CON: Got HEARTBEAT, connected.
+```
 
 ## Step 4 - Run RQT
 
