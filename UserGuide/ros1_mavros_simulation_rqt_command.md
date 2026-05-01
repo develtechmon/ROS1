@@ -47,11 +47,18 @@ Here we can run PX4, Gazebo, QGroundControl, ROS/MAVROS together
 Open terminator terminal and run following command
 ```
 cd ~/PX4-Autopilot
-make px4_sitl gazebo-classic_iris
+HEADLESS=1 make px4_sitl gazebo-classic
 ```
 Wait for home_set message.
 
-## Step 2 - Launch MAVROS
+## Step 2 - Launch Gazebo
+
+In new terminal, run the following command
+```
+roslaunch gazebo_ros iris_world.launch
+```
+
+## Step 3 - Launch MAVROS
 Open new terminal
 ```
 source /opt/ros/noetic/setup.bash
