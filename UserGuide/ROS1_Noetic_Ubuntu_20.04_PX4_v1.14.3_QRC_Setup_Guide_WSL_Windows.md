@@ -80,6 +80,25 @@ git checkout v1.14.3
 git submodule update --init --recursive
 ```
 
+Usually avbove step is quite slow and take lots of time. YOu can speed up time the process by using below method. This is 5-10x faster than full clone!
+
+```
+# Press Ctrl+C to stop current clone
+
+cd ~
+
+# Remove incomplete clone
+rm -rf PX4-Autopilot
+
+# Shallow clone (MUCH faster - downloads only v1.14.3, not entire history)
+git clone --depth 1 --branch v1.14.3 https://github.com/PX4/PX4-Autopilot.git
+
+cd PX4-Autopilot
+
+# Now get submodules (this is the slow part)
+git submodule update --init --recursive
+```
+
 ### Step 3: Fix Python Dependencies
 
 PX4 v1.14.3 has a known dependency syntax issue. Fix it:
