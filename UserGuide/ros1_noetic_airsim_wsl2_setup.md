@@ -187,6 +187,13 @@ git submodule update --init --recursive
 
 ./Tools/environment_install/install-prereqs-ubuntu.sh -y
 
+git checkout f29b062e40
+or
+git checkout Copter-4.3.7
+
+git submodule update --init --recursive
+
+
 . ~/.profile
 ```
 
