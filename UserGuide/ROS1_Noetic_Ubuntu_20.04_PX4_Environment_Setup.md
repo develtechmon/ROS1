@@ -312,6 +312,24 @@ cd ~/PX4-Autopilot
 make px4_sitl gazebo-classic_iris__warehouse
 ```
 
+Other examples
+```
+# Iris quad in warehouse (indoor)
+make px4_sitl gazebo-classic_iris__warehouse
+
+# Iris quad in Yosemite (mountains)
+make px4_sitl gazebo-classic_iris__yosemite
+
+# Iris quad in Baylands (waterfront)
+make px4_sitl gazebo-classic_iris__baylands
+
+# Plane in airport runway
+make px4_sitl gazebo-classic_plane__ksql_airport
+
+# Rover in Sonoma Raceway
+make px4_sitl gazebo-classic_r1_rover__sonoma_raceway
+```
+
 **What Should Happen:**
 
 1. Gazebo window opens showing an Iris quadcopter
