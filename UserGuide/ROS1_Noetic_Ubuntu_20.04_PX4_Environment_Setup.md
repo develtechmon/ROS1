@@ -125,7 +125,7 @@ save & quit
 
 ---
 
-### Step 2: Install PX4 Dependencies
+### Step 2: Alternatively, you can ignore the `Ubuntu.sh` and Install PX4 Dependencies manually
 
 **Important:** We will NOT use PX4's `ubuntu.sh` setup script as-is because it tries to install Gazebo Harmonic, which conflicts with Gazebo Classic 11 on Ubuntu 20.04.
 
