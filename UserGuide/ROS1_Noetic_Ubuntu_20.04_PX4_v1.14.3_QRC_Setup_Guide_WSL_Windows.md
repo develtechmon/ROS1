@@ -97,6 +97,10 @@ cd PX4-Autopilot
 
 # Now get submodules (this is the slow part)
 git submodule update --init --recursive
+
+# Verify you're on v1.14.3
+cd ~/PX4-Autopilot
+git describe --tags
 ```
 
 ### Step 3: Fix Python Dependencies
@@ -118,6 +122,11 @@ bash ./Tools/setup/ubuntu.sh
 ```bash
 cd ~/PX4-Autopilot
 make px4_sitl gazebo-classic
+
+or
+
+# Build (fast with all cores)
+make px4_sitl gazebo-classic -j$(nproc)
 ```
 
 **First build takes 5-10 minutes.** Subsequent builds are faster.
