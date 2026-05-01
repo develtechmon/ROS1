@@ -281,6 +281,35 @@ make px4_sitl gazebo-classic
 
 or you can try with
 make px4_sitl gazebo-classic_iris
+
+You can try different world
+make px4_sitl gazebo-classic_iris__warehouse
+```
+
+You can see all available worlds as shown below
+```
+ls ~/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/worlds/
+```
+
+list of worlds as follow
+```
+baylands.world
+empty.world
+hippocampus.world
+ksql_airport.world
+mcmillan_airfield.world
+safe_landing.world
+sonoma_raceway.world
+typhoon_h480.world
+uuv_hippocampus.world
+warehouse.world
+yosemite.world
+```
+
+Try to build warehouse right now
+```
+cd ~/PX4-Autopilot
+make px4_sitl gazebo-classic_iris__warehouse
 ```
 
 **What Should Happen:**
