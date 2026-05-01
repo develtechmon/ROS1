@@ -231,6 +231,16 @@ To invoke `mavproxy` terminal
 mavproxy.py --master=127.0.0.1:14550
 ```
 
+if there is no `established` connection between `sim_vehicle.py` and `gazebo`. You have to perform `cmake` again as follow:
+```
+cd ardupilot_gazebo
+mkdir build
+cd build
+sudo apt install cmake
+cmake ..
+make -j4
+sudo make install
+```
 
 # Install mavros noetic
 
