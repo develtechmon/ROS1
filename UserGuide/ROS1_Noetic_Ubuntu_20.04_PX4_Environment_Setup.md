@@ -277,6 +277,9 @@ make px4_sitl gazebo-classic
 ```bash
 cd ~/PX4-Autopilot
 make px4_sitl gazebo-classic
+
+or you can try with
+make px4_sitl gazebo-classic_iris
 ```
 
 **What Should Happen:**
