@@ -62,6 +62,10 @@ Wait for connection message:
 [ INFO] [1234567890.123456]: CON: Got HEARTBEAT, connected.
 ```
 
+For PX4, you can refer to my userguide here with more details
+```
+https://github.com/develtechmon/ROS1/blob/master/UserGuide/ROS1_Noetic_Ubuntu_20.04_PX4_v1.14.3_QRC_Setup_Guide_WSL_Windows.md
+```
 ## Step 4 - Run RQT
 
 Advantage of RQT, is that it enable you to make a service call and execute topic to control the drone.
