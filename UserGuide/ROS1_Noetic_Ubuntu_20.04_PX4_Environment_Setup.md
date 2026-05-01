@@ -160,6 +160,57 @@ pip3 install --user \
     numpy future empy jinja2 pymavlink
 ```
 
+You can consider to install the following to add from above
+```
+cd ~/PX4-Autopilot
+
+# Install the essential Python packages manually
+pip3 install --user \
+    packaging \
+    toml \
+    numpy \
+    pyros-genmsg \
+    setuptools \
+    wheel \
+    'matplotlib>=3.0' \
+    pyserial \
+    empy \
+    pyulog \
+    pyyaml \
+    cerberus \
+    jinja2 \
+    jsonschema \
+    kconfiglib
+
+# Now continue with the rest of setup
+sudo apt update
+sudo apt install -y \
+    astyle \
+    build-essential \
+    ccache \
+    cmake \
+    cppcheck \
+    file \
+    g++ \
+    gcc \
+    gdb \
+    git \
+    lcov \
+    make \
+    ninja-build \
+    python3 \
+    python3-dev \
+    python3-pip \
+    python3-setuptools \
+    python3-wheel \
+    rsync \
+    shellcheck \
+    unzip \
+    wget \
+    xsltproc \
+    zip
+
+```
 ---
 
 ### Step 3: Configure Environment Variables
