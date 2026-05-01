@@ -87,13 +87,14 @@ Since Ubuntu 20.04 is `end of support`, checkout a version that still supports i
 git clone https://github.com/ArduPilot/ardupilot
 
 cd ardupilot
-git submodule update --init --recursive
 
 git checkout f29b062e40
 or
 git checkout Copter-4.3.7
 
 git submodule update --init --recursive
+
+git describe --tags
 
 ./Tools/environment_install/install-prereqs-ubuntu.sh -y
 ```
