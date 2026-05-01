@@ -467,7 +467,7 @@ print("=" * 50)
 
 # Connect to AirSim
 print("\n[1/8] Connecting to AirSim...")
-client = airsim.MultirotorClient(ip="172.23.0.1") # This is referring to windows IP address "IPv4 Address"
+client = airsim.MultirotorClient(ip="172.28.0.1") # This is referring to windows IP address "IPv4 Address"
 #client = airsim.MultirotorClient()
 client.confirmConnection()
 print("✓ Connected to AirSim")
