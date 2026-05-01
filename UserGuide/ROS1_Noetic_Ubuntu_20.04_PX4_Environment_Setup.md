@@ -126,6 +126,8 @@ cd PX4-Autopilot
 # Now get submodules (this is the slow part)
 git submodule update --init --recursive
 
+bash ./Tools/setup/ubuntu.sh
+
 # Verify you're on v1.14.3
 cd ~/PX4-Autopilot
 git describe --tags
