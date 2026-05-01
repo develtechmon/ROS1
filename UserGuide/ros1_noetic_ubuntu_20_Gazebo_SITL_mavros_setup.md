@@ -214,6 +214,9 @@ Next we're going to fly our `drone` in Gazebo. Run following command in new term
 gazebo iris_arducopter_runaway.world
 gazebo --verbose ~/ardupilot_gazebo/worlds/iris_arducopter_runway.world
 
+or if you want to use ros topic
+roslaunch gazebo_ros iris_world.launch
+
 cd ardupilot/ArduCopter
 ../Tools/autotest/sim_vehicle.py -f gazebo-iris --console --map
 
