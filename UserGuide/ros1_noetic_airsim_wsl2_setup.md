@@ -227,9 +227,18 @@ cd build
 
 sudo apt install cmake
 
+# Configure with cmake
 cmake ..
 
+# Build with all cores (fast)
 make -j4
+
+or
+
+make -j$(nproc)
+
+# Install plugin system-wide
+sudo make install
 
 clear
 ```
