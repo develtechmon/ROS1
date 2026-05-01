@@ -309,7 +309,18 @@ Then launch the `SITL`
 sim_vehicle.py -v ArduCopter -f gazebo-iris --console
 ```
 
-We can the published topic
+if there is no `established` connection between `sim_vehicle.py` and `gazebo`. You have to perform `cmake` again as follow:
+```
+cd ardupilot_gazebo
+mkdir build
+cd build
+sudo apt install cmake
+cmake ..
+make -j4
+sudo make install
+```
+
+We can check published topic
 ```
 cd ~
 
