@@ -171,6 +171,15 @@ sudo apt-get install -y \
     gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
     gstreamer1.0-plugins-ugly gstreamer1.0-libav
 
+# Install additional dependencies for Gazebo Classic
+sudo apt-get install -y protobuf-compiler libeigen3-dev libopencv-dev
+
+# Install GStreamer (for camera plugins)
+sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-plugins-good gstreamer1.0-libav
+
+# Install Qt (for Gazebo GUI)
+sudo apt-get install -y qtbase5-dev libqt5svg5-dev
+
 # Install Python 3 dependencies
 sudo apt-get install -y \
     python3-pip python3-dev python3-jinja2 python3-numpy \
@@ -236,6 +245,15 @@ sudo apt install -y \
     xsltproc \
     zip
 
+# Install additional dependencies for Gazebo Classic
+sudo apt-get install -y protobuf-compiler libeigen3-dev libopencv-dev
+
+# Install GStreamer (for camera plugins)
+sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-plugins-good gstreamer1.0-libav
+
+# Install Qt (for Gazebo GUI)
+sudo apt-get install -y qtbase5-dev libqt5svg5-dev
+
 ```
 ---
 
@@ -283,6 +301,14 @@ cd ~/PX4-Autopilot
 make px4_sitl gazebo-classic
 
 # This will take 5-15 minutes on first build
+```
+
+if build is fail, then do the following
+```
+# Clean and rebuild
+cd ~/PX4-Autopilot
+make distclean
+make px4_sitl gazebo-classic -j$(nproc)
 ```
 
 **Expected Output:**
