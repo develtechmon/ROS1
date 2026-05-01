@@ -107,6 +107,22 @@ bash ./Tools/setup/ubuntu.sh
 
 **Note:** The `--recursive` flag is critical — it clones all Git submodules that PX4 depends on.
 
+of you encounter an issues with `matplotlib>=3.0*` after running `ubuntu.sh`. You can do the following
+```
+cd ~/PX4-Autopilot
+
+vi Tools/setup/requirements.txt
+
+Find line that says:
+matplotlib>=3.0.*
+
+change it to:
+matplotlib>=3.0
+
+save & quit
+```
+
+
 ---
 
 ### Step 2: Install PX4 Dependencies
