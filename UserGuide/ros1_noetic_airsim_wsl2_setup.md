@@ -80,7 +80,7 @@ terminator
 
 ### ROS Noetic Installation
 
-### Step 1 : Perform pdate and upgrade 
+### Step 1 : Perform update and upgrade 
 ```
 sudo apt-get update -y && sudo apt-get ugprade -y
 ```
@@ -178,6 +178,9 @@ pip install --upgrade pip setuptools setuptools_scm wheel build
 We're going to install `Ardupilot` which will be used for simulation later.
 
 #### Step 1: Clone Ardupilot packages and install the following
+
+Since Ubuntu 20.04 is "end of support", checkout a version that still supports it:
+
 ```
 git clone https://github.com/ArduPilot/ardupilot
 
