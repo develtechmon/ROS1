@@ -85,6 +85,9 @@ sudo bash ./install_geographiclib_datasets.sh
 
 ### Step 1: Clone PX4-Autopilot Repository
 
+Since we're using `Ros1 Noetic` and `Gazebo classic`. Therefore, `px4 autopilot` package `v1.14 stable` is optimized for this setup. Therefore
+we're going to install this version to avoid any issue during the installation.
+
 ```bash
 # Navigate to home directory
 cd ~
@@ -94,6 +97,12 @@ git clone https://github.com/PX4/PX4-Autopilot.git --recursive
 
 # Navigate into the repository
 cd PX4-Autopilot
+
+git checkout v1.14.3
+
+git submodule update --init --recursive
+
+bash ./Tools/setup/ubuntu.sh
 ```
 
 **Note:** The `--recursive` flag is critical — it clones all Git submodules that PX4 depends on.
