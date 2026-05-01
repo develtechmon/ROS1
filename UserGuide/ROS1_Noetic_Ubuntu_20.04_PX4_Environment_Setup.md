@@ -108,6 +108,29 @@ bash ./Tools/setup/ubuntu.sh
 
 **Note:** The `--recursive` flag is critical — it clones all Git submodules that PX4 depends on.
 
+Usually avbove step is quite slow and take lots of time. YOu can speed up time the process by using below method. This is 5-10x faster than full clone!
+
+```
+# Press Ctrl+C to stop current clone
+
+cd ~
+
+# Remove incomplete clone
+rm -rf PX4-Autopilot
+
+# Shallow clone (MUCH faster - downloads only v1.14.3, not entire history)
+git clone --depth 1 --branch v1.14.3 https://github.com/PX4/PX4-Autopilot.git
+
+cd PX4-Autopilot
+
+# Now get submodules (this is the slow part)
+git submodule update --init --recursive
+
+# Verify you're on v1.14.3
+cd ~/PX4-Autopilot
+git describe --tags
+```
+
 of you encounter an issues with `matplotlib>=3.0*` after running `ubuntu.sh`. You can do the following
 ```
 cd ~/PX4-Autopilot
