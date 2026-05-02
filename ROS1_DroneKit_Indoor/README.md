@@ -11,7 +11,7 @@ rm -rf build devel
 
 catkin_make
 
-source deve/setup/bash
+source devel/setup/bash
 ```
 
 ## Step 2  : run our scripts
