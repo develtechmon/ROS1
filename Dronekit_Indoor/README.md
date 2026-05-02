@@ -296,6 +296,28 @@ See below diagram. This is `ESC` i used in this setup.
 
 
 # Raspberry Pi Specific Setup
+
+## Using this method you can `ssh` to `rpi` as follow:
+
+Upon reboot, new WIFI access point will shown as `pi_techmon`, please connect to it 1st using this password
+```
+password : Lukas@92
+```
+
+To ssh in windows
+```
+ipconfig
+
+then search for Wireless LAN adapter Wi-FI
+Default GateWay : 10.42.0.1
+```
+
+Then ssh as follow in terminal
+```
+jlukas@10.42.0.1
+password: 2328
+```
+
 ## 1. Flash Image
 
 Please ensure that you have flash RPI with mentioned Image using RPI imager.
