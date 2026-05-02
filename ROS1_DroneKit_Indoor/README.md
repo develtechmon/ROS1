@@ -25,4 +25,14 @@ keyboard_motion_control_field.py              takeoff_and_loiter_optical_flow_fi
 keyboard_motion_control_sim.launch            takeoff_and_loiter_optical_flow_field.py
 keyboard_motion_control_sim.py                takeoff_and_loiter_optical_flow_sim.launch
 simulator.launch                              takeoff_and_loiter_optical_flow_sim.py
-start_sim_vehicle.py     ```
+start_sim_vehicle.py
+```
+
+## Step 3 : alternatively, you can launch the scripts
+```
+jlukas@Techmon:~/My_Project/ROS1/ROS1_DroneKit_Indoor$ roslaunch indoor
+
+keyboard_motion_control_field.launch          takeoff_and_loiter_optical_flow_field.launch
+keyboard_motion_control_sim.launch            takeoff_and_loiter_optical_flow_sim.launch
+simulator.launch  
+```
