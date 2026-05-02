@@ -136,6 +136,19 @@ sudo pip install dronekit
 sudo pip install MAVProxy
 sudo pip install keyboard
 sudo pip install pymavlink==2.4.37
+sudo pip install simple_pid
+```
+
+To ensure works with ros1 indoor drone, especially the aruco detection. We have to install this specific opencv
+```
+Step 1: Uninstall Current OpenCV
+pip3 uninstall opencv-python opencv-contrib-python
+
+Step 2: Install OpenCV 4.2.0
+pip3 install opencv-python==4.2.0.34 opencv-contrib-python==4.2.0.34
+
+Step 3: Verify Installation
+python3 -c "import cv2; print(cv2.__version__)"
 ```
 
 ### Step 3 : Install Python 3.11 From Source and Install PIP
