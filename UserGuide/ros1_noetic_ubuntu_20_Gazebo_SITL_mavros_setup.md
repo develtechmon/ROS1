@@ -76,6 +76,8 @@ sudo pip install dronekit
 sudo pip install MAVProxy
 sudo pip install keyboard
 sudo pip install pymavlink==2.4.37 <===== important to avoid def init(self, buf: Optional[Sequence[int]] = None) -> None: Error SyntaxError: invalid syntax
+
+sudo pip install simple_pid
 ```
 
 To ensure works with ros1 indoor drone, especially the aruco detection. We have to install this specific opencv
