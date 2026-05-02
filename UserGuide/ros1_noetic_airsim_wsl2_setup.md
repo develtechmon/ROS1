@@ -175,7 +175,7 @@ pip install --upgrade pip setuptools setuptools_scm wheel build
 
 ### Ardupilot Installation
 
-We're going to install `Ardupilot` which will be used for simulation later.
+We're going to install `Ardupilot` which will be used for simulation later. Since Ubuntu 20.04 is end of support, checkout a version that still supports it. This version support ROS1 indoor drone code. Latest version of ardupilot didn't support it.
 
 #### Step 1: Clone Ardupilot packages and install the following
 
@@ -186,9 +186,24 @@ git clone https://github.com/ArduPilot/ardupilot
 
 cd ardupilot
 
-git checkout f29b062e40
-or
 git checkout Copter-4.3.7
+
+git submodule update --init --recursive
+
+git describe --tags
+
+./Tools/environment_install/install-prereqs-ubuntu.sh -y
+
+. ~/.profile
+```
+
+Alternatively, you can try to install this version which is also working with ros1 indoor drone code esepcially to solve rangefinder issue.
+```
+git clone https://github.com/ArduPilot/ardupilot
+
+cd ardupilot
+
+git checkout AP_Periph-1.5.0
 
 git submodule update --init --recursive
 
