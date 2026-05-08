@@ -687,7 +687,19 @@ Velocity control tells the drone "move at this speed" instead of "go to this pos
 
 #### Step-by-Step Procedure
 
-**Terminal 4 — Start Publishing Zero Velocity (Hover):**
+
+Terminal 1 - 1st we need perform the following 
+```
+commander arm
+commander takeoff
+```
+
+Terminal 2 - run the following command to check what is the current flight mode.
+```
+rostopic echo /mavros/state -n 1
+```
+
+**Terminal 3 — Start Publishing Zero Velocity (Hover):**
 
 ```bash
 rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
@@ -705,7 +717,7 @@ angular:
 
 ---
 
-**Terminal 5 — Switch to OFFBOARD and Arm:**
+**Terminal 4 — Switch to OFFBOARD and Arm:**
 
 ```bash
 # Wait 5-10 seconds after starting setpoints
@@ -714,8 +726,15 @@ angular:
 rosservice call /mavros/set_mode "base_mode: 0
 custom_mode: 'OFFBOARD'"
 
-# Arm
-rosservice call /mavros/cmd/arming "value: true"
+# Expected response: mode_sent: True
+
+# Arm (Use this only if you dodn't want to arm using commander px4)
+rosservice call /mavros/cmd/arming "value: true" 
+```
+
+Then check the state again
+```
+rostopic echo /mavros/state -n 1
 ```
 
 **Drone arms but stays on ground (because Z velocity = 0).**
