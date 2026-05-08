@@ -514,6 +514,17 @@ OFFBOARD mode allows you to control the drone programmatically via ROS. This is 
 
 ### Method 1: Position Control (Go to Coordinates)
 
+1st we need perform the following
+```
+commander arm
+commander takeoff
+```
+
+Then in new terminal, run the following command to check what is the current `flight mode`.
+```
+rostopic echo /mavros/state -n 1
+```
+
 Position control tells the drone "fly to this XYZ coordinate and stay there."
 
 **Best for:** Waypoint missions, hovering at specific locations, structured testing
@@ -554,6 +565,11 @@ custom_mode: 'OFFBOARD'"
 ```
 
 ---
+
+Then check the state again
+```
+rostopic echo /mavros/state -n 1
+```
 
 **Terminal 5 — Arm the drone:**
 
