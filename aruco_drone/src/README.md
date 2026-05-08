@@ -18,7 +18,24 @@ catkin_make
 source devel/setup.bash
 ```
 
-Then run 
+Then run below.
+
+```
+sudo su
+enter your password. This is because keyboard required root access
+```
+
+Then install this package
+```
+ip install simple_pid
+```
+
+Then
+```
+source devel/setup.bash
+```
+
+and run this script
 ```
 rosrun aruco_drone keyboard_motion_control_sim_with_aruco_detection.py 
 ```
