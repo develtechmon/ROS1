@@ -803,6 +803,29 @@ manual_input: False
 mode: "AUTO.LOITER <----
 ```
 
+**Terminal 4 — Start Publishing Position Setpoints:**
+
+```bash
+rostopic pub -r 20 /mavros/setpoint_position/local geometry_msgs/PoseStamped "
+header:
+  stamp: now
+  frame_id: 'map'
+pose:
+  position:
+    x: 0.0
+    y: 0.0
+    z: 2.0
+  orientation:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0"
+```
+
+**Leave this running!** It publishes "hover at (0, 0, 2m)" at 20Hz.
+
+---
+
 Then we can switch to `OFFBOARD mode`.
 ```bash
 # Switch to OFFBOARD mode
