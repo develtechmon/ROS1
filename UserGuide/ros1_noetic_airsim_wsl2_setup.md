@@ -227,6 +227,18 @@ git describe --tags
 . ~/.profile
 ```
 
+if you have alreday use `latest version` and install the packages, then we need to perform clean `build` as follow.
+```
+cd ~/ardupilot
+git fetch --tags
+git checkout Copter-4.3.7
+git submodule update --init --recursive
+./waf clean
+rm -rf build/
+./waf configure --board sitl
+./waf copter
+```
+
 ## Step 2: Launch `Sim Vehicle`
 
 Once done with the installation, we can launch the SITL using this command
