@@ -1,5 +1,5 @@
-# AirSim + PX4 SITL Complete Simulation Testing Guide
-## Windows + WSL2 Setup and Verification Workflow
+# AirSim + PX4 SITL Complete Simulation Testing Guide using DroneServer
+## Windows + WSL2/VM Ubuntu Setup and Verification Workflow
 
 ---
 
