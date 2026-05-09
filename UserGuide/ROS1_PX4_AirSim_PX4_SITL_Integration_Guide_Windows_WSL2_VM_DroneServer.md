@@ -1374,6 +1374,22 @@ commander: preflight check: 1052 events, 0us elapsed, 0.00us avg, min 0us max 0u
 
 To change the mode, you can refer to previous guide.
 
+Additionally we can control the drone directly using `mavlink` as mentioned before. Please ensure that both `droneserver` and `px4 commander` alive together. If yes then we can run the following in new terminal.
+```
+cd ~/AirSim/build_release/output/bin
+
+# Connect to port 18570 (Normal mode instance)
+./MavLinkTest -udp:127.0.0.1:18570
+```
+Next, click double to prompt the `mav`. You can test the following command and see how the drone react
+```
+arm
+
+takeoff 2
+
+land
+```
+
 ### 6.4: Understanding the Output
 
 | Message | Meaning | Status |
