@@ -1021,7 +1021,29 @@ nano ~/Documents/AirSim/settings.json
 
 ### 6.3: Run DroneServer
 
-Open a **new WSL2 terminal** (Terminal 3):
+Please pay attention to run the `DroneServer` 1st before running `make px4_sitl none_iris` command, otherwise it wont work.
+
+Before running `droneserver` it is very important to use correct `settings.json` in our `linux` which located at `/Documents/AirSim/settings.json `. If this file not exist, you have to create it manually. Please use below content for our `settings.json` script.
+
+Ubuntu linux (/Documents/AirSim/settings.json)
+```
+{
+  "SettingsVersion": 1.2,
+  "SimMode": "",
+  "Vehicles": {
+    "PX4": {
+      "VehicleType": "PX4Multirotor",
+      "UseSerial": false,
+      "UseTcp": false,
+      "UdpIp": "127.0.0.1",
+      "UdpPort": 14580,
+      "LocalHostIp": "127.0.0.1"
+    }
+  }
+}
+```
+
+Open a **new WSL2 terminal** (Terminal 3).
 
 ```bash
 cd ~/AirSim/build_release/output/bin
@@ -1047,8 +1069,310 @@ not receiving any messages from HIL, please restart your HIL node and try again
 ```
 
 **Leave it running.** The HIL warning is expected (explained in next section).
-
 ---
+
+Next, please run the `AirSim block.exe` in windows and please ensure the `settings.json` as follow before running this. 
+
+Windows (C:\Users\lukas\Documents\AirSim)
+```
+{
+  "SettingsVersion": 1.2,
+  "SimMode": "Multirotor",
+  "ClockType": "SteppableClock",
+  "Vehicles": {
+    "PX4": {
+      "VehicleType": "PX4Multirotor",
+      "UseSerial": false,
+      "LockStep": true,
+      "UseTcp": true,
+      "TcpPort": 4560,
+      "ControlIp": "remote",
+      "ControlPortLocal": 14540,
+      "ControlPortRemote": 14580,
+      "LocalHostIp": "192.168.177.1",
+      "Sensors":{
+        "Barometer":{
+          "SensorType": 1,
+          "Enabled": true,
+          "PressureFactorSigma": 0.0001825
+        }
+      },
+      "Parameters": {
+        "NAV_RCL_ACT": 0,
+        "NAV_DLL_ACT": 0,
+        "COM_OBL_ACT": 1,
+        "LPE_LAT": 47.641468,
+        "LPE_LON": -122.140165
+      }
+    }
+  }
+}
+```
+IP address `192.168.177.1` is referring to windows IPs not Linux. You may have to change it.
+
+Then in `Linux`, please run the following command to enable `make px4`. We have to export the ip address as follow to ensure correct connection established. Otherwise it wont work.
+
+```
+export PX4_SIM_HOST_ADDR=192.168.177.1  # Your Windows IP
+cd ~/PX4-Autopilot
+make px4_sitl none_iris
+```
+
+At this point you should see output from `droneserver` as follow that indicate there is hearbeat received. Sometime you have to `ctrl + c` the `drone server` and relaunch it again to see this heartbeat properly.
+```
+Connected to SITL over UDP.
+Connecting to PX4 Control UDP port 14540, local IP 127.0.0.1, remote IP 127.0.0.1 ...
+Ground control connected over UDP.
+Got GPS lock
+Preflight Fail: ekf2 missing data
+[logger] ./log/2026-05-09/03_13_26.ulg	
+received first heartbeat <----- Drone hearbeat
+Got GPS Home Location  <-----  It looking for location
+```
+
+To test if `px4 commander` recognize our `droneserver`. Let's do the following
+
+In `px4 commander we write the following command to observe the interaction
+```
+INFO  [px4] Startup script returned successfully
+pxh> INFO  [tone_alarm] notify negative
+INFO  [mavlink] partner IP: 127.0.0.1
+INFO  [commander] Ready for takeoff!
+
+pxh> commander arm <------------
+pxh> INFO  [commander] Armed by internal command	
+INFO  [tone_alarm] arming warning
+
+```
+
+Then in `droneserver` terminal, you should see the following respond. If yes, this indicate that the communication is successful.
+```
+Armed by internal command	<----
+not receiving any messages from HIL, please restart your HIL node and try again
+Disarmed by auto preflight disarming
+```
+
+Next let's `arm` and `takeoff` the drone in `auto.loiter` mode. This is very important mode, otherwise our `test_airsim_api.py` sciript wont work. It need to be in `auto.loiter` mode. 
+
+By default, the mode is in `auto.loiter` mode. If you notice the script cant work because it keep asking for `valid gps location`. You can change the mode as follow in `px4 commander`.
+
+```
+mode status
+
+We will what is the current status now
+INFO  [commander] Arm state: Standby
+INFO  [commander] navigation mode: AUTO_LOITER
+INFO  [commander] user intended navigation mode: LOITER <-- It's in loiter mode, we have to change into AUTO_LOITER mode.
+INFO  [commander] in failsafe: no
+commander: cycle: 24368 events, 3000us elapsed, 0.12us avg, min 0us max 3000us 19.217us rms
+commander: preflight check: 2708 events, 0us elapsed, 0.00us avg, min 0us max 0us 0.000us rms
+```
+To check what available mode you can use this command
+```
+commander mode
+
+You will see available below mode that are supported.
+mode Change flight mode
+     manual|acro|offboard|stabilized|altctl|posctl|auto:mission|auto:loiter|auto:rtl|auto:takeoff|auto:land|auto:precla
+```
+
+To change the mode just do the following
+```
+commander mode auto:loiter
+```
+Then run the following command to check if mode changed
+```
+pxh> commander status
+INFO  [commander] Arm state: Standby
+INFO  [commander] navigation mode: AUTO_LOITER
+INFO  [commander] user intended navigation mode: AUTO_LOITER
+INFO  [commander] in failsafe: no
+commander: cycle: 38277 events, 3000us elapsed, 0.08us avg, min 0us max 3000us 15.333us rms
+commander: preflight check: 4254 events, 0us elapsed, 0.00us avg, min 0us max 0us 0.000us rms
+pxh> 
+```
+
+Next we're ready to test our script and fly from `px4 commander`.
+
+To run from `px4 commander` just run the following command
+```
+pxh> commander arm
+pxh> INFO  [commander] Armed by internal command	
+INFO  [tone_alarm] arming warning
+INFO  [logger] Start file log (type: full)
+INFO  [logger] [logger] ./log/2026-05-09/03_22_05.ulg	
+INFO  [logger] Opened full log file: ./log/2026-05-09/03_22_05.ulg
+pxh> commander takeoff
+pxh> INFO  [navigator] Using minimum takeoff altitude: 2.50 m	
+INFO  [commander] Takeoff detected
+```
+
+And in `droneserver` you will see the following output
+```
+Armed by internal command	
+[logger] ./log/2026-05-09/03_22_05.ulg	
+Armed by internal command	
+[logger] ./log/2026-05-09/03_22_05.ulg	
+not receiving any messages from HIL, please restart your HIL node and try again
+Using minimum takeoff altitude: 2.50 m	
+Takeoff detected	
+```
+
+and you can land normally by using this command in `px4 commander`
+```
+pxh> commander land
+pxh> INFO  [commander] Landing at current position	
+INFO  [commander] Landing detected	
+INFO  [commander] Disarmed by landing	
+INFO  [tone_alarm] notify neutral
+INFO  [logger] closed logfile, bytes written: 18500396
+```
+
+and in `droneserver` you will see the following
+```
+Landing at current position	
+not receiving any messages from HIL, please restart your HIL node and try again
+Landing detected	
+Disarmed by landing
+```
+
+If you reach here then good job !!
+
+Next we're going to test with our `test_airsim_api.py` script as follow. You can copy and create this file in our workspace
+
+```
+#!/usr/bin/env python3
+import airsim
+import time
+
+print("=" * 60)
+print("AirSim Python API Test")
+print("=" * 60)
+
+# CRITICAL: Specify Windows IP when running from WSL2
+# Replace 172.28.0.1 with YOUR Windows IP from Step 1.1
+WINDOWS_IP = "127.0.0.1"
+
+# Connect to AirSim
+#print(f"\n[1/8] Connecting to AirSim at {WINDOWS_IP}...")
+
+# If running from WSL2, MUST use Windows IP
+client = airsim.MultirotorClient(ip=WINDOWS_IP)
+#client = airsim.MultirotorClient()
+
+# If running from Windows, can use default:
+# client = airsim.MultirotorClient()
+
+client.confirmConnection()
+print("✓ Connected to AirSim")
+
+# Enable API control
+print("\n[2/8] Enabling API control...")
+client.enableApiControl(True)
+print("✓ API control enabled")
+
+# Arm
+print("\n[3/8] Arming...")
+client.armDisarm(True)
+time.sleep(1)
+print("✓ Armed")
+
+# Takeoff
+print("\n[4/8] Taking off...")
+client.takeoffAsync().join()
+print("✓ Takeoff complete")
+
+# Hover for 5 seconds
+print("\n[5/8] Hovering for 5 seconds...")
+for i in range(5):
+    state = client.getMultirotorState()
+    pos = state.kinematics_estimated.position
+    print(f"  T+{i+1}s - Altitude: {-pos.z_val:.2f}m")
+    time.sleep(1)
+print("✓ Hover complete")
+
+# Land
+print("\n[6/8] Landing...")
+client.landAsync().join()
+print("✓ Landed")
+
+# Disarm
+print("\n[7/8] Disarming...")
+client.armDisarm(False)
+print("✓ Disarmed")
+
+# Disable API control
+print("\n[8/8] Disabling API control...")
+client.enableApiControl(False)
+print("✓ API control disabled")
+
+print("\n" + "=" * 60)
+print("✅ AirSim Python API Test SUCCESSFUL!")
+print("=" * 60)
+```
+
+When you run this script please ensure the mode is at `AUTO_LOITER`. Otherwise it wont work.
+
+When you run this script as follow
+```
+python test_airsim_api.py 
+
+You will see the following result
+============================================================
+AirSim Python API Test
+============================================================
+Connected!
+Client Ver:1 (Min Req: 1), Server Ver:1 (Min Req: 1)
+
+✓ Connected to AirSim
+
+[2/8] Enabling API control...
+✓ API control enabled
+
+[3/8] Arming...
+✓ Armed
+
+[4/8] Taking off...
+
+```
+
+and in `droneserver` you will see the following
+```
+### command 400 result: MAV_RESULT_ACCEPTEDArmed by external command	
+[logger] ./log/2026-05-09/03_26_50.ulg	
+Take off to 123.417999### command 22 result: MAV_RESULT_ACCEPTEDTakeoff detected	
+not receiving any messages from HIL, please restart your HIL node and try again
+Landing at current position	
+### command 21 result: MAV_RESULT_ACCEPTEDLanding detected	
+Disarmed by external command	
+### command 400 result: MAV_RESULT_ACCEPTEDnot receiving any messages from HIL, please restart your HIL node and try again
+```
+
+and in `px4 commander` you will see the following
+```
+INFO  [logger] Opened full log file: ./log/2026-05-09/03_26_50.ulg
+INFO  [commander] Takeoff detected	
+INFO  [commander] Landing at current position	
+INFO  [commander] Landing detected	
+INFO  [commander] Disarmed by external command	
+INFO  [tone_alarm] notify neutral
+INFO  [logger] closed logfile, bytes written: 4127505
+```
+
+In the `airsim block.exe`, you should be able to see that drone are actually `takeoff` --> `hover` --> and `landing`.
+
+One thing you have to be careful, once script execution done, the drone mode will automatically change to `POSCTL`. We have to change this mode to `AUTO_LOITER` like i've mentioned previously. You will see this mode if you run the check
+```
+pxh> commander status <--- Command used
+INFO  [commander] Arm state: Standby
+INFO  [commander] navigation mode: POSCTL
+INFO  [commander] user intended navigation mode: POSCTL <---- We have to change to AUTO_LOITER
+INFO  [commander] in failsafe: no
+commander: cycle: 9444 events, 6000us elapsed, 0.64us avg, min 0us max 3000us 53.466us rms
+commander: preflight check: 1052 events, 0us elapsed, 0.00us avg, min 0us max 0us 0.000us rms
+```
+
+To change the mode, you can refer to previous guide.
 
 ### 6.4: Understanding the Output
 
