@@ -1390,6 +1390,18 @@ takeoff 2
 land
 ```
 
+Additionally, if you mess with the `px4 parameter`, you can do the following to rest or change the settings
+```
+param reset_all
+param set MIS_TAKEOFF_ALT 10.0 <-- this command i use to increase the altitude issue
+param save
+
+Then
+shutodown
+
+Then relaunch the px4 commander again
+```
+
 ### 6.4: Understanding the Output
 
 | Message | Meaning | Status |
