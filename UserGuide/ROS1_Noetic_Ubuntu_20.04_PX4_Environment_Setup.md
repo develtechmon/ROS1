@@ -148,6 +148,12 @@ matplotlib>=3.0
 save & quit
 ```
 
+If you encounter an error complaining about `empy`. You can do the following:
+```
+pip uninstall empy
+pip install empy=3.3.4
+```
+
 
 ---
 
