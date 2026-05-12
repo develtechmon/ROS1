@@ -98,7 +98,7 @@ git clone https://github.com/PX4/PX4-Autopilot.git --recursive
 # Navigate into the repository
 cd PX4-Autopilot
 
-git checkout v1.14.3
+git checkout v1.13.3
 Link to this version -> https://github.com/PX4/PX4-Autopilot/blob/v1.14.3/Tools/setup/ubuntu.sh
 
 git submodule update --init --recursive
@@ -118,8 +118,8 @@ cd ~
 # Remove incomplete clone
 rm -rf PX4-Autopilot
 
-# Shallow clone (MUCH faster - downloads only v1.14.3, not entire history)
-git clone --depth 1 --branch v1.14.3 https://github.com/PX4/PX4-Autopilot.git
+# Shallow clone (MUCH faster - downloads only v1.13.3, not entire history)
+git clone --depth 1 --branch v1.13.3 https://github.com/PX4/PX4-Autopilot.git
 
 cd PX4-Autopilot
 
@@ -128,7 +128,7 @@ git submodule update --init --recursive
 
 bash ./Tools/setup/ubuntu.sh
 
-# Verify you're on v1.14.3
+# Verify you're on v1.13.3
 cd ~/PX4-Autopilot
 git describe --tags
 ```
@@ -263,6 +263,21 @@ sudo apt-get install -y qtbase5-dev libqt5svg5-dev
 ```
 ---
 
+If you get v1.14.0 or new version of PX4, you must downgrade, otherwise `airsim simulator block` wont work. Here is how to downgrade to v1.13.3
+```
+cd ~/PX4-Autopilot
+git tag | grep v1.13
+
+git stash
+git checkout v1.13.3
+make clean
+make distclean
+rm -rf build
+git checkout v1.13.3
+make distclean
+rn -rf build
+make px4_sitl_default non_iris
+```
 ### Step 3: Configure Environment Variables
 
 **For PX4-only installation:**
