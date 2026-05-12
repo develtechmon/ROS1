@@ -5,7 +5,7 @@
 This guide provides a complete setup for PX4 SITL simulation with Gazebo Classic, integrated with ROS1 Noetic and QGroundControl on a Windows 11 + WSL2 environment.
 
 **What you'll achieve:**
-- PX4 Autopilot v1.14.3 running in WSL2 (Ubuntu 20.04)
+- PX4 Autopilot v1.13.3 running in WSL2 (Ubuntu 20.04)
 - Gazebo Classic simulation with various vehicle types
 - QGroundControl (Windows) connected to WSL simulation
 - ROS1 Noetic with MAVROS for programmatic control
@@ -21,7 +21,7 @@ This guide provides a complete setup for PX4 SITL simulation with Gazebo Classic
 ## Table of Contents
 
 1. [Prerequisites](#prerequisites)
-2. [Install PX4 Autopilot v1.14.3](#install-px4-autopilot-v1143)
+2. [Install PX4 Autopilot v1.13.3](#install-px4-autopilot-v1143)
 3. [Install QGroundControl (Windows)](#install-qgroundcontrol-windows)
 4. [Configure WSL Network Connection](#configure-wsl-network-connection)
 5. [Start PX4 Gazebo Classic Simulation](#start-px4-gazebo-classic-simulation)
@@ -63,7 +63,7 @@ Should show: `Ubuntu 20.04.x LTS`
 
 ---
 
-## Install PX4 Autopilot v1.14.3
+## Install PX4 Autopilot v1.13.3
 
 ### Step 1: Clone PX4 Repository
 
@@ -73,10 +73,10 @@ git clone https://github.com/PX4/PX4-Autopilot.git --recursive
 cd PX4-Autopilot
 ```
 
-### Step 2: Checkout v1.14.3
+### Step 2: Checkout v1.13.3
 
 ```bash
-git checkout v1.14.3
+git checkout v1.13.3
 git submodule update --init --recursive
 ```
 
@@ -90,22 +90,22 @@ cd ~
 # Remove incomplete clone
 rm -rf PX4-Autopilot
 
-# Shallow clone (MUCH faster - downloads only v1.14.3, not entire history)
-git clone --depth 1 --branch v1.14.3 https://github.com/PX4/PX4-Autopilot.git
+# Shallow clone (MUCH faster - downloads only v1.13.3, not entire history)
+git clone --depth 1 --branch v1.13.3 https://github.com/PX4/PX4-Autopilot.git
 
 cd PX4-Autopilot
 
 # Now get submodules (this is the slow part)
 git submodule update --init --recursive
 
-# Verify you're on v1.14.3
+# Verify you're on v1.13.3
 cd ~/PX4-Autopilot
 git describe --tags
 ```
 
 ### Step 3: Fix Python Dependencies
 
-PX4 v1.14.3 has a known dependency syntax issue. Fix it:
+PX4 v1.13.3 has a known dependency syntax issue. Fix it:
 
 ```bash
 sed -i 's/matplotlib>=3.0.\*/matplotlib>=3.0/g' Tools/setup/requirements.txt
@@ -627,7 +627,7 @@ You're on wrong PX4 version:
 
 ```bash
 cd ~/PX4-Autopilot
-git checkout v1.14.3
+git checkout v1.13.3
 git submodule update --init --recursive
 make clean
 make px4_sitl gazebo-classic_iris
