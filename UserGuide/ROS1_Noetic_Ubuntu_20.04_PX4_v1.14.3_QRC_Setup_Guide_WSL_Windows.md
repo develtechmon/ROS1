@@ -86,7 +86,7 @@ git clone https://github.com/PX4/PX4-Autopilot.git --recursive
 cd PX4-Autopilot
 
 git checkout v1.13.3
-Link to this version -> https://github.com/PX4/PX4-Autopilot/blob/v1.14.3/Tools/setup/ubuntu.sh
+Link to this version -> https://github.com/PX4/PX4-Autopilot/blob/v1.13.3/Tools/setup/ubuntu.sh
 
 git submodule sync --recursive
 git submodule update --init --recursive --force
