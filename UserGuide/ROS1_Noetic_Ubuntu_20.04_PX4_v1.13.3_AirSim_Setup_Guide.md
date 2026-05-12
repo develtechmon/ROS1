@@ -214,6 +214,55 @@ Please use  this `settings.json` if youre running `PX4` for Software in the Loop
 }
 ```
 
+Please use  this `settings.json` if youre running `PX4` for Hardware in the Loop
+```
+{
+    "SettingsVersion": 1.2,
+    "SimMode": "Multirotor",
+    "Vehicles": {
+        "PX4": {
+            "VehicleType": "PX4Multirotor",
+            "UseSerial": true,
+            "SerialPort": "/dev/ttyACM0",
+            "SerialBaudRate": 115200,
+            "LockStep": false,
+            "Sensors": {
+                "Barometer": {
+                    "SensorType": 1,
+                    "Enabled": true,
+                    "PressureFactorSigma": 0.0001825
+                },
+                "Gps": {
+                    "SensorType": 3,
+                    "Enabled": true
+                },
+                "Magnetometer": {
+                    "SensorType": 4,
+                    "Enabled": true
+                },
+                "Imu": {
+                    "SensorType": 2,
+                    "Enabled": true
+                }
+            },
+            "Parameters": {
+                "COM_ARM_WO_GPS": 1,
+                "NAV_RCL_ACT": 0,
+                "NAV_DLL_ACT": 0,
+                "COM_RC_IN_MODE": 4,
+                "COM_OBL_ACT": 1,
+                
+                "EKF2_AID_MASK": 1,
+                "EKF2_HGT_MODE": 0,
+                "EKF2_GPS_CHECK": 0
+            }
+        }
+    }
+}
+
+```
+
+
 Let's launch if `PX4` and `AirSim` is working
 
 Terminal 1 and waif for connection
