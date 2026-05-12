@@ -214,6 +214,20 @@ Please use  this `settings.json` if youre running `PX4` for Software in the Loop
 }
 ```
 
+Let's launch if `PX4` and `AirSim` is working
+
+Terminal 1 and waif for connection
+```
+./Blocks.sh -windowed
+```
+
+Terminal 2 perform make
+```
+make px4_sitl_default none_iris
+```
+
+Let's wait and you shoud see the AirSim says it's connected
+
 
 
 
