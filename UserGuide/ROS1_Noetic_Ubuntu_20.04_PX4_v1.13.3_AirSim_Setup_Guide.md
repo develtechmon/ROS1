@@ -230,5 +230,24 @@ Let's wait and you shoud see the AirSim says it's connected
 
 
 
+## Step 6: Launch `mavros` for our testing.
+To launch `mavros` use the following command in new terminal
+```
+roslaunch mavros px4.launch fcu_url:="udp://:14550@127.0.0.1:14555" 
+```
+
+## Step 7: Disable RC failsafe.
+
+In the PX4 console, run the additional parameters to disable RC failsafe in SITL. But in actual hardware, it's not recommended.
+```
+param set COM_RCL_EXCEPT 4
+param set NAV_RCL_ACT 0
+param save
+```
+Explanation:
+
+`COM_RCL_EXCEPT 4` = RC loss exception mode: allow all modes to continue without RC
+`NAV_RCL_ACT 0` = When RC is lost, do nothing (you already set this, but double-check)
+
 
 
