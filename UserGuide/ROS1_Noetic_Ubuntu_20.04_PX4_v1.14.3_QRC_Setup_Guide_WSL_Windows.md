@@ -1,4 +1,4 @@
-# ROS1 Noetic + Ubuntu 20.04 + PX4 v1.14.3 + QGroundControl Setup Guide (WSL2)
+# ROS1 Noetic + Ubuntu 20.04 + PX4 v1.13.3 + QGroundControl Setup Guide (WSL2)
 
 ## Overview
 
