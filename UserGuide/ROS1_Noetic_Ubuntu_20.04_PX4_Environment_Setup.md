@@ -101,9 +101,12 @@ cd PX4-Autopilot
 git checkout v1.13.3
 Link to this version -> https://github.com/PX4/PX4-Autopilot/blob/v1.14.3/Tools/setup/ubuntu.sh
 
-git submodule update --init --recursive
+git submodule sync --recursive
+git submodule update --init --recursive --force
 
 bash ./Tools/setup/ubuntu.sh
+
+make px4_sitl_default none_iris
 ```
 
 **Note:** The `--recursive` flag is critical — it clones all Git submodules that PX4 depends on.
