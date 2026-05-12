@@ -395,18 +395,24 @@ sudo apt install -y \
 ### Step 5.2: Clone and Build PX4
 
 ```bash
+# Navigate to home directory
 cd ~
+
+# Clone PX4-Autopilot with all submodules
 git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+
+# Navigate into the repository
 cd PX4-Autopilot
 
-# Checkout v1.14.3 (stable with AirSim)
-git checkout v1.14.3
+git checkout v1.13.3
+Link to this version -> https://github.com/PX4/PX4-Autopilot/blob/v1.14.3/Tools/setup/ubuntu.sh
 
-# Update submodules
-git submodule update --init --recursive
+git submodule sync --recursive
+git submodule update --init --recursive --force
 
-# Run build once to compile
-make px4_sitl_default
+bash ./Tools/setup/ubuntu.sh
+
+make px4_sitl_default none_iris
 ```
 
 **First build takes 10-15 minutes.**
