@@ -76,8 +76,24 @@ cd PX4-Autopilot
 ### Step 2: Checkout v1.13.3
 
 ```bash
+# Navigate to home directory
+cd ~
+
+# Clone PX4-Autopilot with all submodules
+git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+
+# Navigate into the repository
+cd PX4-Autopilot
+
 git checkout v1.13.3
-git submodule update --init --recursive
+Link to this version -> https://github.com/PX4/PX4-Autopilot/blob/v1.14.3/Tools/setup/ubuntu.sh
+
+git submodule sync --recursive
+git submodule update --init --recursive --force
+
+bash ./Tools/setup/ubuntu.sh
+
+make px4_sitl_default none_iris
 ```
 
 Usually avbove step is quite slow and take lots of time. YOu can speed up time the process by using below method. This is 5-10x faster than full clone!
