@@ -223,11 +223,11 @@ Terminal 1 and waif for connection
 
 Terminal 2 perform make
 ```
+cd PX4-Autopilot
 make px4_sitl_default none_iris
 ```
 
 Let's wait and you shoud see the AirSim says it's connected
-
 
 
 ## Step 6: Launch `mavros` for our testing.
@@ -249,5 +249,157 @@ Explanation:
 `COM_RCL_EXCEPT 4` = RC loss exception mode: allow all modes to continue without RC
 `NAV_RCL_ACT 0` = When RC is lost, do nothing (you already set this, but double-check)
 
+## Step 6 : Let's control the drone using Velocity mode
 
+To control the drone using mavros velocity mode, we have to follow this step sequentially as follow
+
+Terminal 1 - 1st we need perform the following
+```
+commander arm
+commander takeoff
+```
+
+Terminal 2 - run the following command to check what is the current flight mode.
+```
+rostopic echo /mavros/state -n 1
+```
+
+Terminal 3 — Switch to OFFBOARD and check the mode once drone hovering ok.
+```
+# Switch to OFFBOARD
+rosservice call /mavros/set_mode "base_mode: 0
+custom_mode: 'OFFBOARD'"
+
+rostopic echo /mavros/state -n 1
+```
+
+Terminal 4 - Use this command during your test
+
+Move Forward at 1 m/s:
+```
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 1.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+
+Move Backward at 1 m/s:
+```
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: -1.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+
+Move Left at 1 m/s:
+```
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 1.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+
+Move Right at 1 m/s:
+```
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: -1.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+
+Ascend at 0.5 m/s:
+```
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.5
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+
+Descend at 0.5 m/s:
+```
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 0.0
+  z: -0.5
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+Rotate Left (Yaw) at 0.5 rad/s:
+```
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.5"
+```
+
+Rotate Right (Yaw) at 0.5 rad/s:
+```
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: -0.5"
+```
+
+Stop/Hover:
+```
+rostopic pub -r 20 /mavros/setpoint_velocity/cmd_vel_unstamped geometry_msgs/Twist "
+linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+
+Understanding Velocity Fields
+```
+linear:
+  x: 1.0   # Forward (+) / Backward (-) in m/s
+  y: 1.0   # Left (+) / Right (-) in m/s
+  z: 1.0   # Up (+) / Down (-) in m/s
+angular:
+  x: 0.0   # Roll (rarely used)
+  y: 0.0   # Pitch (rarely used)
+  z: 0.5   # Yaw: rotate left (+) / right (-) in rad/s
+```
 
