@@ -204,10 +204,10 @@ Please use  this `settings.json` if youre running `PX4` for Software in the Loop
             },
             "Parameters": {
                 "NAV_RCL_ACT": 0,
-                "NAV_DLL_ACT": 0,
-                "COM_OBL_ACT": 1,
-                "LPE_LAT": 47.641468,
-                "LPE_LON": -122.140165
+            		"NAV_DLL_ACT": 0,
+            		"COM_OBL_ACT": 1,
+            		"EKF2_AID_MASK": 1,
+            		"EKF2_HGT_MODE": 0
             }
         }
     }
