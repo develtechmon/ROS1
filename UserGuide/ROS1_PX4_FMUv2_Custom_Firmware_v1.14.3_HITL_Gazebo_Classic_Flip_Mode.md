@@ -183,6 +183,15 @@ Memory region    Used Size   Region Size   %age Used
 [717/717] Creating px4_fmu-v2_default.px4
 ```
 
+if you encounter `soft_unicode error` and `markupsafe`. Please do the following
+```
+cd ~/PX4-Autopilot
+make clean
+pip install jinja2==3.0.3 markupsafe==2.0.1
+```
+
+Then build again.
+
 > ⚠️ If `region 'flash' overflowed` — firmware too large for 1MB. You must remove other modules via boardconfig to make room.
 
 ### 3.4 Copy Firmware to Windows
