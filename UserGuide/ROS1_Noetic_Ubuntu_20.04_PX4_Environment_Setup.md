@@ -98,7 +98,7 @@ git clone https://github.com/PX4/PX4-Autopilot.git --recursive
 # Navigate into the repository
 cd PX4-Autopilot
 
-git checkout v1.13.3
+git checkout v1.14.3
 Link to this version -> https://github.com/PX4/PX4-Autopilot/blob/v1.14.3/Tools/setup/ubuntu.sh
 
 git submodule sync --recursive
@@ -121,8 +121,8 @@ cd ~
 # Remove incomplete clone
 rm -rf PX4-Autopilot
 
-# Shallow clone (MUCH faster - downloads only v1.13.3, not entire history)
-git clone --depth 1 --branch v1.13.3 https://github.com/PX4/PX4-Autopilot.git
+# Shallow clone (MUCH faster - downloads only v1.14.3, not entire history)
+git clone --depth 1 --branch v1.14.3 https://github.com/PX4/PX4-Autopilot.git
 
 cd PX4-Autopilot
 
@@ -272,11 +272,11 @@ cd ~/PX4-Autopilot
 git tag | grep v1.13
 
 git stash
-git checkout v1.13.3
+git checkout v1.14.3
 make clean
 make distclean
 rm -rf build
-git checkout v1.13.3
+git checkout v1.14.3
 make distclean
 rn -rf build
 make px4_sitl_default non_iris
