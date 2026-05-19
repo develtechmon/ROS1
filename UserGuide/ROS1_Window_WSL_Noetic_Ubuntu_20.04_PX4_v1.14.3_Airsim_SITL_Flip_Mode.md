@@ -255,10 +255,10 @@ param set COM_RC_IN_MODE 4
 
 # Disable roll failure detector
 # Value >360 completely disables it (allows full 360° flip)
-param set FD_FAIL_R 400
+param set FD_FAIL_R 0
 
 # Disable pitch failure detector
-param set FD_FAIL_P 400
+param set FD_FAIL_P 0
 
 # Allow 1800 deg/s max roll rate
 # Required because 30 rad/s = ~1718 deg/s
