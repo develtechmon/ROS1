@@ -21,7 +21,7 @@ This guide provides a complete setup for PX4 SITL simulation with Gazebo Classic
 ## Table of Contents
 
 1. [Prerequisites](#prerequisites)
-2. [Install PX4 Autopilot v1.13.3](#install-px4-autopilot-v1143)
+2. [Install PX4 Autopilot v1.14.3](#install-px4-autopilot-v1143)
 3. [Install QGroundControl (Windows)](#install-qgroundcontrol-windows)
 4. [Configure WSL Network Connection](#configure-wsl-network-connection)
 5. [Start PX4 Gazebo Classic Simulation](#start-px4-gazebo-classic-simulation)
@@ -63,7 +63,7 @@ Should show: `Ubuntu 20.04.x LTS`
 
 ---
 
-## Install PX4 Autopilot v1.13.3
+## Install PX4 Autopilot v1.14.3
 
 ### Step 1: Clone PX4 Repository
 
@@ -121,7 +121,7 @@ git describe --tags
 
 ### Step 3: Fix Python Dependencies
 
-PX4 v1.13.3 has a known dependency syntax issue. Fix it:
+PX4 v1.14.3 has a known dependency syntax issue. Fix it:
 
 ```bash
 sed -i 's/matplotlib>=3.0.\*/matplotlib>=3.0/g' Tools/setup/requirements.txt
@@ -643,7 +643,7 @@ You're on wrong PX4 version:
 
 ```bash
 cd ~/PX4-Autopilot
-git checkout v1.13.3
+git checkout v1.14.3
 git submodule update --init --recursive
 make clean
 make px4_sitl gazebo-classic_iris
