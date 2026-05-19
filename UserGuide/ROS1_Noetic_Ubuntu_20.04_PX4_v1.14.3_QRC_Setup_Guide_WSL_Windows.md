@@ -73,7 +73,7 @@ git clone https://github.com/PX4/PX4-Autopilot.git --recursive
 cd PX4-Autopilot
 ```
 
-### Step 2: Checkout v1.13.3
+### Step 2: Checkout v1.14.3
 
 ```bash
 # Navigate to home directory
@@ -85,8 +85,8 @@ git clone https://github.com/PX4/PX4-Autopilot.git --recursive
 # Navigate into the repository
 cd PX4-Autopilot
 
-git checkout v1.13.3
-Link to this version -> https://github.com/PX4/PX4-Autopilot/blob/v1.13.3/Tools/setup/ubuntu.sh
+git checkout v1.14.3
+Link to this version -> https://github.com/PX4/PX4-Autopilot/blob/v1.14.3/Tools/setup/ubuntu.sh
 
 git submodule sync --recursive
 git submodule update --init --recursive --force
@@ -106,15 +106,15 @@ cd ~
 # Remove incomplete clone
 rm -rf PX4-Autopilot
 
-# Shallow clone (MUCH faster - downloads only v1.13.3, not entire history)
-git clone --depth 1 --branch v1.13.3 https://github.com/PX4/PX4-Autopilot.git
+# Shallow clone (MUCH faster - downloads only v1.14.3, not entire history)
+git clone --depth 1 --branch v1.14.3 https://github.com/PX4/PX4-Autopilot.git
 
 cd PX4-Autopilot
 
 # Now get submodules (this is the slow part)
 git submodule update --init --recursive
 
-# Verify you're on v1.13.3
+# Verify you're on v1.14.3
 cd ~/PX4-Autopilot
 git describe --tags
 ```
