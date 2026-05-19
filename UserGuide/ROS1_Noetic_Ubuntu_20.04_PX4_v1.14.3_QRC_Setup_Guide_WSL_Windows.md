@@ -5,7 +5,7 @@
 This guide provides a complete setup for PX4 SITL simulation with Gazebo Classic, integrated with ROS1 Noetic and QGroundControl on a Windows 11 + WSL2 environment.
 
 **What you'll achieve:**
-- PX4 Autopilot v1.13.3 running in WSL2 (Ubuntu 20.04)
+- PX4 Autopilot v1.14.3 running in WSL2 (Ubuntu 20.04)
 - Gazebo Classic simulation with various vehicle types
 - QGroundControl (Windows) connected to WSL simulation
 - ROS1 Noetic with MAVROS for programmatic control
