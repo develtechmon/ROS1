@@ -5,8 +5,16 @@ This is userguide on how to install and setup `mavsdk` in your environment. The 
 ## Step 1: Install this package
 
 Terminal 1
+
+If you're using python3.9 and above, this package should be ok for you
 ```
 pip3 install mavsdk
+pip3 install aioconsole
+```
+
+if you're using python3.8, you should install a specific version
+```
+pip3 install "mavsdk<2.0.0"
 pip3 install aioconsole
 ```
 
