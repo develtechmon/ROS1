@@ -32,6 +32,7 @@ async def run():
     print("[ a/d ]   - Left / Right")
     print("[ u/j ]   - Up (Takeoff) / Down (Land)")
     print("[ q/e ]   - Yaw Left / Yaw Right")
+    print("[ l ]     - Non-GPS Landing")
     print("[ ESC ]   - Emergency Stop Offboard (Hover)\n")
 
     offboard_started = False
@@ -66,6 +67,28 @@ async def run():
                         print("Emergency: Stopping Offboard (Drone will hover/land depending on failsafe)")
                         await drone.offboard.stop()
                         offboard_started = False
+                        
+                # --- NEW EMERGENCY NON-GPS LANDING ---
+                elif event.key == pygame.K_l:
+                    print("\rEMERGENCY LANDING INITIATED...")
+                    
+                    # 1. Stop Offboard mode cleanly so Python stops sending velocity overrides
+                    if offboard_started:
+                        try:
+                            await drone.offboard.stop()
+                            offboard_started = False
+                        except Exception:
+                            pass # Force proceed if offboard is already broken
+                    
+                    # 2. Force the flight controller to switch to its native non-GPS Land Mode
+                    try:
+                        await drone.action.land() 
+                        print("Drone is landing vertically. Motors will disarm on touchdown.\r")
+                    except Exception as e:
+                        print(f"Action Land Rejected: {e}. Falling back to downward forced velocity.")
+                        # Emergency fallback: If the flight controller rejects the high-level land command,
+                        # re-engage a hard downward velocity override until manually stopped.
+                        await drone.offboard.set_velocity_body(VelocityBodyYawspeed(0.0, 0.0, 0.5, 0.0))
 
         keys = pygame.key.get_pressed()
         
