@@ -104,6 +104,16 @@ Run this command to launch `px4` SITL
 make px4_sitl_default gazebo-classic_iris
 ```
 
+or if you want to run using other method
+```
+HEADLESS=1 make px4_sitl gazebo-classic
+```
+
+And in other terminal
+```
+roslaunch gazebo_ros iris_world.launch
+```
+
 Then inside `px4 console` please set this parameter which you can find also in `gazebo hitl` guide
 ```
 # ── FAILSAFE DISABLE ──────────────────────────────────────────────────────────
