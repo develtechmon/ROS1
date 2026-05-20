@@ -1,0 +1,8 @@
+# If you're using python 3.8
+pip install mavsdk==1.4.9 pynput
+pip install pygame
+
+# If you're using python 3.9 and above
+pip install mavsdk pynput
+pip install aioconsole
+
