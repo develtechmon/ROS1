@@ -220,6 +220,13 @@ export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)
 export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)/Tools/simulation/gazebo-classic/sitl_gazebo-classic
 
 gazebo Tools/simulation/gazebo-classic/sitl_gazebo-classic/worlds/hitl_iris.world --verbose
+
+# This launch bland iris drone world
+gazebo Tools/simulation/gazebo-classic/sitl_gazebo-classic/worlds/hitl_iris.world --verbose
+
+# This launch bayland grassfield drone world for better visualization
+gazebo Tools/simulation/gazebo-classic/sitl_gazebo-classic/worlds/hitl_iris_env.world --verbose
+
 ```
 
 You will see the serial device connected.
