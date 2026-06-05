@@ -20,19 +20,27 @@ EPISODE TIMING (per episode):
 For SITL, you can speed this up by reducing takeoff/land wait times.
 For HITL with real hardware, use the full times.
 
+1 steps = 0.05 seconds, therefore 500 x 0.05 = 25 seconds
 Currently 200 steps = 10 seconds. The drone barely moves from its starting position in 10 seconds.
 Collect at 500 steps = 25 seconds. Over 25 seconds, PX4 will make larger corrections as the drone drifts giving you
 more labels for a wider range of error magnitudes.
 
+200 steps = 10 seconds/episode
+400 steps = 20 seconds/episode
+
 Usage:
     Terminal 1: make px4_sitl gazebo
-    Terminal 2: python collect_demonstrations_mavsdk.py --episodes 50 --steps 200
+    Terminal 2: python collect_demonstration_mavsdk.py --episodes 50 --steps 200
 
     or 
-    Terminal 2: python collect_demonstrations_mavsdk.py --episodes 100 --steps 500
+    Terminal 2: python collect_demonstration_mavsdk.py --episodes 100 --steps 500
 
 For quick test:
     python collect_demonstrations_mavsdk.py --episodes 10 --steps 200
+
+    For STIL and achieve good data. I'm using this
+    python collect_demonstration_mavsdk.py --episodes 100 --steps 500
+
 """
 
 import asyncio

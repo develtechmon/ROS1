@@ -16,6 +16,10 @@ Produces everything needed for the paper:
 Usage:
   python stage1_statistics.py --model ./models/hover_policy_best.pth --episodes 10
   python stage1_statistics.py --model ./models/hover_policy_best.pth --episodes 10 --steps 500
+
+  for STIL and achieve good data. I'm using this
+  python stage_statistics.py  --model ./models/hover_policy_best.pth --episodes 10  --steps 500
+
 """
 
 import asyncio

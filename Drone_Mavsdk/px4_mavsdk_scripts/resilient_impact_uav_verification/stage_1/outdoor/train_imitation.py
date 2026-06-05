@@ -16,6 +16,9 @@ Usage:
 
     python train_imitation.py --dataset ./demonstrations/expert_demonstrations_mavsdk.pkl 
 
+    for STIL and achieve good data. I'm using this
+    python train_imitation.py --dataset ./demonstrations/expert_demonstrations_mavsdk.pkl --epochs 800
+
 Success Criteria:
     Final Val Loss < 0.05  → Excellent! (95%+ success)
     Final Val Loss 0.05-0.10 → Good (85-95% success)
