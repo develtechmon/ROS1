@@ -281,7 +281,8 @@ In QGC MAVLink Console (or NSH console):
 param set NAV_RCL_ACT 0          # No RC loss failsafe (no RC in HITL)
 param set NAV_DLL_ACT 0          # No data link loss failsafe
 param set COM_RC_IN_MODE 4       # No RC controller required
-param set COM_OBL_RC_ACT 1       # Hover when offboard ends (v1.14 name)
+#param set COM_OBL_RC_ACT 1      # Hover when offboard ends (v1.14 name)
+param set COM_OBL_RC_ACT 0       # 1 Altitude, 0 position hold
 
 # ── FLIP PARAMETERS ───────────────────────────────────────────────────────────
 param set FD_FAIL_R 0            # Disable roll failure detector
