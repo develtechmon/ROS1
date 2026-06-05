@@ -96,7 +96,7 @@ await drone.action.takeoff()
 
 If everything is OK, we can try to run our customer script included in this package.
 
-### Gazebo 
+### Gazebo SITL
 
 Terminal 2
 Run this command to launch `px4` SITL
@@ -180,3 +180,114 @@ await drone.action.takeoff()
 ```
 
 If everything is OK, we can try to run our customer script included in this package.
+
+
+### Gazebo HITL
+
+Please connect the `pixhawk` from windows to WSL. To connect, please refer to this userguide
+```
+https://github.com/develtechmon/ROS1/blob/master/UserGuide/Attach_Pixhawk_to_WSL_And_Connect_To_Gazebo.md
+```
+
+##  Connect Pixhawk with Gazebo
+
+1. Step 1: Build Gazebo Classic Plugins (one time)
+```
+cd ~/PX4-Autopilot
+DONT_RUN=1 make px4_sitl_default gazebo-classic
+```
+
+2. Edit iri_hitl.sdf
+```
+vi ~/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models/iris_hitl/iris_hitl.sdf
+```
+Find and set
+```
+<serialEnabled>1</serialEnabled>
+<serialDevice>/dev/ttyACM0</serialDevice>
+<baudRate>921600</baudRate>
+<hil_mode>1</hil_mode>
+```
+save and exit.
+
+3. Then follow this to launch
+```
+cd ~/PX4-Autopilot
+source Tools/simulation/gazebo-classic/setup_gazebo.bash \
+  $(pwd) $(pwd)/build/px4_sitl_default
+
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)/Tools/simulation/gazebo-classic/sitl_gazebo-classic
+
+gazebo Tools/simulation/gazebo-classic/sitl_gazebo-classic/worlds/hitl_iris.world --verbose
+```
+
+You will see the serial device connected.
+
+4. Set the `pixhawk` parameter .
+   
+You may need to set this parameter in `pixhawk` using `QGC` and the save and reboot and reconnect again.
+```
+# ── FAILSAFE DISABLE ──────────────────────────────────────────────────────────
+param set NAV_RCL_ACT 0          # No RC loss failsafe (no RC in HITL)
+param set NAV_DLL_ACT 0          # No data link loss failsafe
+param set COM_RC_IN_MODE 4       # No RC controller required
+param set COM_OBL_RC_ACT 1       # Hover when offboard ends (v1.14 name)
+
+# ── FLIP PARAMETERS ───────────────────────────────────────────────────────────
+param set FD_FAIL_R 0            # Disable roll failure detector
+param set FD_FAIL_P 0            # Disable pitch failure detector
+param set MC_ROLLRATE_MAX 1800   # Allow 30 rad/s flip roll rate
+param set COM_OF_LOSS_T 5        # Offboard timeout 5 seconds
+param set CBRK_FLIGHTTERM 121212 # Disable flight termination system
+
+# ── FASTER VERTICAL RECOVERY ──────────────────────────────────────────────────
+param set MPC_Z_VEL_P_ACC 8.0   # 2x faster altitude recovery after flip
+param set MPC_Z_VEL_MAX_UP 6.0  # Faster upward climb after flip
+param set MPC_ACC_UP_MAX 10.0   # Higher upward acceleration
+
+# ── EKF2 GPS RELAXATION ───────────────────────────────────────────────────────
+param set EKF2_GPS_CHECK 0       # Disable GPS quality checks
+param set EKF2_REQ_EPH 5.0      # Relaxed horizontal accuracy
+param set EKF2_REQ_EPV 8.0      # Relaxed vertical accuracy
+param set EKF2_REQ_SACC 5.0     # Relaxed speed accuracy
+param set EKF2_REQ_NSATS 4      # Minimum 4 satellites
+param set EKF2_REQ_HDRIFT 0.3   # Relaxed horizontal drift
+param set EKF2_REQ_VDRIFT 0.5   # Relaxed vertical drift
+
+# ── ARMING ────────────────────────────────────────────────────────────────────
+param set COM_ARM_WO_GPS 1       # Allow arming without GPS
+
+# ── MAVLINK ───────────────────────────────────────────────────────────────────
+param set MAV_1_CONFIG 0         # Disable TELEM2 MAVLink (prevents Tx overflow)
+
+# ── SAVE AND REBOOT ───────────────────────────────────────────────────────────
+param save
+reboot
+```
+
+To test if `mavsdk` is working, please run the following command in new terminal
+
+Terminal 3
+Running this command will open a console for us to test the `mavsdk`
+```
+apython
+```
+Then in the console type the following command one by one
+```
+from mavsdk import System
+drone = System()
+
+await drone.connect(system_address="serial:///dev/ttyACM0:57600")
+
+await drone.action.arm()
+await drone.action.takeoff()
+```
+
+It everything is working, you should able to see the drone is armed and takeoff. To land run  this command
+```
+await drone.action.takeoff()
+```
+
+If everything is OK, we can try to run our customer script included in this package.
+
