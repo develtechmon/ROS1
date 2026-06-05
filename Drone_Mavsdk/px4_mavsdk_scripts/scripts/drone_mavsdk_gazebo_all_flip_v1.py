@@ -261,10 +261,10 @@ async def main():
     drone = System()
 
     # SITL
-    await drone.connect(system_address="udp://:14540")
+    #await drone.connect(system_address="udp://:14540")
 
     # PIXHAWK
-    #await drone.connect(system_address="serial:///dev/ttyACM0:57600")
+    await drone.connect(system_address="serial:///dev/ttyACM0:57600")
 
     print("Waiting for connection...")
     async for state in drone.core.connection_state():

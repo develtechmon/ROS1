@@ -22,7 +22,7 @@ async def run():
     #await drone.connect(system_address="udp://:14540")
 
     # PIXHAWK
-    await drone.connect(system_address="serial:///dev/ttyACM0:57600")
+    await drone.connect(system_address="serial:///dev/ttyACM0:2000000")
 
     print("Connecting to drone...")
     async for state in drone.core.connection_state():
