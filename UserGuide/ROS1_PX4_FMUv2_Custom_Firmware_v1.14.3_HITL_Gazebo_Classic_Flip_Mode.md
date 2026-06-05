@@ -304,6 +304,10 @@ param set EKF2_REQ_NSATS 4      # Minimum 4 satellites
 param set EKF2_REQ_HDRIFT 0.3   # Relaxed horizontal drift
 param set EKF2_REQ_VDRIFT 0.5   # Relaxed vertical drift
 
+param set EKF2_HGT_REF 0        # Use the barometer as the primary height reference
+param set EKF2_AID_MASK 0       # In PX4 v1.14, this parameter is deprecated.
+param set EKF2_GPS_CTRL 7       # Allow GPS altitude fusion where it enable GPS lat/lon/alt/velocity fusion
+
 # ── ARMING ────────────────────────────────────────────────────────────────────
 param set COM_ARM_WO_GPS 1       # Allow arming without GPS
 
