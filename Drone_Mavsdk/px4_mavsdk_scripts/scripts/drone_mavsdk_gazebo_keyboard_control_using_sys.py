@@ -15,7 +15,11 @@ TIMEOUT = 0.15        # Seconds before drone stops moving if no key is held
 async def run():
     drone = System()
     # Connect to the simulator (adjust if connecting to real hardware)
-    await drone.connect(system_address="udp://:14540")
+    # SITL
+    #await drone.connect(system_address="udp://:14540")
+
+    # PIXHAWK
+    await drone.connect(system_address="serial:///dev/ttyACM0:57600")
 
     print("Waiting for drone to connect...")
     async for state in drone.core.connection_state():

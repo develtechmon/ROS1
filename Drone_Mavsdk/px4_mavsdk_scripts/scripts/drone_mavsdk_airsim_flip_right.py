@@ -151,7 +151,7 @@ async def main():
 
     drone = System()
     await drone.connect(system_address="udp://127.0.0.1:14550")
-
+    
     print("Waiting for connection...")
     async for state in drone.core.connection_state():
         if state.is_connected:

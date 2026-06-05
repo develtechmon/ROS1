@@ -15,7 +15,12 @@ async def run():
     pygame.display.set_caption("MAVSDK Flight Controller")
     
     drone = System()
-    await drone.connect(system_address="udp://:14540")
+
+    # SITL
+    #await drone.connect(system_address="udp://:14540")
+
+    # PIXHAWK
+    await drone.connect(system_address="serial:///dev/ttyACM0:57600")
 
     print("Waiting for drone to connect...")
     async for state in drone.core.connection_state():
