@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src
+CMAKE_SOURCE_DIR = /home/jlukas/My_Project/ROS1/aruco_drone/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build
+CMAKE_BINARY_DIR = /home/jlukas/My_Project/ROS1/aruco_drone/build
 
 # Utility rule file for doxygen.
 
@@ -67,6 +67,6 @@ CMakeFiles/doxygen.dir/clean:
 .PHONY : CMakeFiles/doxygen.dir/clean
 
 CMakeFiles/doxygen.dir/depend:
-	cd /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/CMakeFiles/doxygen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/jlukas/My_Project/ROS1/aruco_drone/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jlukas/My_Project/ROS1/aruco_drone/src /home/jlukas/My_Project/ROS1/aruco_drone/src /home/jlukas/My_Project/ROS1/aruco_drone/build /home/jlukas/My_Project/ROS1/aruco_drone/build /home/jlukas/My_Project/ROS1/aruco_drone/build/CMakeFiles/doxygen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/doxygen.dir/depend
 

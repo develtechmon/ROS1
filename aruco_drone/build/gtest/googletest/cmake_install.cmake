@@ -2,7 +2,7 @@
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/install")
+  set(CMAKE_INSTALL_PREFIX "/home/jlukas/My_Project/ROS1/aruco_drone/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

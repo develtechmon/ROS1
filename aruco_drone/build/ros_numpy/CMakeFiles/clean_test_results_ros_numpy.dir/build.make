@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src
+CMAKE_SOURCE_DIR = /home/jlukas/My_Project/ROS1/aruco_drone/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build
+CMAKE_BINARY_DIR = /home/jlukas/My_Project/ROS1/aruco_drone/build
 
 # Utility rule file for clean_test_results_ros_numpy.
 
@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build
 include ros_numpy/CMakeFiles/clean_test_results_ros_numpy.dir/progress.make
 
 ros_numpy/CMakeFiles/clean_test_results_ros_numpy:
-	cd /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/ros_numpy && /usr/bin/python3 /opt/ros/noetic/share/catkin/cmake/test/remove_test_results.py /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/test_results/ros_numpy
+	cd /home/jlukas/My_Project/ROS1/aruco_drone/build/ros_numpy && /usr/bin/python3 /opt/ros/noetic/share/catkin/cmake/test/remove_test_results.py /home/jlukas/My_Project/ROS1/aruco_drone/build/test_results/ros_numpy
 
 clean_test_results_ros_numpy: ros_numpy/CMakeFiles/clean_test_results_ros_numpy
 clean_test_results_ros_numpy: ros_numpy/CMakeFiles/clean_test_results_ros_numpy.dir/build.make
@@ -67,10 +67,10 @@ ros_numpy/CMakeFiles/clean_test_results_ros_numpy.dir/build: clean_test_results_
 .PHONY : ros_numpy/CMakeFiles/clean_test_results_ros_numpy.dir/build
 
 ros_numpy/CMakeFiles/clean_test_results_ros_numpy.dir/clean:
-	cd /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/ros_numpy && $(CMAKE_COMMAND) -P CMakeFiles/clean_test_results_ros_numpy.dir/cmake_clean.cmake
+	cd /home/jlukas/My_Project/ROS1/aruco_drone/build/ros_numpy && $(CMAKE_COMMAND) -P CMakeFiles/clean_test_results_ros_numpy.dir/cmake_clean.cmake
 .PHONY : ros_numpy/CMakeFiles/clean_test_results_ros_numpy.dir/clean
 
 ros_numpy/CMakeFiles/clean_test_results_ros_numpy.dir/depend:
-	cd /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src/ros_numpy /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/ros_numpy /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/ros_numpy/CMakeFiles/clean_test_results_ros_numpy.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/jlukas/My_Project/ROS1/aruco_drone/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jlukas/My_Project/ROS1/aruco_drone/src /home/jlukas/My_Project/ROS1/aruco_drone/src/ros_numpy /home/jlukas/My_Project/ROS1/aruco_drone/build /home/jlukas/My_Project/ROS1/aruco_drone/build/ros_numpy /home/jlukas/My_Project/ROS1/aruco_drone/build/ros_numpy/CMakeFiles/clean_test_results_ros_numpy.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : ros_numpy/CMakeFiles/clean_test_results_ros_numpy.dir/depend
 

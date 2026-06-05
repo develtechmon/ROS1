@@ -49,6 +49,7 @@ class Custom_DroneKit_Vehicle(dronekit.Vehicle):
         return self.mode != 'INITIALISING' and self.rangefinder.distance and self._ekf_predposhorizrel
 
 connection_string = 'tcp:127.0.0.1:5763'
+
 print('Connecting to vehicle on: %s' % connection_string)
 vehicle = connect(connection_string, wait_ready=True, vehicle_class=Custom_DroneKit_Vehicle)
 vehicle.parameters['PLND_ENABLED'] = 1
@@ -449,6 +450,15 @@ def control():
             
             hover_thread.join()
             control_thread.join()
+            
+            # Don't use threads for keyboard - run directly
+            #hover_thread = threading.Thread(target=hover)
+            #hover_thread.start()
+            
+            # Run keyboard in main thread (not in separate thread!)
+            #keyboard_control()  
+            
+            #hover_thread.join()
             
 
 if __name__ == "__main__":

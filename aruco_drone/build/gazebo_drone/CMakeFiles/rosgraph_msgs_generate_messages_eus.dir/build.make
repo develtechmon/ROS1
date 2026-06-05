@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src
+CMAKE_SOURCE_DIR = /home/jlukas/My_Project/ROS1/aruco_drone/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build
+CMAKE_BINARY_DIR = /home/jlukas/My_Project/ROS1/aruco_drone/build
 
 # Utility rule file for rosgraph_msgs_generate_messages_eus.
 
@@ -63,10 +63,10 @@ gazebo_drone/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build: rosgraph_
 .PHONY : gazebo_drone/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build
 
 gazebo_drone/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/clean:
-	cd /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/gazebo_drone && $(CMAKE_COMMAND) -P CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/cmake_clean.cmake
+	cd /home/jlukas/My_Project/ROS1/aruco_drone/build/gazebo_drone && $(CMAKE_COMMAND) -P CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/cmake_clean.cmake
 .PHONY : gazebo_drone/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/clean
 
 gazebo_drone/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/depend:
-	cd /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src/gazebo_drone /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/gazebo_drone /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/gazebo_drone/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/jlukas/My_Project/ROS1/aruco_drone/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jlukas/My_Project/ROS1/aruco_drone/src /home/jlukas/My_Project/ROS1/aruco_drone/src/gazebo_drone /home/jlukas/My_Project/ROS1/aruco_drone/build /home/jlukas/My_Project/ROS1/aruco_drone/build/gazebo_drone /home/jlukas/My_Project/ROS1/aruco_drone/build/gazebo_drone/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : gazebo_drone/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/depend
 

@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src
+CMAKE_SOURCE_DIR = /home/jlukas/My_Project/ROS1/aruco_drone/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build
+CMAKE_BINARY_DIR = /home/jlukas/My_Project/ROS1/aruco_drone/build
 
 # Utility rule file for _run_tests_ros_numpy_nosetests.
 
@@ -63,10 +63,10 @@ ros_numpy/CMakeFiles/_run_tests_ros_numpy_nosetests.dir/build: _run_tests_ros_nu
 .PHONY : ros_numpy/CMakeFiles/_run_tests_ros_numpy_nosetests.dir/build
 
 ros_numpy/CMakeFiles/_run_tests_ros_numpy_nosetests.dir/clean:
-	cd /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/ros_numpy && $(CMAKE_COMMAND) -P CMakeFiles/_run_tests_ros_numpy_nosetests.dir/cmake_clean.cmake
+	cd /home/jlukas/My_Project/ROS1/aruco_drone/build/ros_numpy && $(CMAKE_COMMAND) -P CMakeFiles/_run_tests_ros_numpy_nosetests.dir/cmake_clean.cmake
 .PHONY : ros_numpy/CMakeFiles/_run_tests_ros_numpy_nosetests.dir/clean
 
 ros_numpy/CMakeFiles/_run_tests_ros_numpy_nosetests.dir/depend:
-	cd /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src/ros_numpy /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/ros_numpy /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/ros_numpy/CMakeFiles/_run_tests_ros_numpy_nosetests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/jlukas/My_Project/ROS1/aruco_drone/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jlukas/My_Project/ROS1/aruco_drone/src /home/jlukas/My_Project/ROS1/aruco_drone/src/ros_numpy /home/jlukas/My_Project/ROS1/aruco_drone/build /home/jlukas/My_Project/ROS1/aruco_drone/build/ros_numpy /home/jlukas/My_Project/ROS1/aruco_drone/build/ros_numpy/CMakeFiles/_run_tests_ros_numpy_nosetests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : ros_numpy/CMakeFiles/_run_tests_ros_numpy_nosetests.dir/depend
 

@@ -13,21 +13,21 @@ fi
 
 echo_and_run() { echo "+ $@" ; "$@" ; }
 
-echo_and_run cd "/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src/ros_numpy"
+echo_and_run cd "/home/jlukas/My_Project/ROS1/aruco_drone/src/ros_numpy"
 
 # ensure that Python install destination exists
-echo_and_run mkdir -p "$DESTDIR/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/install/lib/python3/dist-packages"
+echo_and_run mkdir -p "$DESTDIR/home/jlukas/My_Project/ROS1/aruco_drone/install/lib/python3/dist-packages"
 
 # Note that PYTHONPATH is pulled from the environment to support installing
 # into one location when some dependencies were installed in another
 # location, #123.
 echo_and_run /usr/bin/env \
-    PYTHONPATH="/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/install/lib/python3/dist-packages:/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/lib/python3/dist-packages:$PYTHONPATH" \
-    CATKIN_BINARY_DIR="/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build" \
+    PYTHONPATH="/home/jlukas/My_Project/ROS1/aruco_drone/install/lib/python3/dist-packages:/home/jlukas/My_Project/ROS1/aruco_drone/build/lib/python3/dist-packages:$PYTHONPATH" \
+    CATKIN_BINARY_DIR="/home/jlukas/My_Project/ROS1/aruco_drone/build" \
     "/usr/bin/python3" \
-    "/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src/ros_numpy/setup.py" \
+    "/home/jlukas/My_Project/ROS1/aruco_drone/src/ros_numpy/setup.py" \
      \
-    build --build-base "/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/ros_numpy" \
+    build --build-base "/home/jlukas/My_Project/ROS1/aruco_drone/build/ros_numpy" \
     install \
     --root="${DESTDIR-/}" \
-    --install-layout=deb --prefix="/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/install" --install-scripts="/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/install/bin"
+    --install-layout=deb --prefix="/home/jlukas/My_Project/ROS1/aruco_drone/install" --install-scripts="/home/jlukas/My_Project/ROS1/aruco_drone/install/bin"

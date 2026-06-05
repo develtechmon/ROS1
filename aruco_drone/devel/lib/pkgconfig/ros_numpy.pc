@@ -1,4 +1,4 @@
-prefix=/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/devel
+prefix=/home/jlukas/My_Project/ROS1/aruco_drone/devel
 
 Name: ros_numpy
 Description: Description of ros_numpy

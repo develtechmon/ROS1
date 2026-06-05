@@ -67,14 +67,14 @@ set(aruco_drone_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(aruco_drone_SOURCE_PREFIX /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/src/gazebo_drone)
-  set(aruco_drone_DEVEL_PREFIX /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/devel)
+  set(aruco_drone_SOURCE_PREFIX /home/jlukas/My_Project/ROS1/aruco_drone/src/gazebo_drone)
+  set(aruco_drone_DEVEL_PREFIX /home/jlukas/My_Project/ROS1/aruco_drone/devel)
   set(aruco_drone_INSTALL_PREFIX "")
   set(aruco_drone_PREFIX ${aruco_drone_DEVEL_PREFIX})
 else()
   set(aruco_drone_SOURCE_PREFIX "")
   set(aruco_drone_DEVEL_PREFIX "")
-  set(aruco_drone_INSTALL_PREFIX /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/install)
+  set(aruco_drone_INSTALL_PREFIX /home/jlukas/My_Project/ROS1/aruco_drone/install)
   set(aruco_drone_PREFIX ${aruco_drone_INSTALL_PREFIX})
 endif()
 
@@ -118,7 +118,7 @@ endif()
 
 set(libraries "")
 foreach(library ${libraries})
-  # keep build configuration keywords, target names and absolute libraries as-is
+  # keep build configuration keywords, generator expressions, target names, and absolute libraries as-is
   if("${library}" MATCHES "^(debug|optimized|general)$")
     list(APPEND aruco_drone_LIBRARIES ${library})
   elseif(${library} MATCHES "^-l")
@@ -146,6 +146,8 @@ foreach(library ${libraries})
       target_link_options("${interface_target_name}" INTERFACE "${library}")
     endif()
     list(APPEND aruco_drone_LIBRARIES "${interface_target_name}")
+  elseif(${library} MATCHES "^\\$<")
+    list(APPEND aruco_drone_LIBRARIES ${library})
   elseif(TARGET ${library})
     list(APPEND aruco_drone_LIBRARIES ${library})
   elseif(IS_ABSOLUTE ${library})
@@ -154,7 +156,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/install/lib;/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/jlukas/My_Project/ROS1/aruco_drone/install/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

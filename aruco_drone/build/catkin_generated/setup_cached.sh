@@ -7,5 +7,9 @@
 # new environment variables
 
 # modified environment variables
-export PWD='/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build'
-export PYTHONPATH="/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/devel/lib/python3/dist-packages:$PYTHONPATH"
+export CMAKE_PREFIX_PATH="/home/jlukas/My_Project/ROS1/aruco_drone/devel:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH='/home/jlukas/My_Project/ROS1/aruco_drone/devel/lib:/opt/ros/noetic/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins'
+export PWD='/home/jlukas/My_Project/ROS1/aruco_drone/build'
+export PYTHONPATH="/home/jlukas/My_Project/ROS1/aruco_drone/devel/lib/python3/dist-packages:$PYTHONPATH"
+export ROSLISP_PACKAGE_DIRECTORIES='/home/jlukas/My_Project/ROS1/aruco_drone/devel/share/common-lisp'
+export ROS_PACKAGE_PATH="/home/jlukas/My_Project/ROS1/aruco_drone/src:$ROS_PACKAGE_PATH"

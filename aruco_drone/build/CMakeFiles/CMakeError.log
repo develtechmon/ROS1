@@ -1,21 +1,21 @@
 Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
-Change Dir: /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp
+Change Dir: /home/jlukas/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_4c065/fast && /usr/bin/make -f CMakeFiles/cmTC_4c065.dir/build.make CMakeFiles/cmTC_4c065.dir/build
-make[1]: Entering directory '/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_4c065.dir/src.c.o
-/usr/lib/ccache/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_4c065.dir/src.c.o   -c /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_4c065
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4c065.dir/link.txt --verbose=1
-/usr/lib/ccache/cc  -DCMAKE_HAVE_LIBC_PTHREAD    -rdynamic CMakeFiles/cmTC_4c065.dir/src.c.o  -o cmTC_4c065 
-/usr/bin/ld: CMakeFiles/cmTC_4c065.dir/src.c.o: in function `main':
+Run Build Command(s):/usr/bin/make cmTC_f2eee/fast && /usr/bin/make -f CMakeFiles/cmTC_f2eee.dir/build.make CMakeFiles/cmTC_f2eee.dir/build
+make[1]: Entering directory '/home/jlukas/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_f2eee.dir/src.c.o
+/usr/lib/ccache/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_f2eee.dir/src.c.o   -c /home/jlukas/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_f2eee
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f2eee.dir/link.txt --verbose=1
+/usr/lib/ccache/cc  -DCMAKE_HAVE_LIBC_PTHREAD    -rdynamic CMakeFiles/cmTC_f2eee.dir/src.c.o  -o cmTC_f2eee 
+/usr/bin/ld: CMakeFiles/cmTC_f2eee.dir/src.c.o: in function `main':
 src.c:(.text+0x46): undefined reference to `pthread_create'
 /usr/bin/ld: src.c:(.text+0x52): undefined reference to `pthread_detach'
 /usr/bin/ld: src.c:(.text+0x63): undefined reference to `pthread_join'
 collect2: error: ld returned 1 exit status
-make[1]: *** [CMakeFiles/cmTC_4c065.dir/build.make:87: cmTC_4c065] Error 1
-make[1]: Leaving directory '/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp'
-make: *** [Makefile:121: cmTC_4c065/fast] Error 2
+make[1]: *** [CMakeFiles/cmTC_f2eee.dir/build.make:87: cmTC_f2eee] Error 1
+make[1]: Leaving directory '/home/jlukas/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_f2eee/fast] Error 2
 
 
 Source file was:
@@ -39,20 +39,20 @@ int main(void)
 }
 
 Determining if the function pthread_create exists in the pthreads failed with the following output:
-Change Dir: /home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp
+Change Dir: /home/jlukas/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_a8d89/fast && /usr/bin/make -f CMakeFiles/cmTC_a8d89.dir/build.make CMakeFiles/cmTC_a8d89.dir/build
-make[1]: Entering directory '/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_a8d89.dir/CheckFunctionExists.c.o
-/usr/lib/ccache/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_a8d89.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
-Linking C executable cmTC_a8d89
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a8d89.dir/link.txt --verbose=1
-/usr/lib/ccache/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_a8d89.dir/CheckFunctionExists.c.o  -o cmTC_a8d89  -lpthreads 
+Run Build Command(s):/usr/bin/make cmTC_375b1/fast && /usr/bin/make -f CMakeFiles/cmTC_375b1.dir/build.make CMakeFiles/cmTC_375b1.dir/build
+make[1]: Entering directory '/home/jlukas/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_375b1.dir/CheckFunctionExists.c.o
+/usr/lib/ccache/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_375b1.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_375b1
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_375b1.dir/link.txt --verbose=1
+/usr/lib/ccache/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_375b1.dir/CheckFunctionExists.c.o  -o cmTC_375b1  -lpthreads 
 /usr/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-make[1]: *** [CMakeFiles/cmTC_a8d89.dir/build.make:87: cmTC_a8d89] Error 1
-make[1]: Leaving directory '/home/jlukas/Desktop/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp'
-make: *** [Makefile:121: cmTC_a8d89/fast] Error 2
+make[1]: *** [CMakeFiles/cmTC_375b1.dir/build.make:87: cmTC_375b1] Error 1
+make[1]: Leaving directory '/home/jlukas/My_Project/ROS1/aruco_drone/build/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_375b1/fast] Error 2
 
 
 
