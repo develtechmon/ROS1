@@ -17,9 +17,16 @@ Usage:
   python stage1_statistics.py --model ./models/hover_policy_best.pth --episodes 10
   python stage1_statistics.py --model ./models/hover_policy_best.pth --episodes 10 --steps 500
 
-  for STIL and achieve good data. I'm using this
+  for SIIL and achieve good data. I'm using this
   python stage_statistics.py  --model ./models/hover_policy_best.pth --episodes 10  --steps 500
 
+  for HITL
+  python stage1_statistics.py \
+    --model ./models/hover_policy_best.pth \
+    --episodes 10 \
+    --steps 500 \
+    --address serial:///dev/ttyACM0:57600 \
+    --results ./results/hitl
 """
 
 import asyncio
