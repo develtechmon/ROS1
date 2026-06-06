@@ -22,6 +22,9 @@ Usage (SITL):
     Terminal 1: make px4_sitl gazebo
     Terminal 2: python pid_expert_mavsdk.py
 
+For HITL run this:
+python pid_expert_mavsdk.py --address serial:///dev/ttyACM0:57600
+
 Expected Output:
     Mean altitude: ~10.0m
     Std deviation: <0.15m
@@ -34,6 +37,7 @@ import numpy as np
 import time
 from mavsdk import System
 from mavsdk.offboard import OffboardError, VelocityNedYaw
+
 
 # ─────────────────────────────────────────────
 # Shared Telemetry Buffer
@@ -192,7 +196,7 @@ async def goto_position_ned(drone, buf, north_m, east_m, alt_m,
         await asyncio.sleep(0.05)   # 20Hz setpoint rate
 
 
-async def test_position_hold_quality():
+async def test_position_hold_quality(system_address="udp://:14550"):
     """
     Verifies that PX4's position controller holds altitude well enough
     to produce quality training data.
@@ -217,7 +221,7 @@ async def test_position_hold_quality():
     print("="*70)
 
     drone = System()
-    await drone.connect(system_address="udp://:14550")
+    await drone.connect(system_address=system_address)
 
     print("Waiting for drone connection...")
     async for state in drone.core.connection_state():
@@ -367,5 +371,12 @@ if __name__ == "__main__":
     # can intercept it. os._exit(0) terminates all threads immediately — the gRPC
     # callbacks never fire into a closed loop.
     import os
-    asyncio.run(test_position_hold_quality())
+    import argparse
+    parser = argparse.ArgumentParser(description="PX4 position hold quality test")
+    parser.add_argument(
+        '--address', type=str, default='udp://:14550',
+        help='SITL: udp://:14550   HITL: serial:///dev/ttyACM0:57600'
+    )
+    args = parser.parse_args()
+    asyncio.run(test_position_hold_quality(system_address=args.address)))
     os._exit(0)
