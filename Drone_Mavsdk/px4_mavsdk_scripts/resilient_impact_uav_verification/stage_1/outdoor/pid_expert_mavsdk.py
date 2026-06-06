@@ -378,5 +378,5 @@ if __name__ == "__main__":
         help='SITL: udp://:14550   HITL: serial:///dev/ttyACM0:57600'
     )
     args = parser.parse_args()
-    asyncio.run(test_position_hold_quality(system_address=args.address)))
+    asyncio.run(test_position_hold_quality(system_address=args.address))
     os._exit(0)
