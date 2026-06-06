@@ -45,7 +45,7 @@ For quick test:
     python collect_demonstration_mavsdk.py \
     --episodes 10 \
     --steps 500 \
-    --address serial:///dev/ttyACM0:57600
+    --address serial:///dev/ttyACM0:921600
 
 """
 
