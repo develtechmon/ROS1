@@ -23,7 +23,7 @@ Usage (SITL):
     Terminal 2: python pid_expert_mavsdk.py
 
 For HITL run this:
-python pid_expert_mavsdk.py --address serial:///dev/ttyACM0:57600
+python pid_expert_mavsdk.py --address serial:///dev/ttyACM0:921600
 
 Expected Output:
     Mean altitude: ~10.0m
