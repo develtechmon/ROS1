@@ -16,7 +16,10 @@ Usage:
 
     python train_imitation.py --dataset ./demonstrations/expert_demonstrations_mavsdk.pkl 
 
-    for STIL and achieve good data. I'm using this
+    for SITL and achieve good data. I'm using this
+    python train_imitation.py --dataset ./demonstrations/expert_demonstrations_mavsdk.pkl --epochs 800
+
+    for HITL
     python train_imitation.py --dataset ./demonstrations/expert_demonstrations_mavsdk.pkl --epochs 800
 
 Success Criteria:
