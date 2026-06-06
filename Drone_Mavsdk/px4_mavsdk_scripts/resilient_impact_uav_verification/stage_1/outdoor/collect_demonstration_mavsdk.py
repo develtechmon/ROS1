@@ -41,6 +41,12 @@ For quick test:
     For STIL and achieve good data. I'm using this
     python collect_demonstration_mavsdk.py --episodes 100 --steps 500
 
+    For HITL use this
+    python collect_demonstration_mavsdk.py \
+    --episodes 10 \
+    --steps 500 \
+    --address serial:///dev/ttyACM0:57600
+
 """
 
 import asyncio
