@@ -25,7 +25,7 @@ Usage:
     --model ./models/hover_policy_best.pth \
     --episodes 10 \
     --steps 500 \
-    --address serial:///dev/ttyACM0:57600 \
+    --address serial:///dev/ttyACM0:921600 \
     --results ./results/hitl
 """
 
