@@ -28,7 +28,7 @@ Usage:
     --address serial:///dev/ttyACM0:921600 \
     --results ./results/hitl
     
-  or you run run directly without address serial because we'll use the proxy
+  or you run run directly without address serial because we'll use the proxy. I use this most of the time.
   python3 stage_statistics.py --model ./models/hover_policy_best.pth --episodes 10 --steps 500 --results ./results/hitl/
   
 """
