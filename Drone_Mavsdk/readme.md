@@ -205,6 +205,10 @@ Find and set
 ```
 <serialEnabled>1</serialEnabled>
 <serialDevice>/dev/ttyACM0</serialDevice>
+
+or this one to resolve the dynamic /dev/ttyACM* issue
+<serialDevice>/dev/serial/by-id/usb-3D_Robotics_PX4_FMU_v2.x_0-if00</serialDevice>
+
 <baudRate>921600</baudRate>
 <hil_mode>1</hil_mode>
 ```
