@@ -47,8 +47,8 @@ For quick test:
     --steps 500 \
     --address serial:///dev/ttyACM0:921600
     
-    or you run run directly without address serial because we'll use the proxy
-    python3 collect_demonstration_mavsdk.py --episodes 100 --steps 500 
+    or you run run directly without address serial because we'll use the proxy. For better accuracy, i use this one to collect more samples
+    python3 collect_demonstration_mavsdk.py --episodes 200 --steps 500 
 
 """
 
