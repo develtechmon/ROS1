@@ -32,13 +32,13 @@ Usage:
     Terminal 1: make px4_sitl gazebo
     Terminal 2: python collect_demonstration_mavsdk.py --episodes 50 --steps 200
 
-    or 
+    or
     Terminal 2: python collect_demonstration_mavsdk.py --episodes 100 --steps 500
 
 For quick test:
     python collect_demonstrations_mavsdk.py --episodes 10 --steps 200
 
-    For STIL and achieve good data. I'm using this
+    For SITL and achieve good data. I'm using this
     python collect_demonstration_mavsdk.py --episodes 100 --steps 500
 
     For HITL use this
@@ -46,10 +46,18 @@ For quick test:
     --episodes 10 \
     --steps 500 \
     --address serial:///dev/ttyACM0:921600
-    
-    or you run run directly without address serial because we'll use the proxy
-    python3 collect_demonstration_mavsdk.py --episodes 100 --steps 500 
 
+CHANGES v5:
+  - GUARD 1: NaN check on TARGET snapshot — aborts episode cleanly
+  - GUARD 2: NaN check on computed action at each step
+  - GUARD 3: NaN check on telemetry during climb — aborts WITHOUT calling
+             land(), which would send NaN coords to Gazebo and crash gzclient
+             via Ogre AxisAlignedBox assertion. Disarms directly instead.
+  - FIX: wait_for_landed() at episode start blocks cascade arm failures
+  - FIX: finally block skips land() when telemetry is NaN (same Ogre crash
+           prevention), disarms directly. Uses wait_for_landed() when
+           telemetry is valid so disarm only fires after PX4 confirms ON_GROUND.
+  - FIX: offboard.stop() wrapped in try/except to handle serial timeouts (HITL)
 """
 
 import asyncio
@@ -59,6 +67,7 @@ import pickle
 import argparse
 from pathlib import Path
 from mavsdk import System
+from mavsdk.telemetry import LandedState
 from mavsdk.offboard import OffboardError, VelocityNedYaw, PositionNedYaw
 
 # Import from our translated expert file
@@ -118,16 +127,35 @@ async def wait_for_armed(drone, timeout_s=5.0):
     return False
 
 
+async def wait_for_landed(drone, timeout_s=30.0):
+    """
+    Wait until PX4 confirms ON_GROUND.
+    Used both at episode start (cascade prevention) and after land()
+    (ensures disarm only fires when drone is actually on the ground).
+    Returns True if landed within timeout, False otherwise.
+    """
+    t0 = asyncio.get_event_loop().time()
+    async for land_state in drone.telemetry.landed_state():
+        if land_state == LandedState.ON_GROUND:
+            return True
+        if asyncio.get_event_loop().time() - t0 > timeout_s:
+            return False
+        await asyncio.sleep(0.2)
+    return False
+
+
 async def run_episode(drone, buf, max_steps, episode_num):
     """
     Run one data collection episode.
 
     EPISODE FLOW:
-        1. Arm  (verified via telemetry, not just API call)
-        2. Offboard position climb to random (±2m N/E, 10m alt)
-        3. Settle 1.5s at hover
-        4. Switch to velocity setpoints → collect (obs, action) pairs
-        5. Stop offboard → land → disarm
+        1. Wait for ON_GROUND — prevents cascade failures from prior episodes
+        2. Arm  (verified via telemetry, not just API call)
+        3. Offboard position climb to random (±2m N/E, 10m alt)
+        4. Settle 1.5s at hover
+        5. Validate TARGET snapshot — abort if NaN/inf detected
+        6. Collect (obs, action) pairs with per-step NaN guard
+        7. Stop offboard → land → wait for ON_GROUND → disarm
     """
     episode_states  = []
     episode_actions = []
@@ -135,11 +163,20 @@ async def run_episode(drone, buf, max_steps, episode_num):
     success         = True
 
     try:
-        # ── Step 1: Arm + verify ──
-        print(f"  [Ep {episode_num:3d}] Arming...", end=" ", flush=True)
+        # ── Step 1: Wait for landed state ──
+        # Blocks until PX4 confirms ON_GROUND or times out.
+        # Prevents COMMAND_DENIED cascade when prior episode left drone airborne.
+        print(f"  [Ep {episode_num:3d}] Waiting for ground...", end=" ", flush=True)
+        landed = await wait_for_landed(drone, timeout_s=30.0)
+        if not landed:
+            print(f"SKIP — not on ground after 30s")
+            return [], [], 0.0, False
+        print(f"On ground", end=" | ", flush=True)
+
+        # ── Step 2: Arm + verify ──
+        print(f"Arming...", end=" ", flush=True)
         await drone.action.arm()
 
-        # Confirm arm via telemetry — API call returns before FC confirms
         armed = await wait_for_armed(drone, timeout_s=5.0)
         if not armed:
             print(f"FAILED (arm not confirmed)")
@@ -147,7 +184,7 @@ async def run_episode(drone, buf, max_steps, episode_num):
             return [], [], 0.0, False
         print(f"Armed", end=" | ", flush=True)
 
-        # ── Step 2: Offboard + climb ──
+        # ── Step 3: Offboard + climb ──
         start_n = float(np.random.uniform(-2, 2))
         start_e = float(np.random.uniform(-2, 2))
 
@@ -163,6 +200,25 @@ async def run_episode(drone, buf, max_steps, episode_num):
         print(f"Climbing...", end=" ", flush=True)
         t_climb = asyncio.get_event_loop().time()
         while True:
+            # ── GUARD 3: NaN telemetry during climb ──
+            # If EKF drops out mid-climb, buf.pos_* goes NaN.
+            # We must abort WITHOUT calling land() — calling land() with a
+            # corrupt EKF sends NaN coordinates into Gazebo physics which
+            # crashes gzclient via Ogre AxisAlignedBox assertion.
+            # Direct disarm is safe here because the drone is still climbing
+            # under offboard position control to a hardcoded setpoint.
+            if not all(np.isfinite([buf.pos_n, buf.pos_e, buf.pos_d])):
+                print(f"SKIP — telemetry NaN during climb, disarming directly")
+                try:
+                    await drone.offboard.stop()
+                except Exception:
+                    pass
+                try:
+                    await drone.action.disarm()
+                except Exception:
+                    pass
+                return [], [], 0.0, False
+
             await drone.offboard.set_position_ned(
                 PositionNedYaw(start_n, start_e, -10.0, 0.0)
             )
@@ -186,7 +242,7 @@ async def run_episode(drone, buf, max_steps, episode_num):
 
         print(f"At {buf.altitude():.1f}m | Collecting...", end=" ", flush=True)
 
-        # ── Step 3: Collect while PX4 holds position ──
+        # ── Step 4: Snapshot TARGET position ──
         # KEY DESIGN DECISION:
         #   We stay in position setpoint mode throughout collection.
         #   PX4's internal MPC holds the drone at (start_n, start_e, 10m) perfectly.
@@ -214,18 +270,28 @@ async def run_episode(drone, buf, max_steps, episode_num):
         #     These gains match the outer position loop of the PID expert,
         #     but now the drone is actually stable while we label the data.
 
-        # TARGET_N = start_n
-        # TARGET_E = start_e
-        # TARGET_D = -10.0    # NED: 10m altitude = -10m down
-
         TARGET_N = buf.pos_n
         TARGET_E = buf.pos_e
         TARGET_D = buf.pos_d
 
+        # ── GUARD 1: Validate TARGET snapshot ──
+        # If telemetry glitched during climb/settle, TARGET values can be NaN
+        # or inf. Sending NaN position setpoints to PX4 causes physics divergence
+        # in Gazebo which propagates as NaN to Ogre and crashes gzclient.
+        if not all(np.isfinite([TARGET_N, TARGET_E, TARGET_D])):
+            print(f"SKIP — NaN in TARGET snapshot "
+                  f"(N={TARGET_N:.3f} E={TARGET_E:.3f} D={TARGET_D:.3f})")
+            try:
+                await drone.offboard.stop()
+            except Exception:
+                pass
+            await asyncio.sleep(0.5)
+            return [], [], 0.0, False
+
         # Position error gains (outer loop only — matches pid_expert kp values)
         KP_N = 0.5
         KP_E = 0.5
-        KP_D = 2.0 # <- Increased from 0.8 to product stronger altitude corrections
+        KP_D = 2.0  # Increased from 0.8 to produce stronger altitude corrections
 
         # Velocity clip (safety — same as PID output limits)
         V_MAX = 3.0
@@ -250,9 +316,17 @@ async def run_episode(drone, buf, max_steps, episode_num):
             ve_cmd = float(np.clip(KP_E * err_e, -V_MAX, V_MAX))
             vd_cmd = float(np.clip(KP_D * err_d, -V_MAX, V_MAX))
 
-            # vn_cmd = float(np.clip(buf.vel_n, -V_MAX, V_MAX))
-            # ve_cmd = float(np.clip(buf.vel_e, -V_MAX, V_MAX))
-            # vd_cmd = float(np.clip(buf.vel_d, -V_MAX, V_MAX))
+            # ── GUARD 2: Validate computed action ──
+            # np.clip does not sanitise NaN — if err_* is NaN (from a telemetry
+            # dropout), the clipped value is still NaN. A NaN action stored in
+            # the dataset corrupts training, and a NaN setpoint sent to PX4
+            # crashes Gazebo via the Ogre NaN position assertion.
+            if not all(np.isfinite([vn_cmd, ve_cmd, vd_cmd])):
+                print(f"\n  [Ep {episode_num}] NaN action at step {step} "
+                      f"(vn={vn_cmd:.3f} ve={ve_cmd:.3f} vd={vd_cmd:.3f}) — "
+                      f"aborting episode")
+                success = False
+                break
 
             action = np.array([vn_cmd, ve_cmd, vd_cmd], dtype=np.float32)
 
@@ -276,19 +350,29 @@ async def run_episode(drone, buf, max_steps, episode_num):
             print(f"Done ({len(episode_states)} samples, "
                   f"alt={buf.altitude():.1f}m, reward={episode_reward:.0f})")
 
-        # ── Step 4: Stop offboard ──
-        await drone.offboard.stop()
-        await asyncio.sleep(0.5)
+        # ── Step 5: Stop offboard ──
+        try:
+            await drone.offboard.stop()
+            await asyncio.sleep(0.5)
+        except Exception:
+            pass
 
     except Exception as e:
         print(f"Exception: {e}")
         success = False
 
     finally:
-        # ── Step 5: Land + disarm (always runs) ──
+        # ── Step 6: Land + disarm (always runs) ──
+        # CRITICAL: only call land() if telemetry is valid.
+        # land() with a corrupt EKF (NaN pos) sends NaN coordinates into
+        # Gazebo physics, crashing gzclient via the Ogre AxisAlignedBox
+        # assertion. If telemetry is NaN, skip land() and disarm directly.
         try:
-            await drone.action.land()
-            await asyncio.sleep(5.0)
+            if all(np.isfinite([buf.pos_n, buf.pos_e, buf.pos_d])):
+                await drone.action.land()
+                await wait_for_landed(drone, timeout_s=20.0)
+            else:
+                print(f"  [Ep {episode_num}] Skipping land() — telemetry NaN")
             await drone.action.disarm()
             await asyncio.sleep(2.0)
         except Exception:
@@ -315,9 +399,8 @@ async def collect_demonstrations(num_episodes=200, max_steps=200,
     print("Setting up drone connection...")
     drone, buf = await setup_drone(system_address)
 
-
-    all_states = []
-    all_actions = []
+    all_states      = []
+    all_actions     = []
     episode_rewards = []
     failed_episodes = 0
 
@@ -338,11 +421,11 @@ async def collect_demonstrations(num_episodes=200, max_steps=200,
 
         # Progress log every episode
         if True:
-            elapsed = time.time() - start_time
-            completed = episode + 1 - failed_episodes
-            eps_per_min = (episode + 1) / (elapsed / 60) if elapsed > 0 else 0
-            eta_min = (num_episodes - episode - 1) / eps_per_min if eps_per_min > 0 else 0
-            avg_reward = np.mean(episode_rewards[-10:]) if episode_rewards else 0
+            elapsed      = time.time() - start_time
+            completed    = episode + 1 - failed_episodes
+            eps_per_min  = (episode + 1) / (elapsed / 60) if elapsed > 0 else 0
+            eta_min      = (num_episodes - episode - 1) / eps_per_min if eps_per_min > 0 else 0
+            avg_reward   = np.mean(episode_rewards[-10:]) if episode_rewards else 0
 
             print(f"Episode {episode+1:4d}/{num_episodes} | "
                   f"Collected: {completed} | "
@@ -355,7 +438,7 @@ async def collect_demonstrations(num_episodes=200, max_steps=200,
         if (episode + 1) % 50 == 0 and len(all_states) > 0:
             cp_path = f"{save_dir}/checkpoint_{episode+1}.pkl"
             cp_data = {
-                'states': np.array(all_states),
+                'states':  np.array(all_states),
                 'actions': np.array(all_actions),
                 'rewards': episode_rewards
             }
@@ -373,7 +456,7 @@ async def collect_demonstrations(num_episodes=200, max_steps=200,
         return None
 
     dataset = {
-        'states': np.array(all_states),
+        'states':  np.array(all_states),
         'actions': np.array(all_actions),
         'rewards': episode_rewards,
         'metadata': {
@@ -412,12 +495,12 @@ async def collect_demonstrations(num_episodes=200, max_steps=200,
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--episodes',  type=int,   default=50,
+    parser.add_argument('--episodes',  type=int, default=50,
                         help='Number of episodes (default 50 for SITL test)')
-    parser.add_argument('--steps',     type=int,   default=200,
+    parser.add_argument('--steps',     type=int, default=200,
                         help='Steps per episode')
-    parser.add_argument('--save-dir',  type=str,   default='./demonstrations')
-    parser.add_argument('--address',   type=str,   default='udp://:14550',
+    parser.add_argument('--save-dir',  type=str, default='./demonstrations')
+    parser.add_argument('--address',   type=str, default='udp://:14550',
                         help='MAVSDK system address')
     args = parser.parse_args()
 

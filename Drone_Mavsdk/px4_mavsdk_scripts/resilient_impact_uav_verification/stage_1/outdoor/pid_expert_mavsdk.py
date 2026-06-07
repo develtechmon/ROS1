@@ -25,6 +25,9 @@ Usage (SITL):
 For HITL run this:
 python pid_expert_mavsdk.py --address serial:///dev/ttyACM0:921600
 
+or you run run directly without address serial because we'll use the proxy
+python pid_expert_mavsdk.py 
+
 Expected Output:
     Mean altitude: ~10.0m
     Std deviation: <0.15m

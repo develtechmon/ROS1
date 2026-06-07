@@ -1,0 +1,100 @@
+========================================================================
+STAGE 1 STATISTICS REPORT
+Behavioural Cloning: PX4 Position Hold vs Imitation Policy
+Target altitude: 10.0m | Episodes: 10 | Steps: per episode
+========================================================================
+
+TABLE 1 — MAIN COMPARISON (copy directly to paper)
+------------------------------------------------------------------------
+Metric                                PX4 Baseline    BC Policy        Gap
+------------------------------------------------------------------------
+Mean altitude (m)                            9.878        9.987     +0.109
+Mean altitude error (m)                      0.122        0.102     -0.020
+RMSE from target (m)                         0.128        0.138     +0.010
+Altitude std dev (m)                         0.034        0.082     +0.048
+Mean horiz distance (m)                      1.579        1.570     -0.008
+Max horiz distance (m)                       2.720        2.765          —
+Drift rate |m/s| mean                       0.0032       0.0072    +0.0040
+Success rate (%)                             100.0        100.0          —
+RMSE ratio (policy/baseline)                  1.00         1.08          —
+Transfer efficiency (%)                          —         92.4          —
+------------------------------------------------------------------------
+
+TABLE 2 — PER-EPISODE BREAKDOWN
+--------------------------------------------------------------------------------------------------------
+Ep     BL alt  BL std  BL RMSE  BL dist  BL dmax   BC alt  BC std  BC RMSE  BC dist  BC dmax  BC drift
+--------------------------------------------------------------------------------------------------------
+1       9.873  0.0107   0.1270    1.829    1.920    9.890  0.0653   0.1278    1.620    1.834   +0.0066
+2       9.898  0.0381   0.1093    1.020    1.078   10.035  0.0943   0.1005    1.102    1.285   +0.0085
+3       9.874  0.0532   0.1364    1.923    2.036   10.130  0.0861   0.1561    1.964    2.057   +0.0007
+4       9.956  0.0294   0.0529    2.261    2.330    9.959  0.0380   0.0559    2.231    2.553   -0.0032
+5       9.847  0.0492   0.1611    0.909    0.963    9.753  0.0806   0.2596    1.095    1.298   -0.0037
+6       9.758  0.0683   0.2515    2.656    2.720   10.160  0.1247   0.2027    2.673    2.765   +0.0139
+7       9.952  0.0221   0.0529    1.770    1.911   10.089  0.1187   0.1485    1.531    1.854   +0.0149
+8       9.793  0.0297   0.2090    1.786    1.861   10.031  0.0753   0.0815    1.809    2.009   +0.0092
+9       9.880  0.0139   0.1207    0.787    0.879    9.992  0.0586   0.0592    0.622    0.689   -0.0025
+10      9.944  0.0295   0.0632    0.846    0.896    9.827  0.0806   0.1905    1.058    1.296   -0.0090
+--------------------------------------------------------------------------------------------------------
+Mean    9.878  0.0344   0.1284    1.579    1.659    9.987  0.0822   0.1382    1.570    1.764    0.0072
+
+ACTION DISTRIBUTION (policy output statistics)
+------------------------------------------------------------------------
+  vn (north): mean=-0.0051  std=0.0092  max|val|=0.0266
+  ve (east):  mean=-0.0020  std=0.0102  max|val|=0.0326
+  vd (down):  mean=-0.0106  std=0.0397  max|val|=0.1622
+
+  NOTE: Near-zero means confirm unbiased labels (TARGET_D fix working).
+  Small std confirms policy outputs gentle corrections, not aggressive cmds.
+
+========================================================================
+ACTION HISTOGRAM — X/Y DATA FOR PLOTTING
+------------------------------------------------------------------------
+  vn:  mean=-0.0051  std=0.0092  median=-0.0069  bins=40
+       x (bin centres): [-0.026, -0.0248, -0.0236, -0.0224, -0.0212] ... [0.0163, 0.0175, 0.0187, 0.0199, 0.0211]
+       y (counts):      [4, 1, 1, 143, 29] ... [2, 2, 2, 1, 3]
+
+  ve:  mean=-0.0020  std=0.0102  median=-0.0027  bins=40
+       x (bin centres): [-0.0303, -0.0287, -0.0271, -0.0255, -0.0239] ... [0.0255, 0.027, 0.0286, 0.0302, 0.0318]
+       y (counts):      [1, 1, 3, 9, 6] ... [7, 7, 5, 7, 2]
+
+  vd:  mean=-0.0106  std=0.0397  median=-0.0115  bins=40
+       x (bin centres): [-0.1592, -0.1534, -0.1475, -0.1417, -0.1358] ... [0.0456, 0.0514, 0.0573, 0.0631, 0.069]
+       y (counts):      [11, 3, 4, 2, 2] ... [118, 149, 119, 63, 45]
+
+  To plot in Python:
+    import pickle, numpy as np, matplotlib.pyplot as plt
+    with open('./results/statistics_summary.pkl','rb') as f: d=pickle.load(f)
+    h = d['policy']['action_histogram']['vd']
+    plt.bar(h['x'], h['y'], width=h['width'], color='steelblue')
+    plt.axvline(h['mean'], color='orange', label=f"mean={h['mean']:.4f}")
+    plt.axvline(0, color='red', linestyle='--', label='zero')
+    plt.xlabel('vd command (m/s)'); plt.ylabel('frequency')
+    plt.legend(); plt.show()
+
+========================================================================
+FIGURES — ALL DATA KEYS IN statistics_summary.pkl
+------------------------------------------------------------------------
+  Fig 1 — Altitude time series:
+    data['baseline']['episode_altitudes']  → list of 10 lists (500 steps each)
+    data['policy']['episode_altitudes']    → list of 10 lists (500 steps each)
+
+  Fig 2 — Per-episode RMSE bar chart:
+    data['baseline']['ep_rmse']            → list of 10 RMSE values
+    data['policy']['ep_rmse']              → list of 10 RMSE values
+
+  Fig 3 — Action distribution histogram (vd):
+    data['policy']['action_histogram']['vd']['x']  → bin centres (m/s)
+    data['policy']['action_histogram']['vd']['y']  → counts per bin
+    data['policy']['action_histogram']['vd']['width'] → bar width
+    data['policy']['all_actions']          → raw (N,3) array [vn,ve,vd]
+
+  Fig 4 — Horizontal drift bar chart:
+    data['baseline']['ep_dist_max']        → max dist per episode
+    data['policy']['ep_dist_max']          → max dist per episode
+
+  Extra — Horizontal distance time series:
+    data['baseline']['episode_distances']  → list of 10 lists (500 steps each)
+    data['policy']['episode_distances']    → list of 10 lists (500 steps each)
+
+  All raw data: ./results/statistics_summary.pkl
+========================================================================
