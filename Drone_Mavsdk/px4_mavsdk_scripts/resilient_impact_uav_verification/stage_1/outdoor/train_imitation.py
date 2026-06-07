@@ -20,7 +20,7 @@ Usage:
     python train_imitation.py --dataset ./demonstrations/expert_demonstrations_mavsdk.pkl --epochs 800
 
     for HITL
-    python train_imitation.py --dataset ./demonstrations/expert_demonstrations_mavsdk.pkl --epochs 800
+    python train_imitation.py --dataset ./demonstrations/expert_demonstrations_mavsdk.pkl --epochs 2000
 
 Success Criteria:
     Final Val Loss < 0.05  → Excellent! (95%+ success)
