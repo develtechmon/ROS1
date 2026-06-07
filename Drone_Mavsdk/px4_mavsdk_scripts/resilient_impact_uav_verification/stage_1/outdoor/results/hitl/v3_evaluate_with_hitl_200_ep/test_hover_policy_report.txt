@@ -1,0 +1,90 @@
+======================================================================
+  [Ep  1] Arming... Armed | Climbing... At 9.9m | Policy running...
+    Step   0: Alt=9.86m | Dist=0.05m | Cmd=[0.01,-0.00,-0.04]
+    Step 100: Alt=9.82m | Dist=0.05m | Cmd=[0.00,-0.01,-0.05]
+    Step 200: Alt=9.83m | Dist=0.18m | Cmd=[0.00,-0.01,-0.06]
+    Step 300: Alt=9.88m | Dist=0.41m | Cmd=[0.00,0.00,-0.04]
+    Step 400: Alt=9.92m | Dist=0.36m | Cmd=[0.01,-0.01,-0.09]
+  Episode  1/10 | OK PASS | Alt=9.86±0.05m | Dist=0.24m | Steps=500 | completed
+  [Ep  2] Arming... Armed | Climbing... At 9.9m | Policy running...
+    Step   0: Alt=9.92m | Dist=0.03m | Cmd=[0.00,-0.01,-0.01]
+    Step 100: Alt=9.87m | Dist=0.13m | Cmd=[0.01,-0.01,-0.07]
+    Step 200: Alt=9.94m | Dist=0.20m | Cmd=[0.01,-0.01,0.10]
+    Step 300: Alt=9.93m | Dist=0.13m | Cmd=[0.01,-0.01,-0.04]
+    Step 400: Alt=9.87m | Dist=0.11m | Cmd=[0.01,-0.01,-0.08]
+  Episode  2/10 | OK PASS | Alt=9.89±0.03m | Dist=0.14m | Steps=500 | completed
+  [Ep  3] Arming... Armed | Climbing... At 10.0m | Policy running...
+    Step   0: Alt=9.96m | Dist=0.06m | Cmd=[0.00,-0.01,0.02]
+    Step 100: Alt=10.04m | Dist=0.34m | Cmd=[0.00,-0.00,0.06]
+    Step 200: Alt=9.98m | Dist=0.42m | Cmd=[0.01,0.00,0.00]
+    Step 300: Alt=9.98m | Dist=0.28m | Cmd=[0.00,-0.00,-0.00]
+    Step 400: Alt=9.96m | Dist=0.42m | Cmd=[-0.00,-0.00,0.03]
+  Episode  3/10 | OK PASS | Alt=9.97±0.03m | Dist=0.35m | Steps=500 | completed
+  [Ep  4] Arming... Armed | Climbing... At 10.0m | Policy running...
+    Step   0: Alt=10.01m | Dist=0.10m | Cmd=[0.00,-0.01,0.06]
+    Step 100: Alt=9.98m | Dist=0.39m | Cmd=[0.00,-0.01,-0.00]
+    Step 200: Alt=9.92m | Dist=0.36m | Cmd=[0.00,-0.01,-0.01]
+    Step 300: Alt=9.87m | Dist=0.32m | Cmd=[0.00,-0.00,-0.01]
+    Step 400: Alt=9.87m | Dist=0.30m | Cmd=[0.00,0.01,-0.05]
+  Episode  4/10 | OK PASS | Alt=9.91±0.04m | Dist=0.32m | Steps=500 | completed
+  [Ep  5] Arming... Armed | Climbing... At 9.9m | Policy running...
+    Step   0: Alt=9.91m | Dist=0.05m | Cmd=[0.01,-0.01,-0.04]
+    Step 100: Alt=10.05m | Dist=0.23m | Cmd=[0.01,-0.00,-0.03]
+    Step 200: Alt=9.96m | Dist=0.42m | Cmd=[0.01,0.01,-0.01]
+    Step 300: Alt=9.83m | Dist=0.48m | Cmd=[0.01,-0.00,-0.03]
+    Step 400: Alt=9.85m | Dist=0.65m | Cmd=[0.01,0.00,-0.06]
+  Episode  5/10 | OK PASS | Alt=9.92±0.09m | Dist=0.43m | Steps=500 | completed
+  [Ep  6] Arming... Armed | Climbing... At 9.9m | Policy running...
+    Step   0: Alt=9.91m | Dist=0.06m | Cmd=[0.01,-0.00,-0.03]
+    Step 100: Alt=9.91m | Dist=0.24m | Cmd=[0.01,-0.01,-0.05]
+    Step 200: Alt=9.98m | Dist=0.48m | Cmd=[0.00,-0.01,-0.04]
+    Step 300: Alt=10.07m | Dist=0.55m | Cmd=[0.00,-0.01,0.06]
+    Step 400: Alt=10.02m | Dist=0.48m | Cmd=[-0.00,-0.00,0.02]
+  Episode  6/10 | OK PASS | Alt=9.98±0.07m | Dist=0.41m | Steps=500 | completed
+  [Ep  7] Arming... Armed | Climbing... At 9.9m | Policy running...
+    Step   0: Alt=9.93m | Dist=0.04m | Cmd=[0.00,-0.01,-0.01]
+    Step 100: Alt=9.90m | Dist=0.24m | Cmd=[0.01,-0.01,-0.02]
+    Step 200: Alt=9.95m | Dist=0.29m | Cmd=[0.01,-0.01,-0.05]
+    Step 300: Alt=9.91m | Dist=0.34m | Cmd=[0.01,0.00,-0.01]
+    Step 400: Alt=9.86m | Dist=0.27m | Cmd=[0.00,-0.00,-0.01]
+  Episode  7/10 | OK PASS | Alt=9.91±0.04m | Dist=0.27m | Steps=500 | completed
+  [Ep  8] Arming... Armed | Climbing... At 10.0m | Policy running...
+    Step   0: Alt=9.95m | Dist=0.03m | Cmd=[0.01,-0.00,0.01]
+    Step 100: Alt=9.92m | Dist=0.25m | Cmd=[0.00,-0.00,0.01]
+    Step 200: Alt=9.96m | Dist=0.40m | Cmd=[0.01,-0.00,-0.00]
+    Step 300: Alt=9.91m | Dist=0.42m | Cmd=[0.01,-0.00,-0.01]
+    Step 400: Alt=9.84m | Dist=0.30m | Cmd=[0.00,0.00,-0.01]
+  Episode  8/10 | OK PASS | Alt=9.91±0.03m | Dist=0.30m | Steps=500 | completed
+  [Ep  9] Arming... Armed | Climbing... At 9.9m | Policy running...
+    Step   0: Alt=9.94m | Dist=0.01m | Cmd=[0.01,-0.00,-0.00]
+    Step 100: Alt=9.94m | Dist=0.05m | Cmd=[0.01,-0.01,0.02]
+    Step 200: Alt=9.92m | Dist=0.13m | Cmd=[0.01,-0.01,-0.01]
+    Step 300: Alt=9.89m | Dist=0.24m | Cmd=[0.00,-0.00,-0.01]
+    Step 400: Alt=9.98m | Dist=0.26m | Cmd=[0.00,-0.00,0.00]
+  Episode  9/10 | OK PASS | Alt=9.94±0.05m | Dist=0.16m | Steps=500 | completed
+  [Ep 10] Arming... Armed | Climbing... At 9.9m | Policy running...
+    Step   0: Alt=9.91m | Dist=0.03m | Cmd=[0.01,-0.01,-0.03]
+    Step 100: Alt=9.84m | Dist=0.08m | Cmd=[0.00,-0.01,-0.08]
+    Step 200: Alt=9.86m | Dist=0.03m | Cmd=[0.01,-0.01,-0.03]
+    Step 300: Alt=9.92m | Dist=0.13m | Cmd=[0.01,-0.01,0.03]
+    Step 400: Alt=9.90m | Dist=0.15m | Cmd=[0.01,-0.01,0.01]
+  Episode 10/10 | OK PASS | Alt=9.88±0.03m | Dist=0.09m | Steps=500 | completed
+======================================================================
+
+======================================================================
+TEST RESULTS
+======================================================================
+Success Rate:     100% (10/10)
+Avg Episode Len:  500.0 steps
+Mean Altitude:    9.918m  (target: 10.0m)
+Altitude Std:     0.046m
+Altitude Error:   0.082m
+Avg Dist (horiz): 0.27m
+Max Dist (horiz): 0.69m
+
+======================================================================
+EXCELLENT! Policy successfully learned to hover on PX4!
+  Ready for Stage 2 (transfer learning + disturbance)
+  Model validated on MAVSDK/PX4 — HITL-ready
+======================================================================
+
