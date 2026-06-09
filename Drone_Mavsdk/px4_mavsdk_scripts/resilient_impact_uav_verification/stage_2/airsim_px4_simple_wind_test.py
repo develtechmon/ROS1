@@ -14,7 +14,7 @@ Sequence:
 
 Run:
   Terminal 1: make px4_sitl_default none_iris
-  Terminal 2: python wind_visual_demo.py
+  Terminal 2: python airsim_px4_simple_wind_test.py
 """
 
 import airsim

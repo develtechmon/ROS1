@@ -14,7 +14,7 @@ PX4 stays in OFFBOARD the whole time — no mode switching needed.
 
 Run:
   Terminal 1: make px4_sitl_default none_iris
-  Terminal 2: python test_wind_simple.py
+  Terminal 2: python airsim_px4_wind_test_from_all_directions.py
 """
 
 import airsim
